@@ -1,0 +1,15 @@
+The MEASURE program uses analog and digital inputs to
+simulate a datalogger. It runs with RTX Kernel real time
+executive. This example shows how you can use the RTX
+Kernel and signal functions in uVision to simulate a signal
+coming into one of the analog inputs.
+
+You may watch the value of analog input POT1 and the state of
+the S2 switch on MCB21xx evaluation boards. The jumper settings
+are described below.
+
+The MEASURE  example program is available for one target:
+
+Simulator: uVision Simulator for evaluation
+
+

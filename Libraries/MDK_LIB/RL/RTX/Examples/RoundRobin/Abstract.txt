@@ -1,0 +1,18 @@
+This example program uses RTX Kernel and shows round-robin task
+switching. Two tasks (task 1 and task 2) are executing at 
+priority 2 while task 3 is executing at priority 4.
+
+The task execution of task 1 and task 2 is interrupted by round robin
+task switches. You may verify this using the Watch Window #1
+that displays the increments of counter1, counter2, and counter3.
+
+The low priority task 4 with a priority of 1 will never execute and
+will always stay ready. This is because one of the higher priority 
+tasks is always running. You may verify this in the Watch Window #1
+where the value of counter4 is always 0.
+
+The ROUNDROBIN program is available for one target:
+
+Simulator: uVision Simulator for evaluation
+
+

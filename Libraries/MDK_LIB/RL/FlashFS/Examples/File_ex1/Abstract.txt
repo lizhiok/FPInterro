@@ -1,0 +1,15 @@
+This is an RTL Flash File System example. The data
+captured from the serial interface is stored to a file.
+You can read the file, rename it or delete it from the
+flash. You can also display the file directory list.
+
+The Flash File System is configured for SRAM, where
+256 KBytes of RAM is used for file storage.
+
+
+
+The FILE_EX1 program is available for one target:
+  Simulator:      uVision Simulator for evaluation
+
+
+Note: Open UART #2 window for the command console.
