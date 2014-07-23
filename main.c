@@ -2,10 +2,12 @@
 
 
 void RCC_clock_set(void);
+void LED_set(void);
 int main()
 {
 	RCC_DeInit();
 	RCC_clock_set();
+	LED_set();
 
 	for(;;)
 	{
@@ -40,7 +42,10 @@ void RCC_clock_set(void)
 void LED_set(void)
 {
 	  GPIO_InitTypeDef  GPIO_InitStructure;
-	  /* Configure PD.02 CMD line */
+
+	  /* GPIOC,GPIOD and GPIOI Periph clock enable */
+	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+
 	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
