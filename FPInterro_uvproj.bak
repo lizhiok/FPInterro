@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Target 1</TargetName>
+      <TargetName>FPInterro</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -403,7 +403,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Appli</GroupName>
+          <GroupName>user</GroupName>
           <Files>
             <File>
               <FileName>main.c</FileName>
