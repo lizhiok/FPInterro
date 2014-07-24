@@ -1,7 +1,8 @@
 --cpu Cortex-M4.fp
 ".\obj\main.o"
-".\obj\spi_dac_adc.o"
 ".\obj\stm32f4xx_it.o"
+".\obj\spi_ad7980_adc.o"
+".\obj\spi_max5541_dac.o"
 ".\obj\system_stm32f4xx.o"
 ".\obj\startup_stm32f429_439xx.o"
 ".\obj\misc.o"

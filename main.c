@@ -1,6 +1,7 @@
 #include "main.h"
 #include "stm32f4xx.h"
-#include "spi_DAC_ADC.h"
+#include "spi_AD7980_ADC.h"
+#include "spi_MAX5541_DAC.h"
 
 void RCC_clock_set(void);
 void LED_set(void);
@@ -8,7 +9,7 @@ void LED_set(void);
 static __IO uint32_t TimingDelay;
 
 /* Private function prototypes -----------------------------------------------*/
-static void Delay(__IO uint32_t nTime);
+void Delay(__IO uint32_t nTime);
 
 int main()
 {
@@ -16,7 +17,8 @@ int main()
 	RCC_DeInit();
 	RCC_clock_set();
 	LED_set();
-	sDAC_ADC_Init();
+	sMAX5541_DAC_Init();
+	sAD7980_ADC_Init();
 
 #define	dac_step 1
 	dac_data=0;
@@ -26,24 +28,32 @@ int main()
 	    /* Capture error */
 	    while (1);
 	  }
-
 	  Delay(1);
-
 	for(;;)
 	{
+		dac_data+=dac_step;
+		sMAX5541_DAC_CS_LOW();
+		SPI_I2S_SendData(SPI2,65535/2);
+		sMAX5541_DAC_CS_HIGH();
+//		Delay(10);
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 
-			dac_data+=dac_step;
-		sDAC_ADC_CS_LOW();
-		SPI_I2S_SendData(SPI2,dac_data);
-		sDAC_ADC_CS_HIGH();
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+	sAD7980_ADC_CS_LOW();
+	SPI_I2S_SendData(SPI5,0);
+	__asm__{NOP};
+	sAD7980_ADC_CS_HIGH();
+
+	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
+	__asm__{NOP};
+	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
+	__asm__{NOP};
 //	GPIO_SetBits(GPIOD,GPIO_Pin_13);
 //	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 //	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};

@@ -1,11 +1,11 @@
 .\obj\main.o: main.c
 .\obj\main.o: main.h
 .\obj\main.o: stm32f4xx.h
-.\obj\main.o: .\Libraries\CMSIS\Include\core_cm4.h
+.\obj\main.o: C:\Keil\ARM\CMSIS\Include\core_cm4.h
 .\obj\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
-.\obj\main.o: .\Libraries\CMSIS\Include\core_cmInstr.h
-.\obj\main.o: .\Libraries\CMSIS\Include\core_cmFunc.h
-.\obj\main.o: .\Libraries\CMSIS\Include\core_cm4_simd.h
+.\obj\main.o: C:\Keil\ARM\CMSIS\Include\core_cmInstr.h
+.\obj\main.o: C:\Keil\ARM\CMSIS\Include\core_cmFunc.h
+.\obj\main.o: C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h
 .\obj\main.o: system_stm32f4xx.h
 .\obj\main.o: stm32f4xx_conf.h
 .\obj\main.o: .\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
@@ -38,4 +38,5 @@
 .\obj\main.o: .\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 .\obj\main.o: .\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_ltdc.h
 .\obj\main.o: .\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
-.\obj\main.o: spi_DAC_ADC.h
+.\obj\main.o: spi_AD7980_ADC.h
+.\obj\main.o: spi_MAX5541_DAC.h
