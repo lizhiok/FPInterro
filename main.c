@@ -10,10 +10,11 @@ static __IO uint32_t TimingDelay;
 
 /* Private function prototypes -----------------------------------------------*/
 void Delay(__IO uint32_t nTime);
+uint16_t dac_data,adc_data[3];
 
 int main()
 {
-	uint16_t dac_data;
+
 	RCC_DeInit();
 	RCC_clock_set();
 	LED_set();
@@ -31,9 +32,9 @@ int main()
 	  Delay(1);
 	for(;;)
 	{
-//		dac_data+=dac_step;
+		dac_data+=dac_step;
 		sMAX5541_DAC_CS_LOW();
-		SPI_I2S_SendData(SPI2,65535/2);
+		SPI_I2S_SendData(SPI2,65535/4);
 		sMAX5541_DAC_CS_HIGH();
 //		Delay(10);
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
@@ -45,11 +46,30 @@ int main()
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 
+//	sAD7980_ADC_CS_LOW();
+//	SPI_I2S_SendData(SPI5,65535);
+//	adc_data=SPI_I2S_ReceiveData(SPI5);
+//	__asm__{NOP};
+//	sAD7980_ADC_CS_HIGH();
 	sAD7980_ADC_CS_LOW();
-	SPI_I2S_SendData(SPI5,0);
-	__asm__{NOP};
+	__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};
 	sAD7980_ADC_CS_HIGH();
-
+	while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
+	{
+		uint16_t data_temp[4];
+		uint8_t i;
+		for(i=0;i<4;i++)
+		{
+			SPI_I2S_SendData(SPI5,65535);
+			data_temp[i]=SPI_I2S_ReceiveData(SPI5);
+		}
+		sAD7980_ADC_CS_LOW();
+		////deal data
+		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
+		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
+		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
+		__asm__{NOP};
+	}
 //	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
 //	__asm__{NOP};
 //	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);

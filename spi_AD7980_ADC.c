@@ -500,6 +500,14 @@ void sAD7980_ADC_LowLevel_Init(void)
   RCC_AHB1PeriphClockCmd(sAD7980_ADC_SPI_SCK_GPIO_CLK | sAD7980_ADC_SPI_MISO_GPIO_CLK |
                          sAD7980_ADC_SPI_MOSI_GPIO_CLK | sAD7980_ADC_CS_GPIO_CLK, ENABLE);
   
+//  IRQ PB9
+  RCC_AHB1PeriphClockCmd(sAD7980_IRQ_GPIO_CLK,ENABLE);
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Pin = sAD7980_IRQ_PIN;
+  GPIO_Init(sAD7980_IRQ_GPIO_PORT, &GPIO_InitStructure);
   /*!< SPI pins configuration *************************************************/
 
   /*!< Connect SPI pins to AF5 */  
@@ -521,9 +529,9 @@ void sAD7980_ADC_LowLevel_Init(void)
   GPIO_Init(sAD7980_ADC_SPI_MOSI_GPIO_PORT, &GPIO_InitStructure);
 
   /*!< SPI MISO pin configuration */
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 //  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+//  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
   GPIO_InitStructure.GPIO_Pin =  sAD7980_ADC_SPI_MISO_PIN;
   GPIO_Init(sAD7980_ADC_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
 

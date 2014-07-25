@@ -85,6 +85,10 @@
  #define sAD7980_ADC_CS_GPIO_PORT                  GPIOF
  #define sAD7980_ADC_CS_GPIO_CLK                   RCC_AHB1Periph_GPIOF
 
+#define sAD7980_IRQ_PIN								GPIO_Pin_9
+#define sAD7980_IRQ_GPIO_PORT						GPIOB
+#define sAD7980_IRQ_GPIO_CLK						RCC_AHB1Periph_GPIOB
+
 /* Exported macro ------------------------------------------------------------*/
 /* Select sAD7980_ADC: Chip Select pin low */
 #define sAD7980_ADC_CS_LOW()       GPIO_ResetBits(sAD7980_ADC_CS_GPIO_PORT, sAD7980_ADC_CS_PIN)

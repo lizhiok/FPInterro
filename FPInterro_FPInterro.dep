@@ -1,5 +1,5 @@
 Dependencies for Project 'FPInterro', Target 'FPInterro': (DO NOT MODIFY !)
-F (.\main.c)(0x53D1AEC2)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I.\Libraries\STM32F4xx_StdPeriph_Driver\src -I.\Libraries\STM32F4xx_StdPeriph_Driver\inc -I..\code-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324x9I_EVAL -DSTM32F429_439xx-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+F (.\main.c)(0x53D22BF1)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I.\Libraries\STM32F4xx_StdPeriph_Driver\src -I.\Libraries\STM32F4xx_StdPeriph_Driver\inc -I..\code-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324x9I_EVAL -DSTM32F429_439xx-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
 I (main.h)(0x53D06B5F)
 I (stm32f4xx.h)(0x52B7E73F)
 I (C:\Keil\ARM\CMSIS\Include\core_cm4.h)(0x532BF7C2)
@@ -39,7 +39,7 @@ I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h)(0x527D5139)
 I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x527D5139)
 I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_ltdc.h)(0x527D5139)
 I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x527D513A)
-I (spi_AD7980_ADC.h)(0x53D1AC72)
+I (spi_AD7980_ADC.h)(0x53D22418)
 I (spi_MAX5541_DAC.h)(0x53D0AB4E)
 F (.\stm32f4xx_it.c)(0x52839D94)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I.\Libraries\STM32F4xx_StdPeriph_Driver\src -I.\Libraries\STM32F4xx_StdPeriph_Driver\inc -I..\code-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324x9I_EVAL -DSTM32F429_439xx-o .\obj\stm32f4xx_it.o --omf_browse .\obj\stm32f4xx_it.crf --depend .\obj\stm32f4xx_it.d)
 I (stm32f4xx_it.h)(0x52839D94)
@@ -82,8 +82,8 @@ I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h)(0x527D5139)
 I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_ltdc.h)(0x527D5139)
 I (.\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h)(0x527D513A)
 I (main.h)(0x53D06B5F)
-F (.\spi_AD7980_ADC.c)(0x53D1B856)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I.\Libraries\STM32F4xx_StdPeriph_Driver\src -I.\Libraries\STM32F4xx_StdPeriph_Driver\inc -I..\code-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324x9I_EVAL -DSTM32F429_439xx-o .\obj\spi_ad7980_adc.o --omf_browse .\obj\spi_ad7980_adc.crf --depend .\obj\spi_ad7980_adc.d)
-I (spi_AD7980_ADC.h)(0x53D1AC72)
+F (.\spi_AD7980_ADC.c)(0x53D2245D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I.\Libraries\STM32F4xx_StdPeriph_Driver\src -I.\Libraries\STM32F4xx_StdPeriph_Driver\inc -I..\code-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324x9I_EVAL -DSTM32F429_439xx-o .\obj\spi_ad7980_adc.o --omf_browse .\obj\spi_ad7980_adc.crf --depend .\obj\spi_ad7980_adc.d)
+I (spi_AD7980_ADC.h)(0x53D22418)
 I (stm32f4xx.h)(0x52B7E73F)
 I (C:\Keil\ARM\CMSIS\Include\core_cm4.h)(0x532BF7C2)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7C554)
