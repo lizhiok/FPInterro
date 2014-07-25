@@ -9,10 +9,14 @@ Project File Date:  07/24/2014
 <h2>Output:</h2>
 Build target 'FPInterro'
 compiling main.c...
+main.c(16): warning:  #550-D: variable "dac_data" was set but never used
+        uint16_t dac_data;
+main.c: 1 warning, 0 errors
+compiling spi_AD7980_ADC.c...
 linking...
-Program Size: Code=7168 RO-data=460 RW-data=40 ZI-data=1632  
+Program Size: Code=7132 RO-data=460 RW-data=40 ZI-data=1632  
 FromELF: creating hex file...
-".\obj\FPInterro.axf" - 0 Error(s), 0 Warning(s).
+".\obj\FPInterro.axf" - 0 Error(s), 1 Warning(s).
 Load "F:\\work\\FPInterro\\code\\obj\\FPInterro.axf" 
 Set JLink Project File to "F:\work\FPInterro\code\JLinkSettings.ini"
 * JLink Info: Device "STM32F429IG" selected (1024 KB flash, 192 KB RAM).
@@ -36,7 +40,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F429IG
-VTarget = 3.215V
+VTarget = 3.202V
 State of Pins: 
 TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -47,56 +51,6 @@ JTAG speed: 4000 kHz
 Erase Done.
 Programming Done.
 Verify OK.
-Programming Done.
-Verify OK.
-edefinition of macro "sAD7980_ADC_SPI_MISO_GPIO_PORT" (declared at line 73)
-   #define sAD7980_ADC_SPI_MISO_GPIO_PORT            GPIOF
-spi_AD7980_ADC.h(103): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MISO_AF" (declared at line 76)
-   #define sAD7980_ADC_SPI_MISO_AF                   GPIO_AF_SPI5
-spi_AD7980_ADC.h(105): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_PIN" (declared at line 78)
-   #define sAD7980_ADC_SPI_MOSI_PIN                  GPIO_Pin_9
-spi_AD7980_ADC.h(106): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_GPIO_PORT" (declared at line 79)
-   #define sAD7980_ADC_SPI_MOSI_GPIO_PORT            GPIOF
-spi_AD7980_ADC.h(109): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_AF" (declared at line 82)
-   #define sAD7980_ADC_SPI_MOSI_AF                   GPIO_AF_SPI5
-spi_AD7980_ADC.h(111): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_CS_PIN" (declared at line 84)
-   #define sAD7980_ADC_CS_PIN                        GPIO_Pin_6
-spi_AD7980_ADC.h(112): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_CS_GPIO_PORT" (declared at line 85)
-   #define sAD7980_ADC_CS_GPIO_PORT                  GPIOF
-main.c(20): warning:  #223-D: function "sDAC_ADC_Init" declared implicitly
-        sDAC_ADC_Init();
-main.c: 14 warnings, 0 errors
-compiling spi_AD7980_ADC.c...
-spi_AD7980_ADC.h(89): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI" (declared at line 62)
-   #define sAD7980_ADC_SPI                           SPI5
-spi_AD7980_ADC.h(90): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_CLK" (declared at line 63)
-   #define sAD7980_ADC_SPI_CLK                       RCC_APB1Periph_SPI5
-spi_AD7980_ADC.h(93): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_SCK_PIN" (declared at line 66)
-   #define sAD7980_ADC_SPI_SCK_PIN                   GPIO_Pin_7
-spi_AD7980_ADC.h(94): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_SCK_GPIO_PORT" (declared at line 67)
-   #define sAD7980_ADC_SPI_SCK_GPIO_PORT             GPIOF
-spi_AD7980_ADC.h(97): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_SCK_AF" (declared at line 70)
-   #define sAD7980_ADC_SPI_SCK_AF                    GPIO_AF_SPI5
-spi_AD7980_ADC.h(99): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MISO_PIN" (declared at line 72)
-   #define sAD7980_ADC_SPI_MISO_PIN                  GPIO_Pin_8
-spi_AD7980_ADC.h(100): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MISO_GPIO_PORT" (declared at line 73)
-   #define sAD7980_ADC_SPI_MISO_GPIO_PORT            GPIOF
-spi_AD7980_ADC.h(103): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MISO_AF" (declared at line 76)
-   #define sAD7980_ADC_SPI_MISO_AF                   GPIO_AF_SPI5
-spi_AD7980_ADC.h(105): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_PIN" (declared at line 78)
-   #define sAD7980_ADC_SPI_MOSI_PIN                  GPIO_Pin_9
-spi_AD7980_ADC.h(106): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_GPIO_PORT" (declared at line 79)
-   #define sAD7980_ADC_SPI_MOSI_GPIO_PORT            GPIOF
-spi_AD7980_ADC.h(109): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_SPI_MOSI_AF" (declared at line 82)
-   #define sAD7980_ADC_SPI_MOSI_AF                   GPIO_AF_SPI5
-spi_AD7980_ADC.h(111): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_CS_PIN" (declared at line 84)
-   #define sAD7980_ADC_CS_PIN                        GPIO_Pin_6
-spi_AD7980_ADC.h(112): warning:  #47-D: incompatible redefinition of macro "sAD7980_ADC_CS_GPIO_PORT" (declared at line 85)
-   #define sAD7980_ADC_CS_GPIO_PORT                  GPIOF
-spi_AD7980_ADC.c(497): error:  #20: identifier "RCC_APB1Periph_SPI5" is undefined
-    sAD7980_ADC_SPI_CLK_INIT(sAD7980_ADC_SPI_CLK, ENABLE);
-spi_AD7980_ADC.c(552): error:  #20: identifier "RCC_APB1Periph_SPI5" is undefined
-    sAD7980_ADC_SPI_CLK_INIT(sAD7980_ADC_SPI_CLK, DISABLE);
-spi_AD7980_ADC.c: 13 warnings, 2 errors
-".\obj\FPInterro.axf" - 2 Error(s), 27 Warning(s).
-Target not created
+</pre>
+</body>
+</html>

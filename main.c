@@ -31,7 +31,7 @@ int main()
 	  Delay(1);
 	for(;;)
 	{
-		dac_data+=dac_step;
+//		dac_data+=dac_step;
 		sMAX5541_DAC_CS_LOW();
 		SPI_I2S_SendData(SPI2,65535/2);
 		sMAX5541_DAC_CS_HIGH();
@@ -45,14 +45,14 @@ int main()
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 
-	sAD7980_ADC_CS_LOW();
-	SPI_I2S_SendData(SPI5,0);
+//	sAD7980_ADC_CS_LOW();
+	SPI_I2S_SendData(SPI5,65535);
 	__asm__{NOP};
-	sAD7980_ADC_CS_HIGH();
+//	sAD7980_ADC_CS_HIGH();
 
-	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
+//	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
 	__asm__{NOP};
-	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
+//	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
 	__asm__{NOP};
 //	GPIO_SetBits(GPIOD,GPIO_Pin_13);
 //	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};

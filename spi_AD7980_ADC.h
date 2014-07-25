@@ -61,7 +61,7 @@
  /* AD7980 ADC SPI Interface pins  */
  #define sAD7980_ADC_SPI                           SPI5
  #define sAD7980_ADC_SPI_CLK                       RCC_APB2Periph_SPI5
- #define sAD7980_ADC_SPI_CLK_INIT                  RCC_APB1PeriphClockCmd
+ #define sAD7980_ADC_SPI_CLK_INIT                  RCC_APB2PeriphClockCmd
 
  #define sAD7980_ADC_SPI_SCK_PIN                   GPIO_Pin_7
  #define sAD7980_ADC_SPI_SCK_GPIO_PORT             GPIOF
