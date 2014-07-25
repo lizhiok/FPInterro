@@ -45,15 +45,15 @@ int main()
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 
-//	sAD7980_ADC_CS_LOW();
-	SPI_I2S_SendData(SPI5,65535);
+	sAD7980_ADC_CS_LOW();
+	SPI_I2S_SendData(SPI5,0);
 	__asm__{NOP};
-//	sAD7980_ADC_CS_HIGH();
+	sAD7980_ADC_CS_HIGH();
 
 //	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
-	__asm__{NOP};
+//	__asm__{NOP};
 //	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
-	__asm__{NOP};
+//	__asm__{NOP};
 //	GPIO_SetBits(GPIOD,GPIO_Pin_13);
 //	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
 //	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
