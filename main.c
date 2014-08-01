@@ -2,6 +2,7 @@
 #include "stm32f4xx.h"
 #include "spi_AD7980_ADC.h"
 #include "spi_MAX5541_DAC.h"
+#include "function.h"
 
 void RCC_clock_set(void);
 void LED_set(void);
@@ -21,55 +22,68 @@ int main()
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
 
-#define	dac_step 1
+#define	dac_step 6000
 	dac_data=0;
 
-	  if (SysTick_Config(500))
-	  {
-	    /* Capture error */
-	    while (1);
-	  }
-	  Delay(1);
+//	  if (SysTick_Config(500))
+//	  {
+//	    /* Capture error */
+//	    while (1);
+//	  }
+//	  Delay(1);
 	for(;;)
 	{
 		dac_data+=dac_step;
-		sMAX5541_DAC_CS_LOW();
-		SPI_I2S_SendData(SPI2,65535/4);
-		sMAX5541_DAC_CS_HIGH();
+//		if(dac_data<26214)
+//		{
+//			__asm{NOP}
+//			dac_data=26214;
+//			__asm{NOP}
+//		}
+		for(;;)
+		{
+			GPIO_ToggleBits(GPIOD,GPIO_Pin_13);
+			_delay_ms(1);
+		}
+
 //		Delay(10);
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
+
+	_delay_us(100);
+	sMAX5541_DAC_CS_LOW();
+
+	SPI_I2S_SendData(SPI2,0xaaaa);
+
+	sMAX5541_DAC_CS_HIGH();
 
 //	sAD7980_ADC_CS_LOW();
 //	SPI_I2S_SendData(SPI5,65535);
 //	adc_data=SPI_I2S_ReceiveData(SPI5);
 //	__asm__{NOP};
 //	sAD7980_ADC_CS_HIGH();
-	sAD7980_ADC_CS_LOW();
-	__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};
-	sAD7980_ADC_CS_HIGH();
-	while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
-	{
-		uint16_t data_temp[4];
-		uint8_t i;
-		for(i=0;i<4;i++)
-		{
-			SPI_I2S_SendData(SPI5,65535);
-			data_temp[i]=SPI_I2S_ReceiveData(SPI5);
-		}
-		sAD7980_ADC_CS_LOW();
-		////deal data
-		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
-		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
-		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
-		__asm__{NOP};
-	}
+//	sAD7980_ADC_CS_LOW();
+
+
+
+//	__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};__asm__{NOP};
+//	sAD7980_ADC_CS_HIGH();
+//	while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
+//	{
+//		uint16_t data_temp[4];
+//		uint8_t i;
+//		for(i=0;i<4;i++)
+//		{
+//			SPI_I2S_SendData(SPI5,65535);
+//			data_temp[i]=SPI_I2S_ReceiveData(SPI5);
+//		}
+//		sAD7980_ADC_CS_LOW();
+//		////deal data
+//		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
+//		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
+//		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
+//		__asm__{NOP};
+//	}
+
+
 //	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
 //	__asm__{NOP};
 //	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);

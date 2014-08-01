@@ -40,3 +40,4 @@
 .\obj\main.o: .\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 .\obj\main.o: spi_AD7980_ADC.h
 .\obj\main.o: spi_MAX5541_DAC.h
+.\obj\main.o: function.h
