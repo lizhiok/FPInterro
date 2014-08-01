@@ -12,7 +12,7 @@ static __IO uint32_t TimingDelay;
 /* Private function prototypes -----------------------------------------------*/
 void Delay(__IO uint32_t nTime);
 uint16_t dac_data,adc_data[3];
-
+int8_t dac_step=1;
 int main()
 {
 
@@ -22,7 +22,7 @@ int main()
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
 
-#define	dac_step 6000
+//#define	dac_step 1
 	dac_data=0;
 
 //	  if (SysTick_Config(500))
@@ -33,28 +33,24 @@ int main()
 //	  Delay(1);
 	for(;;)
 	{
-		dac_data+=dac_step;
-//		if(dac_data<26214)
-//		{
-//			__asm{NOP}
-//			dac_data=26214;
-//			__asm{NOP}
-//		}
-		for(;;)
+
+		if(dac_data<=26214)
 		{
-			GPIO_ToggleBits(GPIOD,GPIO_Pin_13);
-			_delay_ms(1);
+			dac_step=1;
+		}else if(dac_data>=65535)
+		{
+			dac_step=-1;
 		}
 
+		dac_data+=dac_step;
 //		Delay(10);
 
-	_delay_us(100);
+	_delay_us(3);
 	sMAX5541_DAC_CS_LOW();
-
-	SPI_I2S_SendData(SPI2,0xaaaa);
-
+	_delay_us(3);
+	SPI_I2S_SendData(SPI2,dac_data);
+	_delay_us(3);
 	sMAX5541_DAC_CS_HIGH();
-
 //	sAD7980_ADC_CS_LOW();
 //	SPI_I2S_SendData(SPI5,65535);
 //	adc_data=SPI_I2S_ReceiveData(SPI5);

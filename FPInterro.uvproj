@@ -425,6 +425,11 @@
               <FileType>1</FileType>
               <FilePath>.\spi_MAX5541_DAC.c</FilePath>
             </File>
+            <File>
+              <FileName>function.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\function.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

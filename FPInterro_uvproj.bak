@@ -411,14 +411,19 @@
               <FilePath>.\main.c</FilePath>
             </File>
             <File>
-              <FileName>spi_DAC_ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\spi_DAC_ADC.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_AD7980_ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\spi_AD7980_ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_MAX5541_DAC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\spi_MAX5541_DAC.c</FilePath>
             </File>
           </Files>
         </Group>
