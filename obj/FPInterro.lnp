@@ -4,6 +4,7 @@
 ".\obj\spi_ad7980_adc.o"
 ".\obj\spi_max5541_dac.o"
 ".\obj\function.o"
+".\obj\uart_com1.o"
 ".\obj\system_stm32f4xx.o"
 ".\obj\startup_stm32f429_439xx.o"
 ".\obj\misc.o"
@@ -40,7 +41,7 @@
 ".\obj\stm32f4xx_tim.o"
 ".\obj\stm32f4xx_usart.o"
 ".\obj\stm32f4xx_wwdg.o"
---strict --scatter ".\obj\FPInterro.sct"
+--library_type=microlib --strict --scatter ".\obj\FPInterro.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\list\FPInterro.map" -o .\obj\FPInterro.axf
