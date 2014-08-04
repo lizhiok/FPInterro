@@ -4,14 +4,20 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 F:\work\pcb\FPInterro\code\FPInterro.uvproj
-Project File Date:  08/01/2014
+Project File Date:  08/04/2014
 
 <h2>Output:</h2>
 Build target 'FPInterro'
+compiling main.c...
+main.c(62): warning:  #177-D: variable "i" was declared but never referenced
+                        int i;
+main.c(74): warning:  #177-D: variable "i" was declared but never referenced
+                        int i;
+main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=8452 RO-data=568 RW-data=68 ZI-data=1028  
+Program Size: Code=8356 RO-data=484 RW-data=56 ZI-data=132096  
 FromELF: creating hex file...
-".\obj\FPInterro.axf" - 0 Error(s), 0 Warning(s).
+".\obj\FPInterro.axf" - 0 Error(s), 2 Warning(s).
 Load "F:\\work\\pcb\\FPInterro\\code\\obj\\FPInterro.axf" 
 Set JLink Project File to "F:\work\pcb\FPInterro\code\JLinkSettings.ini"
 * JLink Info: Device "STM32F429IG" selected (1024 KB flash, 192 KB RAM).
@@ -46,118 +52,56 @@ JTAG speed: 4000 kHz
 Erase Done.
 Programming Done.
 Verify OK.
- undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_AF" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(46): error:  #20: identifier "COM_TX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
-uart_com1.c(52): error:  #20: identifier "COM_RX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
-uart_com1.c(56): error:  #20: identifier "COM_USART" is undefined
-    USART_Init(COM_USART[COM], USART_InitStruct);
-uart_com1.c: 0 warnings, 12 errors
-".\obj\FPInterro.axf" - 12 Error(s), 0 Warning(s).
-Target not created
-(36): error:  #20: identifier "COM_TX_AF" is undefined
-    GPIO_PinAFConfig(COM_TX_PORT[COM], COM_TX_PIN_SOURCE[COM], COM_TX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_PORT" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_PIN_SOURCE" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_AF" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(42): error:  #20: identifier "GPIO_OType_PP" is undefined
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-uart_com1.c(43): error:  #20: identifier "GPIO_PuPd_UP" is undefined
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-uart_com1.c(44): error:  #20: identifier "GPIO_Mode_AF" is undefined
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-uart_com1.c(46): error:  #20: identifier "COM_TX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
-uart_com1.c(47): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-uart_com1.c(48): warning:  #223-D: function "GPIO_Init" declared implicitly
-    GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
-uart_com1.c(52): error:  #20: identifier "COM_RX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
-uart_com1.c(56): warning:  #223-D: function "USART_Init" declared implicitly
-    USART_Init(COM_USART[COM], USART_InitStruct);
-uart_com1.c(56): error:  #20: identifier "COM_USART" is undefined
-    USART_Init(COM_USART[COM], USART_InitStruct);
-uart_com1.c(59): warning:  #223-D: function "USART_Cmd" declared implicitly
-    USART_Cmd(COM_USART[COM], ENABLE);
-uart_com1.c: 6 warnings, 20 errors
-".\obj\FPInterro.axf" - 20 Error(s), 6 Warning(s).
-Target not created
-rt_com1.c(39): error:  #20: identifier "COM_RX_PORT" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_PIN_SOURCE" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(39): error:  #20: identifier "COM_RX_AF" is undefined
-    GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
-uart_com1.c(42): error:  #20: identifier "GPIO_OType_PP" is undefined
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-uart_com1.c(43): error:  #20: identifier "GPIO_PuPd_UP" is undefined
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-uart_com1.c(44): error:  #20: identifier "GPIO_Mode_AF" is undefined
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-uart_com1.c(46): error:  #20: identifier "COM_TX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
-uart_com1.c(47): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-uart_com1.c(48): warning:  #223-D: function "GPIO_Init" declared implicitly
-    GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
-uart_com1.c(52): error:  #20: identifier "COM_RX_PIN" is undefined
-    GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
-uart_com1.c(56): warning:  #223-D: function "USART_Init" declared implicitly
-    USART_Init(COM_USART[COM], USART_InitStruct);
-uart_com1.c(56): error:  #20: identifier "COM_USART" is undefined
-    USART_Init(COM_USART[COM], USART_InitStruct);
-uart_com1.c(59): warning:  #223-D: function "USART_Cmd" declared implicitly
-    USART_Cmd(COM_USART[COM], ENABLE);
-uart_com1.c: 6 warnings, 20 errors
-compiling system_stm32f4xx.c...
-assembling startup_stm32f429_439xx.s...
-compiling misc.c...
-compiling stm32f4xx_adc.c...
-compiling stm32f4xx_can.c...
-compiling stm32f4xx_crc.c...
-compiling stm32f4xx_cryp.c...
-compiling stm32f4xx_cryp_aes.c...
-compiling stm32f4xx_cryp_des.c...
-compiling stm32f4xx_cryp_tdes.c...
-compiling stm32f4xx_dac.c...
-compiling stm32f4xx_dbgmcu.c...
-compiling stm32f4xx_dcmi.c...
-compiling stm32f4xx_dma.c...
-compiling stm32f4xx_dma2d.c...
-compiling stm32f4xx_exti.c...
-compiling stm32f4xx_flash.c...
-compiling stm32f4xx_fmc.c...
-compiling stm32f4xx_gpio.c...
-compiling stm32f4xx_hash.c...
-compiling stm32f4xx_hash_md5.c...
-compiling stm32f4xx_hash_sha1.c...
-compiling stm32f4xx_i2c.c...
-compiling stm32f4xx_iwdg.c...
-compiling stm32f4xx_ltdc.c...
-compiling stm32f4xx_pwr.c...
-compiling stm32f4xx_rcc.c...
-compiling stm32f4xx_rng.c...
-compiling stm32f4xx_rtc.c...
-compiling stm32f4xx_sai.c...
-compiling stm32f4xx_sdio.c...
-compiling stm32f4xx_spi.c...
-compiling stm32f4xx_syscfg.c...
-compiling stm32f4xx_tim.c...
-compiling stm32f4xx_usart.c...
-compiling stm32f4xx_wwdg.c...
-".\obj\FPInterro.axf" - 31 Error(s), 11 Warning(s).
-Target not created
-piling stm32f4xx_syscfg.c...
-compiling stm32f4xx_tim.c...
-compiling stm32f4xx_usart.c...
-compiling stm32f4xx_wwdg.c...
-".\obj\FPInterro.axf" - 33 Error(s), 11 Warning(s).
+</pre>
+</body>
+</html>
+JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F429IG
+VTarget = 3.202V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+ration has no storage class or type specifier
+        SPI_I2S_SendData(SPI2,dac_data);
+main.c(92): error:  #147: declaration is incompatible with "void SPI_I2S_SendData(SPI_TypeDef *, uint16_t)" (declared at line 516 of ".\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h")
+        SPI_I2S_SendData(SPI2,dac_data);
+main.c(93): error:  #79: expected a type specifier
+        _delay_us(3);
+main.c(93): warning:  #77-D: this declaration has no storage class or type specifier
+        _delay_us(3);
+main.c(94): error:  #79: expected a type specifier
+        sMAX5541_DAC_CS_HIGH();
+main.c(94): error:  #79: expected a type specifier
+        sMAX5541_DAC_CS_HIGH();
+main.c(94): warning:  #77-D: this declaration has no storage class or type specifier
+        sMAX5541_DAC_CS_HIGH();
+main.c(94): error:  #147: declaration is incompatible with "void GPIO_SetBits(GPIO_TypeDef *, uint16_t)" (declared at line 466 of ".\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h")
+        sMAX5541_DAC_CS_HIGH();
+main.c(102): error:  #79: expected a type specifier
+        sAD7980_ADC_CS_HIGH();
+main.c(102): error:  #79: expected a type specifier
+        sAD7980_ADC_CS_HIGH();
+main.c(102): warning:  #77-D: this declaration has no storage class or type specifier
+        sAD7980_ADC_CS_HIGH();
+main.c(103): error:  #169: expected a declaration
+        while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
+main.c(296): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+main.c(17): error:  #114: function "USART_Config" was referenced but not defined
+  static void USART_Config(void);
+main.c: 10 warnings, 21 errors
+".\obj\FPInterro.axf" - 21 Error(s), 10 Warning(s).
 Target not created

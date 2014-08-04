@@ -221,7 +221,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -429,6 +429,11 @@
               <FileName>function.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\function.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_com1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart_com1.c</FilePath>
             </File>
           </Files>
         </Group>

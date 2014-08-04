@@ -9,7 +9,7 @@
 
 
 void Delay(__IO uint32_t nTime);
-uint16_t dac_data,adc_data[3];
+uint16_t dac_data,adc_data[65535];
 int8_t dac_step=1;
 
 void RCC_clock_set(void);
@@ -42,7 +42,7 @@ int main()
 	  USART_Config();
 
 //#define	dac_step 1
-	dac_data=0;
+	dac_data=1;
 
 //	  if (SysTick_Config(500))
 //	  {
@@ -52,16 +52,35 @@ int main()
 //	  Delay(1);
 
 	  /* Output a message on Hyperterminal using printf function */
-	  printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
+//	  printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
 	for(;;)
 	{
-
-		if(dac_data<=26214)
+#define dac_fazhi 0
+		//26214=12V
+		if(dac_data<=dac_fazhi)
 		{
+			int i;
 			dac_step=1;
+			dac_data=dac_fazhi;
+//			if(adc_data[100]!=0&&adc_data[200]!=0)
+//			{
+//			for(i=dac_fazhi;i<65534;i++)
+//			{
+//				printf("%d,%d\n",i,adc_data[i]);
+//			}
+//		}
 		}else if(dac_data>=65535)
 		{
+			int i;
 			dac_step=-1;
+			dac_data=65535;
+//			if(adc_data[100]!=0&&adc_data[200]!=0)
+//			{
+//			for(i=dac_fazhi;i<65534;i++)
+//			{
+//				printf("%d,%d\n",i,adc_data[i]);
+//			}
+//		}
 		}
 
 		dac_data+=dac_step;
@@ -79,24 +98,25 @@ int main()
 //	__asm__{NOP};
 //	sAD7980_ADC_CS_HIGH();
 //	sAD7980_ADC_CS_LOW();
-
+#if 1
 	sAD7980_ADC_CS_HIGH();
 	while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
 	{
-		uint16_t data_temp[4];
+		uint16_t data_temp[3];
 		uint8_t i;
-		for(i=0;i<4;i++)
+		for(i=0;i<3;i++)
 		{
 			SPI_I2S_SendData(SPI5,65535);
 			data_temp[i]=SPI_I2S_ReceiveData(SPI5);
 		}
+		adc_data[dac_data]=data_temp[0];
 		sAD7980_ADC_CS_LOW();
-		////deal data
-		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
-		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
-		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
-		__asm__{NOP};
+//		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
+//		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
+//		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
+//		__asm__{NOP};
 	}
+#endif
 
 
 //	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
