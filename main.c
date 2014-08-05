@@ -8,7 +8,8 @@
 #include "uart_com1.h"
 
 #define dac_max		39321
-//39321
+//39321  
+//test git
 #define dac_min		0
 
 void Delay(__IO uint32_t nTime);
