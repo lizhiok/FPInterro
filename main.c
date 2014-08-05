@@ -7,9 +7,12 @@
 #include "function.h"
 #include "uart_com1.h"
 
+#define dac_max		39321
+//39321
+#define dac_min		0
 
 void Delay(__IO uint32_t nTime);
-uint16_t dac_data,adc_data[65535];
+uint16_t dac_data,adc_data1[dac_max],adc_data2[dac_max];
 int8_t dac_step=1;
 
 void RCC_clock_set(void);
@@ -55,33 +58,37 @@ int main()
 //	  printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
 	for(;;)
 	{
-#define dac_fazhi 0
+
 		//26214=12V
-		if(dac_data<=dac_fazhi)
-		{
+#if 1
+		if (dac_data <= dac_min) {
 			int i;
-			dac_step=1;
-			dac_data=dac_fazhi;
-//			if(adc_data[100]!=0&&adc_data[200]!=0)
-//			{
-//			for(i=dac_fazhi;i<65534;i++)
-//			{
-//				printf("%d,%d\n",i,adc_data[i]);
-//			}
-//		}
-		}else if(dac_data>=65535)
-		{
+			dac_step = 1;
+			dac_data = dac_min;
+
+			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
+			{
+				for (i = dac_min; i < dac_max; i++) {
+					//printf("%d,%d\n", i, adc_data1[i]);
+					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
+				}
+			}
+		} else if (dac_data >= dac_max) {
 			int i;
-			dac_step=-1;
-			dac_data=65535;
-//			if(adc_data[100]!=0&&adc_data[200]!=0)
-//			{
-//			for(i=dac_fazhi;i<65534;i++)
-//			{
-//				printf("%d,%d\n",i,adc_data[i]);
-//			}
-//		}
+			dac_step = -1;
+			dac_data = dac_max;
+
+			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
+			{
+				for (i = dac_min; i < dac_max; i++) {
+					//printf("%d,%d\n", i, adc_data1[i]);
+					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
+				}
+			}
 		}
+#else
+
+#endif
 
 		dac_data+=dac_step;
 //		Delay(10);
@@ -100,73 +107,27 @@ int main()
 //	sAD7980_ADC_CS_LOW();
 #if 1
 	sAD7980_ADC_CS_HIGH();
-	while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
-	{
-		uint16_t data_temp[3];
-		uint8_t i;
-		for(i=0;i<3;i++)
-		{
-			SPI_I2S_SendData(SPI5,65535);
-			data_temp[i]=SPI_I2S_ReceiveData(SPI5);
-		}
-		adc_data[dac_data]=data_temp[0];
-		sAD7980_ADC_CS_LOW();
+		while (GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT, sAD7980_IRQ_PIN)!= 0) {
+			uint16_t data_temp[3];
+			uint8_t i;
+			for (i = 0; i < 3; i++) {
+				SPI_I2S_SendData(SPI5, 0);
+				_delay_us(10);
+				data_temp[i] = SPI_I2S_ReceiveData(SPI5);
+			}
+			adc_data1[dac_data] = data_temp[0];
+			adc_data2[dac_data] = data_temp[2];
+			sAD7980_ADC_CS_LOW();
+//			printf("%d,%d\n", 0, adc_data[dac_data]);  //test adc
 //		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
 //		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
 //		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
-//		__asm__{NOP};
-	}
+		}
 #endif
-
-
-//	GPIO_SetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
-//	__asm__{NOP};
-//	GPIO_ResetBits(sAD7980_ADC_SPI_SCK_GPIO_PORT, sAD7980_ADC_SPI_SCK_PIN);
-//	__asm__{NOP};
-//	GPIO_SetBits(GPIOD,GPIO_Pin_13);
-//	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-//	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-//	__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};__asm{NOP};
-//	GPIO_ResetBits(GPIOD,GPIO_Pin_13);
-
 	}
 }
 
-//void spi_gpio_set(void)
-//{
-//	GPIO_InitTypeDef GPIO_InitStructure;
-//
-//	RCC_APB1PeriphClockCmd();
-//
-//	RCC_AHB1PeriphClockCmd(sFLASH_SPI_SCK_GPIO_CLK | sFLASH_SPI_MISO_GPIO_CLK |
-//	                         sFLASH_SPI_MOSI_GPIO_CLK | sFLASH_CS_GPIO_CLK, ENABLE);
-//}
-//void spi_dac(void)
-//{
-//	  SPI_InitTypeDef  SPI_InitStructure;
-//
-//	  //sFLASH_LowLevel_Init();
-//	  spi_gpio_set();
-//
-//	  /*!< Deselect the FLASH: Chip Select high */
-//	  //sFLASH_CS_HIGH();
-//
-//	  /*!< SPI configuration */
-//	  SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-//	  SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
-//	  SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
-//	  SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
-//	  SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
-//	  SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-//	  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
-//
-//	  SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
-//	  SPI_InitStructure.SPI_CRCPolynomial = 7;
-//	  SPI_Init(SPI2, &SPI_InitStructure);
-//
-//	  /*!< Enable the sFLASH_SPI  */
-//	  SPI_Cmd(SPI2, ENABLE);
-//}
+
 void RCC_clock_set(void)
 {
   GPIO_InitTypeDef  GPIO_InitStructure;

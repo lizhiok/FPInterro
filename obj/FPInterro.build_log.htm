@@ -8,16 +8,10 @@ Project File Date:  08/04/2014
 
 <h2>Output:</h2>
 Build target 'FPInterro'
-compiling main.c...
-main.c(62): warning:  #177-D: variable "i" was declared but never referenced
-                        int i;
-main.c(74): warning:  #177-D: variable "i" was declared but never referenced
-                        int i;
-main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=8356 RO-data=484 RW-data=56 ZI-data=132096  
+Program Size: Code=8916 RO-data=484 RW-data=60 ZI-data=158308  
 FromELF: creating hex file...
-".\obj\FPInterro.axf" - 0 Error(s), 2 Warning(s).
+".\obj\FPInterro.axf" - 0 Error(s), 0 Warning(s).
 Load "F:\\work\\pcb\\FPInterro\\code\\obj\\FPInterro.axf" 
 Set JLink Project File to "F:\work\pcb\FPInterro\code\JLinkSettings.ini"
 * JLink Info: Device "STM32F429IG" selected (1024 KB flash, 192 KB RAM).
@@ -55,10 +49,7 @@ Verify OK.
 </pre>
 </body>
 </html>
-JLink Info: Found Cortex-M4 r0p1, Little endian.
-* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
+ted.
 ROMTableAddr = 0xE00FF003
  
 Target info:
@@ -75,33 +66,3 @@ JTAG speed: 4000 kHz
 Erase Done.
 Programming Done.
 Verify OK.
-ration has no storage class or type specifier
-        SPI_I2S_SendData(SPI2,dac_data);
-main.c(92): error:  #147: declaration is incompatible with "void SPI_I2S_SendData(SPI_TypeDef *, uint16_t)" (declared at line 516 of ".\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h")
-        SPI_I2S_SendData(SPI2,dac_data);
-main.c(93): error:  #79: expected a type specifier
-        _delay_us(3);
-main.c(93): warning:  #77-D: this declaration has no storage class or type specifier
-        _delay_us(3);
-main.c(94): error:  #79: expected a type specifier
-        sMAX5541_DAC_CS_HIGH();
-main.c(94): error:  #79: expected a type specifier
-        sMAX5541_DAC_CS_HIGH();
-main.c(94): warning:  #77-D: this declaration has no storage class or type specifier
-        sMAX5541_DAC_CS_HIGH();
-main.c(94): error:  #147: declaration is incompatible with "void GPIO_SetBits(GPIO_TypeDef *, uint16_t)" (declared at line 466 of ".\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h")
-        sMAX5541_DAC_CS_HIGH();
-main.c(102): error:  #79: expected a type specifier
-        sAD7980_ADC_CS_HIGH();
-main.c(102): error:  #79: expected a type specifier
-        sAD7980_ADC_CS_HIGH();
-main.c(102): warning:  #77-D: this declaration has no storage class or type specifier
-        sAD7980_ADC_CS_HIGH();
-main.c(103): error:  #169: expected a declaration
-        while(GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,sAD7980_IRQ_PIN)!=0)
-main.c(296): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
-main.c(17): error:  #114: function "USART_Config" was referenced but not defined
-  static void USART_Config(void);
-main.c: 10 warnings, 21 errors
-".\obj\FPInterro.axf" - 21 Error(s), 10 Warning(s).
-Target not created
