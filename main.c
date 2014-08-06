@@ -61,7 +61,8 @@ int main()
 	{
 
 		//26214=12V
-#if 1
+#if 0
+		// Èý½Ç²¨
 		if (dac_data <= dac_min) {
 			int i;
 			dac_step = 1;
@@ -88,7 +89,20 @@ int main()
 			}
 		}
 #else
+		// ¾â³Ý²¨
+		if (dac_data >= dac_max) {
+			int i;
+			dac_step = 1;
+			dac_data = dac_min;
 
+			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
+			{
+				for (i = dac_min; i < dac_max; i++) {
+					//printf("%d,%d\n", i, adc_data1[i]);
+					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
+				}
+			}
+		}
 #endif
 
 		dac_data+=dac_step;
