@@ -7,17 +7,19 @@
 #include "function.h"
 #include "uart_com1.h"
 
-#define dac_max		39321
+#define dac_max  49151
+//39321
 //39321  
 //test git
 #define dac_min		0
 
 void Delay(__IO uint32_t nTime);
-uint16_t dac_data,adc_data1[dac_max],adc_data2[dac_max];
+uint16_t dac_data,adc_data1[dac_max];//,adc_data2[dac_max];
 int8_t dac_step=1;
 
 void RCC_clock_set(void);
 void LED_set(void);
+void Trig_set(void);
 static void USART_Config(void);
 
 #ifdef __GNUC__
@@ -39,6 +41,7 @@ int main()
 	RCC_DeInit();
 	RCC_clock_set();
 	LED_set();
+	Trig_set();
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
 
@@ -72,7 +75,7 @@ int main()
 			{
 				for (i = dac_min; i < dac_max; i++) {
 					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
+					printf("%h",adc_data1[i]);
 				}
 			}
 		} else if (dac_data >= dac_max) {
@@ -94,12 +97,20 @@ int main()
 			int i;
 			dac_step = 1;
 			dac_data = dac_min;
-
+			//GPIO_SetBits(GPIOH, GPIO_Pin_3);
+			//_delay_ms(100);
+			//GPIO_ResetBits(GPIOH, GPIO_Pin_3);
 			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
 			{
+//				putchar(-1);
+//				putchar(-1);
 				for (i = dac_min; i < dac_max; i++) {
 					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
+					printf("%d\n",adc_data1[i]);
+//					int8_t* p = (int8_t*)&adc_data1[i];
+//					putchar(p[1]);
+//					putchar(p[0]);
+					//printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
 				}
 			}
 		}
@@ -121,24 +132,35 @@ int main()
 //	sAD7980_ADC_CS_HIGH();
 //	sAD7980_ADC_CS_LOW();
 #if 1
-	sAD7980_ADC_CS_HIGH();
-		while (GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT, sAD7980_IRQ_PIN)!= 0) {
-			uint16_t data_temp[3];
-			uint8_t i;
-			for (i = 0; i < 3; i++) {
-				SPI_I2S_SendData(SPI5, 0);
-				_delay_us(10);
-				data_temp[i] = SPI_I2S_ReceiveData(SPI5);
+		{
+#define adc_times	2
+			uint32_t data_temp[3]={0};
+			int i;
+			for (i = 0; i < adc_times; i++) {
+				sAD7980_ADC_CS_HIGH();
+				while (GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,
+						sAD7980_IRQ_PIN) != 0) {
+					uint8_t i;
+					for (i = 0; i < 3; i++) {
+//						uint16_t temp1;
+						SPI_I2S_SendData(SPI5, 0);
+						_delay_us(20);
+						data_temp[i] += SPI_I2S_ReceiveData(SPI5);
+//						if(data_temp[i]<temp1)
+//							data_temp[i]=temp1;
+					}
+					sAD7980_ADC_CS_LOW();
+				}
 			}
-			adc_data1[dac_data] = data_temp[0];
-			adc_data2[dac_data] = data_temp[2];
-			sAD7980_ADC_CS_LOW();
-//			printf("%d,%d\n", 0, adc_data[dac_data]);  //test adc
-//		adc_data[0]=data_temp[0]<<1|data_temp[1]&0x8000;
-//		adc_data[1]=data_temp[1]<<1|data_temp[2]&0x8000;
-//		adc_data[2]=data_temp[2]<<1|data_temp[3]&0x8000;
+			adc_data1[dac_data] = data_temp[0]/adc_times;
 		}
 #endif
+//		for(;;)
+//		{
+//
+//			GPIO_ToggleBits(GPIOH, GPIO_Pin_3);
+//			_delay_ms(10);
+//		}
 	}
 }
 
@@ -176,6 +198,20 @@ void LED_set(void)
 	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	  GPIO_Init(GPIOD, &GPIO_InitStructure);
+}
+void Trig_set(void)
+{
+	  GPIO_InitTypeDef  GPIO_InitStructure;
+
+	  /* GPIOC,GPIOD and GPIOI Periph clock enable */
+	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOH, ENABLE);
+
+	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	  GPIO_Init(GPIOH, &GPIO_InitStructure);
 }
 
 /**
