@@ -221,7 +221,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -360,9 +360,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER,STM32F429_439xx,USE_STM324x9I_EVAL,</Define>
+              <Define>USE_STDPERIPH_DRIVER,STM32F429_439xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Libraries\STM32F4xx_StdPeriph_Driver\src;.\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\code</IncludePath>
+              <IncludePath>.\Libraries\STM32F4xx_StdPeriph_Driver\src;.\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\code;.\Libraries\STM32F4x7_ETH_Driver\inc;.\inc;.\Libraries\lwip-1.4.1\src\include;.\Libraries\lwip-1.4.1\src\include\lwip;.\Libraries\lwip-1.4.1\src\include\ipv4;.\Libraries\lwip-1.4.1\port\STM32F4x7;.\Libraries\lwip-1.4.1\port\STM32F4x7\Standalone</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -429,6 +429,21 @@
               <FileName>function.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\function.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_com1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart_com1.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4x7_eth_bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\stm32f4x7_eth_bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>netconf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\netconf.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -667,6 +682,16 @@
               <FileName>stm32f4xx_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_wwdg.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ETH_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f4x7_eth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Libraries\STM32F4x7_ETH_Driver\src\stm32f4x7_eth.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -105,9 +105,6 @@ typedef enum
 /** 
   * @brief  Define for STM324x9I_EVAL board  
   */ 
-#if !defined (USE_STM324x9I_EVAL)
- #define USE_STM324x9I_EVAL
-#endif
 
 /** @addtogroup STM324x9I_EVAL_LOW_LEVEL_LED
   * @{

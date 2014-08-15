@@ -1,21 +1,28 @@
+#include "stm32f4x7_eth.h"
+#include "netconf.h"
 #include "main.h"
 #include "stdint.h"
 #include <stdio.h>
-#include "stm32f4xx.h"
+
 #include "spi_AD7980_ADC.h"
 #include "spi_MAX5541_DAC.h"
 #include "function.h"
 #include "uart_com1.h"
 
-#define dac_max  49151
+#include "lwip/tcp.h"
+#include "lwip/sockets.h"
+#include "lwip/tcp_impl.h"
+
+#define dac_max  65535
 //39321
 //39321  
-//test git
 #define dac_min		0
 
-void Delay(__IO uint32_t nTime);
+#define SYSTEMTICK_PERIOD_MS  10
 uint16_t dac_data,adc_data1[dac_max];//,adc_data2[dac_max];
 int8_t dac_step=1;
+volatile uint32_t LocalTime = 0; /* this variable is used to create a time reference incremented by 10ms */
+uint32_t timingdelay;
 
 void RCC_clock_set(void);
 void LED_set(void);
@@ -45,6 +52,11 @@ int main()
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
 
+  /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
+  ETH_BSP_Config();
+
+  /* Initilaize the LwIP stack */
+  LwIP_Init();
 	  /* USART configuration */
 	  USART_Config();
 
@@ -56,10 +68,14 @@ int main()
 //	    /* Capture error */
 //	    while (1);
 //	  }
-//	  Delay(1);
 
 	  /* Output a message on Hyperterminal using printf function */
-//	  printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
+//		while(1)
+//		{
+//			printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
+//			_delay_ms(100);
+//		}
+	  
 	for(;;)
 	{
 
@@ -100,24 +116,34 @@ int main()
 			//GPIO_SetBits(GPIOH, GPIO_Pin_3);
 			//_delay_ms(100);
 			//GPIO_ResetBits(GPIOH, GPIO_Pin_3);
+#if 1
 			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
 			{
 //				putchar(-1);
 //				putchar(-1);
 				for (i = dac_min; i < dac_max; i++) {
 					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%d\n",adc_data1[i]);
+					printf("%d,%d\n\r",i,adc_data1[i]);
 //					int8_t* p = (int8_t*)&adc_data1[i];
 //					putchar(p[1]);
 //					putchar(p[0]);
 					//printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
 				}
 			}
+			while (1) {
+				/* check if any packet received */
+				if (ETH_CheckFrameReceived()) {
+					/* process received ethernet packet */
+					LwIP_Pkt_Handle();
+				}
+				/* handle periodic timers for LwIP */
+				LwIP_Periodic_Handle(LocalTime);
+			}
+#endif
 		}
 #endif
 
 		dac_data+=dac_step;
-//		Delay(10);
 
 	_delay_us(3);
 	sMAX5541_DAC_CS_LOW();
@@ -131,7 +157,7 @@ int main()
 //	__asm__{NOP};
 //	sAD7980_ADC_CS_HIGH();
 //	sAD7980_ADC_CS_LOW();
-#if 1
+#if 0
 		{
 #define adc_times	2
 			uint32_t data_temp[3]={0};
@@ -214,31 +240,31 @@ void Trig_set(void)
 	  GPIO_Init(GPIOH, &GPIO_InitStructure);
 }
 
+
 /**
   * @brief  Inserts a delay time.
-  * @param  nTime: specifies the delay time length, in milliseconds.
+  * @param  nCount: number of 10ms periods to wait for.
   * @retval None
   */
-void Delay(__IO uint32_t nTime)
+void Delay(uint32_t nCount)
 {
-  TimingDelay = nTime;
+  /* Capture the current local time */
+  timingdelay = LocalTime + nCount;
 
-  while(TimingDelay != 0);
+  /* wait until the desired delay finish */
+  while(timingdelay > LocalTime)
+  {
+  }
 }
-
 /**
-  * @brief  Decrements the TimingDelay variable.
+  * @brief  Updates the system local time
   * @param  None
   * @retval None
   */
-void TimingDelay_Decrement(void)
+void Time_Update(void)
 {
-  if (TimingDelay != 0)
-  {
-    TimingDelay--;
-  }
+  LocalTime += SYSTEMTICK_PERIOD_MS;
 }
-
 
 /*************************************************
   * @brief  Configures the USART Peripheral.
@@ -257,7 +283,7 @@ static void USART_Config(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
-  USART_InitStructure.USART_BaudRate = 115200;
+  USART_InitStructure.USART_BaudRate = 921600;//256000;//115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_No;
