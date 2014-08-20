@@ -61,15 +61,10 @@ int main()
 	Trig_set();
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
-//	TIM6_Config();
-	
-  /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
-//  ETH_BSP_Config();
-
-  /* Initilaize the LwIP stack */
-//  LwIP_Init();
-	  /* USART configuration */
-	  USART_Config();
+	TIM6_Config();
+	ETH_BSP_Config();
+	LwIP_Init();
+	USART_Config();
 
 //#define	dac_step 1
 	dac_data=1;
@@ -83,25 +78,17 @@ int main()
 
 	for(;;)
 	{
-		// ¾â³Ý²¨
+		// Sawtooth
 		if (dac_data >= dac_max) {
 			int i;
 			dac_step = 1;
 			dac_data = dac_min;
-			//GPIO_SetBits(GPIOH, GPIO_Pin_3);
-			//_delay_ms(100);
-			//GPIO_ResetBits(GPIOH, GPIO_Pin_3);
 #if 1
 			if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0||adc_data1[dac_max - 1002] != 0)
 			{
-//				putchar(-1);
-//				putchar(-1);
 				for (i = dac_min; i < dac_max; i++) {
 					//printf("%d,%d\n", i, adc_data1[i]);
 					printf("%d,%d\n\r",i,adc_data1[i]);
-//					int8_t* p = (int8_t*)&adc_data1[i];
-//					putchar(p[1]);
-//					putchar(p[0]);
 					//printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
 				}
 			}
@@ -114,12 +101,7 @@ int main()
 	SPI_I2S_SendData(SPI2,dac_data);
 	_delay_us(3);
 	sMAX5541_DAC_CS_HIGH();
-//	sAD7980_ADC_CS_LOW();
-//	SPI_I2S_SendData(SPI5,65535);
-//	adc_data=SPI_I2S_ReceiveData(SPI5);
-//	__asm__{NOP};
-//	sAD7980_ADC_CS_HIGH();
-//	sAD7980_ADC_CS_LOW();
+
 #if 1
 		{
 #define adc_times	1
@@ -227,9 +209,26 @@ void RCC_clock_set(void)
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	RCC_MCO1Config(RCC_MCO1Source_HSE,RCC_MCO1Div_1);
-	//RCC_HSICmd(ENABLE); //enable internal clock 16M
-	RCC_HSEConfig(RCC_HSE_ON);
+  RCC_MCO1Config (RCC_MCO1Source_HSE, RCC_MCO1Div_5);
+  //RCC_HSICmd(ENABLE); //enable internal clock 16M
+//  RCC_HSEConfig (RCC_HSE_ON);
+
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);//set PC9 for MCO2
+  RCC_MCO2Config (RCC_MCO2Source_SYSCLK, RCC_MCO2Div_5);
+
+  RCC_PLLConfig(RCC_PLLSource_HSE,5,144,5,2);
+  RCC_PLLCmd(ENABLE);
+//  RCC_PLLSAIConfig();
+  RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+
+  RCC_HSEConfig (RCC_HSE_ON);
 }
 
 
