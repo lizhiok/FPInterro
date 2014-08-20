@@ -13,6 +13,9 @@
 #include "lwip/sockets.h"
 #include "lwip/tcp_impl.h"
 
+#include "lwip/debug.h"
+#include "lwip/stats.h"
+#include "lwip/tcp.h"
 #define dac_max  65535
 //39321
 //39321  
@@ -26,8 +29,12 @@ uint32_t timingdelay;
 
 void RCC_clock_set(void);
 void LED_set(void);
+void STM_EVAL_PBInit(void);//(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode);
 void Trig_set(void);
 static void USART_Config(void);
+void tcp_echoclient_connect2(void);
+static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err);
+void TIM6_Config(void);
 
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
@@ -39,6 +46,8 @@ static void USART_Config(void);
 
 static __IO uint32_t TimingDelay;
 
+uint8_t tcp_conneced=0;
+struct tcp_pcb *echoclient_pcb2;
 
 
 
@@ -48,15 +57,17 @@ int main()
 	RCC_DeInit();
 	RCC_clock_set();
 	LED_set();
+	STM_EVAL_PBInit();//(2, 1); //init S2 button for interrupt
 	Trig_set();
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
-
+//	TIM6_Config();
+	
   /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
-  ETH_BSP_Config();
+//  ETH_BSP_Config();
 
   /* Initilaize the LwIP stack */
-  LwIP_Init();
+//  LwIP_Init();
 	  /* USART configuration */
 	  USART_Config();
 
@@ -75,39 +86,10 @@ int main()
 //			printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
 //			_delay_ms(100);
 //		}
-	  
+//	printf("uart ok");
+
 	for(;;)
 	{
-
-		//26214=12V
-#if 0
-		// 三角波
-		if (dac_data <= dac_min) {
-			int i;
-			dac_step = 1;
-			dac_data = dac_min;
-
-			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
-			{
-				for (i = dac_min; i < dac_max; i++) {
-					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%h",adc_data1[i]);
-				}
-			}
-		} else if (dac_data >= dac_max) {
-			int i;
-			dac_step = -1;
-			dac_data = dac_max;
-
-			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
-			{
-				for (i = dac_min; i < dac_max; i++) {
-					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
-				}
-			}
-		}
-#else
 		// 锯齿波
 		if (dac_data >= dac_max) {
 			int i;
@@ -117,7 +99,7 @@ int main()
 			//_delay_ms(100);
 			//GPIO_ResetBits(GPIOH, GPIO_Pin_3);
 #if 1
-			if (adc_data1[dac_max - 100] != 0 && adc_data1[dac_max - 150] != 0)
+			if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0||adc_data1[dac_max - 1002] != 0)
 			{
 //				putchar(-1);
 //				putchar(-1);
@@ -130,21 +112,9 @@ int main()
 					//printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
 				}
 			}
-			while (1) {
-				/* check if any packet received */
-				if (ETH_CheckFrameReceived()) {
-					/* process received ethernet packet */
-					LwIP_Pkt_Handle();
-				}
-				/* handle periodic timers for LwIP */
-				LwIP_Periodic_Handle(LocalTime);
-			}
 #endif
 		}
-#endif
-
 		dac_data+=dac_step;
-
 	_delay_us(3);
 	sMAX5541_DAC_CS_LOW();
 	_delay_us(3);
@@ -157,9 +127,9 @@ int main()
 //	__asm__{NOP};
 //	sAD7980_ADC_CS_HIGH();
 //	sAD7980_ADC_CS_LOW();
-#if 0
+#if 1
 		{
-#define adc_times	2
+#define adc_times	1
 			uint32_t data_temp[3]={0};
 			int i;
 			for (i = 0; i < adc_times; i++) {
@@ -179,6 +149,7 @@ int main()
 				}
 			}
 			adc_data1[dac_data] = data_temp[0]/adc_times;
+			//adc_data1[dac_data] = data_temp[2]/adc_times;
 		}
 #endif
 //		for(;;)
@@ -187,10 +158,68 @@ int main()
 //			GPIO_ToggleBits(GPIOH, GPIO_Pin_3);
 //			_delay_ms(10);
 //		}
+#if 0
+		if(tcp_conneced==1)
+		{
+			tcp_write(echoclient_pcb2,(const void *)dac_data,sizeof(dac_data),1);
+		}
+		/* Call tcp_fasttmr() every 250 ms */
+		{
+			/* check if any packet received */
+			if (ETH_CheckFrameReceived()) {
+				/* process received ethernet packet */
+				LwIP_Pkt_Handle();
+			}
+			/* handle periodic timers for LwIP */
+			LwIP_Periodic_Handle(LocalTime);
+		}
+#endif
 	}
 }
 
+void tcp_echoclient_connect2(void)
+{
+////////////////////////////////////////
+  struct ip_addr DestIPaddr;
 
+  /* create new tcp pcb */
+  echoclient_pcb2 = tcp_new();
+
+  if (echoclient_pcb2 != NULL)
+  {
+    IP4_ADDR( &DestIPaddr, DEST_IP_ADDR0, DEST_IP_ADDR1, DEST_IP_ADDR2, DEST_IP_ADDR3 );
+
+    /* connect to destination address/port */
+    tcp_connect(echoclient_pcb2,&DestIPaddr,DEST_PORT,tcp_connected2);
+  }
+  else
+  {
+    /* deallocate the pcb */
+    memp_free(MEMP_TCP_PCB, echoclient_pcb2);
+#ifdef SERIAL_DEBUG
+    printf("\n\r can not create tcp pcb");
+#endif
+  }
+  /////////
+}
+static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err)
+{
+	#define data_length	1000
+//u8_t   data[100];
+uint16_t data[data_length];
+
+	uint32_t i;
+	s8_t tcp_send_stat=-1;
+    for(i=0;i<data_length;i++)
+    {
+  	  data[i]=i;
+    }
+
+	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+	tcp_close(pcb);
+//	tcp_conneced=1;
+	return ERR_OK;
+}
 void RCC_clock_set(void)
 {
   GPIO_InitTypeDef  GPIO_InitStructure;
@@ -266,6 +295,43 @@ void Time_Update(void)
   LocalTime += SYSTEMTICK_PERIOD_MS;
 }
 
+void TIM6_Config(void)
+{
+	uint16_t PrescalerValue = 0;
+	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+  NVIC_InitTypeDef NVIC_InitStructure;
+
+  /* TIM3 clock enable */
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
+
+  /* Enable the TIM3 gloabal Interrupt */
+  NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+
+  /* Compute the prescaler value */
+  PrescalerValue = (uint16_t) ((SystemCoreClock / 2) / 6000000) - 1;
+
+  /* Time base configuration */
+  TIM_TimeBaseStructure.TIM_Period = 65535;
+  TIM_TimeBaseStructure.TIM_Prescaler = 0;
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+
+  TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);
+
+  /* Prescaler configuration */
+  TIM_PrescalerConfig(TIM6, PrescalerValue, TIM_PSCReloadMode_Immediate);
+
+  /* TIM Interrupts enable */
+  TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
+
+  /* TIM3 enable counter */
+  TIM_Cmd(TIM6, ENABLE);
+}
+
 /*************************************************
   * @brief  Configures the USART Peripheral.
   * @param  None
@@ -331,3 +397,74 @@ PUTCHAR_PROTOTYPE
 //  }
 //}
 //#endif
+
+/**
+  * @brief  Configures Button GPIO and EXTI Line.
+  * @param  Button: Specifies the Button to be configured.
+  *   This parameter can be one of following parameters:
+  *     @arg BUTTON_WAKEUP: Wakeup Push Button
+  *     @arg BUTTON_TAMPER: Tamper Push Button
+  *     @arg BUTTON_TAMPER: Tamper Push Button
+  * @param  Button_Mode: Specifies Button mode.
+  *   This parameter can be one of following parameters:
+  *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO
+  *     @arg BUTTON_MODE_EXTI: Button will be connected to EXTI line with interrupt
+  *                     generation capability
+  * @retval None
+  */
+
+//#define KEY_BUTTON_PIN                   GPIO_Pin_13
+//#define KEY_BUTTON_GPIO_PORT             GPIOC
+//#define KEY_BUTTON_GPIO_CLK              RCC_AHB1Periph_GPIOC
+//#define KEY_BUTTON_EXTI_LINE             EXTI_Line13
+//#define KEY_BUTTON_EXTI_PORT_SOURCE      EXTI_PortSourceGPIOC
+//#define KEY_BUTTON_EXTI_PIN_SOURCE       EXTI_PinSource13
+//#define KEY_BUTTON_EXTI_IRQn             EXTI15_10_IRQn
+
+void STM_EVAL_PBInit(void)//(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+  EXTI_InitTypeDef EXTI_InitStructure;
+  NVIC_InitTypeDef NVIC_InitStructure;
+
+
+  /* Enable the BUTTON Clock */
+  RCC_AHB1PeriphClockCmd(KEY_BUTTON_GPIO_CLK, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+  /* Configure Button pin as input */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  GPIO_InitStructure.GPIO_Pin = KEY_BUTTON_PIN;
+  GPIO_Init(KEY_BUTTON_GPIO_PORT, &GPIO_InitStructure);
+
+
+ // if (Button_Mode == BUTTON_MODE_EXTI)
+  {
+    /* Connect Button EXTI Line to Button GPIO Pin */
+    SYSCFG_EXTILineConfig(KEY_BUTTON_EXTI_PORT_SOURCE, KEY_BUTTON_EXTI_PIN_SOURCE);
+
+    /* Configure Button EXTI line */
+    EXTI_InitStructure.EXTI_Line = KEY_BUTTON_EXTI_LINE;
+    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+
+    if(1)//(Button != BUTTON_WAKEUP)
+    {
+      EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+    }
+    else
+    {
+      EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+    }
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStructure);
+
+    /* Enable and set Button EXTI Interrupt to the lowest priority */
+    NVIC_InitStructure.NVIC_IRQChannel = KEY_BUTTON_EXTI_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+
+    NVIC_Init(&NVIC_InitStructure);
+  }
+}

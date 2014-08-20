@@ -44,7 +44,7 @@
 u8_t  recev_buf[50];
 __IO uint32_t message_count=0;
 
-#define data_length	2000
+#define data_length	1000
 //u8_t   data[100];
 uint16_t data[data_length];
 struct tcp_pcb *echoclient_pcb;
@@ -118,12 +118,51 @@ void tcp_echoclient_connect(void)
 static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 {
 	uint32_t i;
+	s8_t tcp_send_stat=-1;
     for(i=0;i<data_length;i++)
     {
-  	  data[i]=65535-i;
+  	  data[i]=i;
     }
 
-	tcp_write(pcb,data,sizeof(data),0); /* 发送数据 */
+	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+
+//	tcp_send_stat=tcp_output(pcb);
+//	while(tcp_send_stat!=ERR_OK);
+//	tcp_send_stat=-1;
+//
+//    for(i=0;i<data_length;i++)
+//    {
+//  	  data[i]=2*i;
+//    }
+	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+//	tcp_send_stat=tcp_output(pcb);
+//	while(tcp_send_stat!=ERR_OK);
+//	tcp_send_stat=-1;
+//
+//    for(i=0;i<data_length;i++)
+//    {
+//  	  data[i]=3*i;
+//    }
+//	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+//	tcp_send_stat=tcp_output(pcb);
+//	while(tcp_send_stat!=ERR_OK);
+//	tcp_send_stat=-1;
+//    for(i=0;i*1000<data_length;i++)
+//    {
+//    	int j;
+//    	if((i+1)*1000<data_length)
+//    	{
+//    		j=1000;
+//    	}
+//    	else
+//    	{
+//    		j=data_length-i*1000;
+//    	}
+//    	tcp_write(pcb,data+1000*i,j,0); /* 发送数据 */
+//    }
+
+
+
 	tcp_close(pcb);
 	return ERR_OK;
 }

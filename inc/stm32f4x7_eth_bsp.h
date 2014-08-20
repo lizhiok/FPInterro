@@ -33,6 +33,8 @@
  extern "C" {
 #endif
 
+//#include "stm324x9i_eval.h"
+
 #include "netif.h"
 
 /* Exported types ------------------------------------------------------------*/

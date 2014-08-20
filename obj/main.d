@@ -65,3 +65,6 @@
 .\obj\main.o: .\Libraries\lwip-1.4.1\src\include\ipv4\lwip/icmp.h
 .\obj\main.o: .\Libraries\lwip-1.4.1\src\include\lwip/sockets.h
 .\obj\main.o: .\Libraries\lwip-1.4.1\src\include\lwip/tcp_impl.h
+.\obj\main.o: .\Libraries\lwip-1.4.1\src\include\lwip/stats.h
+.\obj\main.o: .\Libraries\lwip-1.4.1\src\include\lwip/memp.h
+.\obj\main.o: .\Libraries\lwip-1.4.1\src\include\lwip/memp_std.h

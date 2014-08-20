@@ -8,108 +8,44 @@ Project File Date:  08/15/2014
 
 <h2>Output:</h2>
 Build target 'FPInterro'
-compiling ethernetif.c...
 linking...
-Program Size: Code=30992 RO-data=724 RW-data=236 ZI-data=163996  
+Program Size: Code=13856 RO-data=688 RW-data=200 ZI-data=143072  
 FromELF: creating hex file...
 ".\obj\FPInterro.axf" - 0 Error(s), 0 Warning(s).
+Load "F:\\work\\pcb\\FPInterro\\code\\obj\\FPInterro.axf" 
+Set JLink Project File to "F:\work\pcb\FPInterro\code\JLinkSettings.ini"
+* JLink Info: Device "STM32F429IG" selected (1024 KB flash, 192 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.80g, compiled Feb 13 2014 20:50:02
+Firmware: J-Link ARM V8 compiled Nov 25 2013 19:20:08
+Hardware: V8.00
+S/N : 99999994 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F429IG
+VTarget = 3.209V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
 </pre>
 </body>
 </html>
-dhcp.c...
-compiling dns.c...
-compiling init.c...
-compiling mem.c...
-compiling memp.c...
-compiling netif.c...
-compiling pbuf.c...
-compiling raw.c...
-compiling stats.c...
-compiling sys.c...
-compiling tcp.c...
-compiling tcp_in.c...
-compiling tcp_out.c...
-Libraries\lwip-1.4.1\src\core\tcp_out.c(845): warning:  #550-D: variable "tcphdr" was set but never used
-    struct tcp_hdr *tcphdr;
-Libraries\lwip-1.4.1\src\core\tcp_out.c(1367): warning:  #550-D: variable "tcphdr" was set but never used
-    struct tcp_hdr *tcphdr;
-Libraries\lwip-1.4.1\src\core\tcp_out.c: 2 warnings, 0 errors
-compiling timers.c...
-compiling udp.c...
-compiling autoip.c...
-compiling icmp.c...
-compiling igmp.c...
-compiling inet.c...
-compiling inet_chksum.c...
-compiling ip.c...
-compiling ip_addr.c...
-compiling ip_frag.c...
-compiling etharp.c...
-compiling ethernetif.c...
-compiling slipif.c...
-linking...
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol ethernetif_init (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol ethernetif_input (referred from netconf.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 2 error messages.
-".\obj\FPInterro.axf" - 2 Error(s), 2 Warning(s).
-Target not created
-f.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol ethernetif_input (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol mem_init (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol memp_init (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol netif_add (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol netif_set_default (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol netif_set_link_callback (referred from netconf.o).
-.\obj\FPInterro.axf: Error: L6218E: Undefined symbol tcp_tmr (referred from netconf.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 19 error messages.
-".\obj\FPInterro.axf" - 19 Error(s), 2 Warning(s).
-Target not created
-ibraries\CMSIS\Include\core_cm4.h(1576): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
-      return((uint32_t)(NVIC->IP[(uint32_t)(IRQn)]           >> (8 - __NVIC_PRIO_BITS)));  } /* get priority for device specific interrupts  */
-.\Libraries\CMSIS\Include\core_cm4.h(1598): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
-    PreemptPriorityBits = ((7 - PriorityGroupTmp) > __NVIC_PRIO_BITS) ? __NVIC_PRIO_BITS : 7 - PriorityGroupTmp;
-.\Libraries\CMSIS\Include\core_cm4.h(1626): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
-    PreemptPriorityBits = ((7 - PriorityGroupTmp) > __NVIC_PRIO_BITS) ? __NVIC_PRIO_BITS : 7 - PriorityGroupTmp;
-.\Libraries\CMSIS\Include\core_cm4.h(1682): error:  #20: identifier "SysTick_IRQn" is undefined
-    NVIC_SetPriority (SysTick_IRQn, (1<<__NVIC_PRIO_BITS) - 1);  /* set Priority for Systick Interrupt */
-.\Libraries\CMSIS\Include\core_cm4.h(1682): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
-    NVIC_SetPriority (SysTick_IRQn, (1<<__NVIC_PRIO_BITS) - 1);  /* set Priority for Systick Interrupt */
-netconf.c(109): error:  #20: identifier "ETH_INIT_FLAG" is undefined
-    if (EthStatus == (ETH_INIT_FLAG | ETH_LINK_FLAG))
-netconf.c(109): error:  #20: identifier "ETH_LINK_FLAG" is undefined
-    if (EthStatus == (ETH_INIT_FLAG | ETH_LINK_FLAG))
-netconf.c(141): warning:  #223-D: function "LCD_SetTextColor" declared implicitly
-      LCD_SetTextColor(Red);
-netconf.c(141): error:  #20: identifier "Red" is undefined
-      LCD_SetTextColor(Red);
-netconf.c(144): warning:  #223-D: function "LCD_DisplayStringLine" declared implicitly
-      LCD_DisplayStringLine(Line5, (uint8_t*)"  Network Cable is  ");
-netconf.c(144): error:  #20: identifier "Line5" is undefined
-      LCD_DisplayStringLine(Line5, (uint8_t*)"  Network Cable is  ");
-netconf.c(145): error:  #20: identifier "Line6" is undefined
-      LCD_DisplayStringLine(Line6, (uint8_t*)"    not connected   ");
-netconf.c(148): error:  #20: identifier "White" is undefined
-      LCD_SetTextColor(White);
-netconf.c(152): error:  #20: identifier "ETH_link_callback" is undefined
-    netif_set_link_callback(&gnetif, ETH_link_callback);
-netconf.c(200): warning:  #223-D: function "STM_EVAL_LEDToggle" declared implicitly
-        STM_EVAL_LEDToggle(LED1);
-netconf.c(200): error:  #20: identifier "LED1" is undefined
-        STM_EVAL_LEDToggle(LED1);
-netconf.c(277): warning:  #223-D: function "STM_EVAL_LEDOn" declared implicitly
-          STM_EVAL_LEDOn(LED1);
-netconf.c(277): error:  #20: identifier "LED1" is undefined
-          STM_EVAL_LEDOn(LED1);
-netconf.c(312): warning:  #223-D: function "STM_EVAL_LEDOn" declared implicitly
-            STM_EVAL_LEDOn(LED1);
-netconf.c(312): error:  #20: identifier "LED1" is undefined
-            STM_EVAL_LEDOn(LED1);
-netconf.c(228): warning:  #177-D: variable "iptab" was declared but never referenced
-    uint8_t iptab[4] = {0};
-netconf.c(229): warning:  #177-D: variable "iptxt" was declared but never referenced
-    uint8_t iptxt[20];
-netconf.c: 8 warnings, 26 errors
-".\obj\FPInterro.axf" - 26 Error(s), 8 Warning(s).
-Target not created

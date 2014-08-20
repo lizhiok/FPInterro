@@ -43,6 +43,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+extern __IO uint8_t EthLinkStatus;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -145,7 +146,44 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-  Time_Update();
+	static int time_cout=0;
+	if(time_cout++==100)
+	{
+
+	}
+//  Time_Update();
+}
+/**
+  * @brief  This function handles EXTI15_10
+  * @param  None
+  * @retval None
+  */
+void EXTI15_10_IRQHandler(void)
+{
+  if(EXTI_GetITStatus(KEY_BUTTON_EXTI_LINE) != RESET)
+  {
+    if (EthLinkStatus == 0)
+    {
+      /*connect to tcp server */
+      tcp_echoclient_connect();
+    }
+    /* Clear the EXTI line  pending bit */
+    EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);
+  }
+  if(EXTI_GetITStatus(ETH_LINK_EXTI_LINE) != RESET)
+  {
+    Eth_Link_ITHandler(DP83848_PHY_ADDRESS);
+    /* Clear interrupt pending bit */
+    EXTI_ClearITPendingBit(ETH_LINK_EXTI_LINE);
+  }
+}
+void TIM6_DAC_IRQHandler(void)
+{
+     if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+     {
+         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); //清除中断标志
+         GPIO_ToggleBits(GPIOD, GPIO_Pin_13);
+     }
 }
 
 /******************************************************************************/

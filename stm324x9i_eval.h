@@ -36,7 +36,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
-#include "stm32_eval_legacy.h"
+//#include "stm32_eval_legacy.h"
    
 /** @addtogroup Utilities
   * @{

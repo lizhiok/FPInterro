@@ -445,6 +445,11 @@
               <FileType>1</FileType>
               <FilePath>.\netconf.c</FilePath>
             </File>
+            <File>
+              <FileName>tcp_echoclient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tcp_echoclient.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

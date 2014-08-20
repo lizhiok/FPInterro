@@ -104,6 +104,18 @@ void Time_Update(void);
 void Delay(uint32_t nCount);
 
 
+/**
+ * @brief Key push-button
+ */
+#define KEY_BUTTON_PIN                   GPIO_Pin_13
+#define KEY_BUTTON_GPIO_PORT             GPIOC
+#define KEY_BUTTON_GPIO_CLK              RCC_AHB1Periph_GPIOC
+#define KEY_BUTTON_EXTI_LINE             EXTI_Line13
+#define KEY_BUTTON_EXTI_PORT_SOURCE      EXTI_PortSourceGPIOC
+#define KEY_BUTTON_EXTI_PIN_SOURCE       EXTI_PinSource13
+#define KEY_BUTTON_EXTI_IRQn             EXTI15_10_IRQn
+
+
 #ifdef __cplusplus
 }
 #endif

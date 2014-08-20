@@ -7,6 +7,7 @@
 ".\obj\uart_com1.o"
 ".\obj\stm32f4x7_eth_bsp.o"
 ".\obj\netconf.o"
+".\obj\tcp_echoclient.o"
 ".\obj\system_stm32f4xx.o"
 ".\obj\startup_stm32f429_439xx.o"
 ".\obj\misc.o"
