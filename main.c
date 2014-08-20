@@ -79,13 +79,6 @@ int main()
 //	    /* Capture error */
 //	    while (1);
 //	  }
-
-	  /* Output a message on Hyperterminal using printf function */
-//		while(1)
-//		{
-//			printf("\n\rUSART Printf Example: retarget the C library printf function to the USARTlizhi\n\r");
-//			_delay_ms(100);
-//		}
 //	printf("uart ok");
 
 	for(;;)
