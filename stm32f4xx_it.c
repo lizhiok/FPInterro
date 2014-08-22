@@ -146,12 +146,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-	static int time_cout=0;
-	if(time_cout++==100)
-	{
-
-	}
-//  Time_Update();
+  Time_Update();
 }
 /**
   * @brief  This function handles EXTI15_10
@@ -179,10 +174,22 @@ void EXTI15_10_IRQHandler(void)
 }
 void TIM6_DAC_IRQHandler(void)
 {
+static uint32_t timecounter;
      if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
      {
-         TIM_ClearITPendingBit(TIM6, TIM_IT_Update); //清除中断标志
-         GPIO_ToggleBits(GPIOD, GPIO_Pin_13);
+
+//         GPIO_ToggleBits(GPIOD, GPIO_Pin_13);	//led displayer
+      /* check if any packet received */
+	 timecounter += 10;
+      if (ETH_CheckFrameReceived ())
+	{
+	  /* process received ethernet packet */
+	  LwIP_Pkt_Handle ();
+	}
+      /* handle periodic timers for LwIP */
+      LwIP_Periodic_Handle (timecounter);
+
+      TIM_ClearITPendingBit(TIM6, TIM_IT_Update); //clear interrupt flag
      }
 }
 

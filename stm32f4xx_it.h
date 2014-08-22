@@ -35,6 +35,15 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
+#include "netconf.h"
+#include "stm32f4x7_eth.h"
+//#include "lwip/tcp.h"
+//#include "lwip/sockets.h"
+//#include "lwip/tcp_impl.h"
+//
+//#include "lwip/debug.h"
+//#include "lwip/stats.h"
+//#include "lwip/tcp.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

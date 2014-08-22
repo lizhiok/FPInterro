@@ -61,9 +61,11 @@ int main()
 	Trig_set();
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
-	TIM6_Config();
 	ETH_BSP_Config();
 	LwIP_Init();
+	TIM6_Config();
+
+
 	USART_Config();
 
 //#define	dac_step 1
@@ -76,24 +78,54 @@ int main()
 //	  }
 //	printf("uart ok");
 
+//	{
+//	  struct ip_addr DestIPaddr;
+//
+//	  /* create new tcp pcb */
+//	  echoclient_pcb = tcp_new();
+//
+//	  if (echoclient_pcb != NULL)
+//	  {
+//	    IP4_ADDR( &DestIPaddr, DEST_IP_ADDR0, DEST_IP_ADDR1, DEST_IP_ADDR2, DEST_IP_ADDR3 );
+//
+//	    /* connect to destination address/port */
+//	    tcp_connect(echoclient_pcb,&DestIPaddr,DEST_PORT,tcp_connected);
+//	  }
+//
+//	  uint16_t test_tcp[100]={0};
+//	  uint8_t i;
+//	  for(i=0;i<100;i++)
+//	    {
+//	      test_tcp[i]=i;
+//	    }
+//	tcp_write(echoclient_pcb2,(const void *)dac_data,sizeof(dac_data),1);
+//	tcp_output(echoclient_pcb2);
+//	}
+
+
 	for(;;)
 	{
+	    int i,jj;
 		// Sawtooth
-		if (dac_data >= dac_max) {
-			int i;
-			dac_step = 1;
-			dac_data = dac_min;
-#if 1
-			if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0||adc_data1[dac_max - 1002] != 0)
-			{
-				for (i = dac_min; i < dac_max; i++) {
-					//printf("%d,%d\n", i, adc_data1[i]);
-					printf("%d,%d\n\r",i,adc_data1[i]);
-					//printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
-				}
-			}
-#endif
+      if (dac_data >= dac_max)
+	{
+
+	  dac_step = 1;
+	  dac_data = dac_min;
+#if 0
+	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
+	      || adc_data1[dac_max - 1002] != 0)
+	    {
+	      for (i = dac_min; i < dac_max; i++)
+		{
+		  //printf("%d,%d\n", i, adc_data1[i]);
+		  printf ("%d,%d\n\r", i, adc_data1[i]);
+		  //printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
 		}
+	    }
+#endif
+	}
+#if     0
 		dac_data+=dac_step;
 	_delay_us(3);
 	sMAX5541_DAC_CS_LOW();
@@ -102,7 +134,9 @@ int main()
 	_delay_us(3);
 	sMAX5541_DAC_CS_HIGH();
 
-#if 1
+#endif
+
+#if 0
 		{
 #define adc_times	1
 			uint32_t data_temp[3]={0};
@@ -127,28 +161,15 @@ int main()
 			//adc_data1[dac_data] = data_temp[2]/adc_times;
 		}
 #endif
-//		for(;;)
-//		{
-//
-//			GPIO_ToggleBits(GPIOH, GPIO_Pin_3);
-//			_delay_ms(10);
-//		}
-#if 0
-		if(tcp_conneced==1)
-		{
-			tcp_write(echoclient_pcb2,(const void *)dac_data,sizeof(dac_data),1);
-		}
-		/* Call tcp_fasttmr() every 250 ms */
-		{
-			/* check if any packet received */
-			if (ETH_CheckFrameReceived()) {
-				/* process received ethernet packet */
-				LwIP_Pkt_Handle();
-			}
-			/* handle periodic timers for LwIP */
-			LwIP_Periodic_Handle(LocalTime);
-		}
-#endif
+
+	if(jj<5002)
+	  jj++;
+
+      if (jj == 3000||jj==1000||jj==2000)
+	{
+	  _delay_ms (100);
+	  tcp_echoclient_connect2 ();
+	}
 	}
 }
 
@@ -179,21 +200,22 @@ void tcp_echoclient_connect2(void)
 }
 static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err)
 {
-	#define data_length	1000
+#define data_length	1000
 //u8_t   data[100];
-uint16_t data[data_length];
+  uint16_t data[data_length];
 
-	uint32_t i;
-	s8_t tcp_send_stat=-1;
-    for(i=0;i<data_length;i++)
+  uint32_t i;
+  s8_t tcp_send_stat = -1;
+  for (i = 0; i < data_length; i++)
     {
-  	  data[i]=i;
+      data[i] = i;
     }
 
-	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
-	tcp_close(pcb);
+  tcp_write (pcb, data, sizeof(data), 1); /* 发送数据 */
+//  tcp_output(pcb);
+  tcp_close (pcb);
 //	tcp_conneced=1;
-	return ERR_OK;
+  return ERR_OK;
 }
 void RCC_clock_set(void)
 {
@@ -223,7 +245,7 @@ void RCC_clock_set(void)
   GPIO_Init(GPIOC, &GPIO_InitStructure);//set PC9 for MCO2
   RCC_MCO2Config (RCC_MCO2Source_SYSCLK, RCC_MCO2Div_5);
 
-  RCC_PLLConfig(RCC_PLLSource_HSE,5,144,5,2);
+  RCC_PLLConfig(RCC_PLLSource_HSE,5,144,5,2);	//set system clock to 180mHz
   RCC_PLLCmd(ENABLE);
 //  RCC_PLLSAIConfig();
   RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
@@ -288,9 +310,9 @@ void Time_Update(void)
 }
 
 void TIM6_Config(void)
-{
-	uint16_t PrescalerValue = 0;
-	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+{	//set to 250ms per times for ethenet
+  uint16_t PrescalerValue = 0;
+  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
   NVIC_InitTypeDef NVIC_InitStructure;
 
   /* TIM3 clock enable */
@@ -304,10 +326,10 @@ void TIM6_Config(void)
   NVIC_Init(&NVIC_InitStructure);
 
   /* Compute the prescaler value */
-  PrescalerValue = (uint16_t) ((SystemCoreClock / 2) / 6000000) - 1;
+  PrescalerValue = (uint16_t) ((SystemCoreClock / 2) / 3000000) - 1;
 
   /* Time base configuration */
-  TIM_TimeBaseStructure.TIM_Period = 65535;
+  TIM_TimeBaseStructure.TIM_Period = 60000;
   TIM_TimeBaseStructure.TIM_Prescaler = 0;
   TIM_TimeBaseStructure.TIM_ClockDivision = 0;
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;

@@ -130,10 +130,10 @@ static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 //	while(tcp_send_stat!=ERR_OK);
 //	tcp_send_stat=-1;
 //
-//    for(i=0;i<data_length;i++)
-//    {
-//  	  data[i]=2*i;
-//    }
+    for(i=0;i<data_length;i++)
+    {
+  	  data[i]=2*i;
+    }
 	tcp_write(pcb,data,sizeof(data),1); /* ·¢ËÍÊý¾Ý */
 //	tcp_send_stat=tcp_output(pcb);
 //	while(tcp_send_stat!=ERR_OK);
@@ -189,7 +189,7 @@ static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err
         
       /* allocate pbuf */
       //es->p_tx = pbuf_alloc(PBUF_TRANSPORT, strlen((char*)data)+1 , PBUF_POOL);
-			es->p_tx = pbuf_alloc(PBUF_TRANSPORT, 2*data_length+1 , PBUF_POOL);
+	es->p_tx = pbuf_alloc(PBUF_TRANSPORT, 2*data_length+1 , PBUF_POOL);
          
       if (es->p_tx)
       {       
