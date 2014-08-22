@@ -44,7 +44,7 @@
 u8_t  recev_buf[50];
 __IO uint32_t message_count=0;
 
-#define data_length	1000
+#define data_length	10000
 //u8_t   data[100];
 uint16_t data[data_length];
 struct tcp_pcb *echoclient_pcb;
@@ -124,17 +124,21 @@ static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
   	  data[i]=i;
     }
 
-	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
-
+	tcp_write(pcb,data,2000,1); /* 发送数据 */
+	tcp_write(pcb,data+2000,2000,1); /* 发送数据 */
+	tcp_write(pcb,data+2000*2,2000,1); /* 发送数据 */
+	tcp_write(pcb,data+2000*3,2000,1); /* 发送数据 */
+	tcp_write(pcb,data+2000*4,2000,1); /* 发送数据 */
+	tcp_write(pcb,data+2000*5,2000,1); /* 发送数据 */
 //	tcp_send_stat=tcp_output(pcb);
 //	while(tcp_send_stat!=ERR_OK);
 //	tcp_send_stat=-1;
 //
-    for(i=0;i<data_length;i++)
-    {
-  	  data[i]=2*i;
-    }
-	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+//    for(i=0;i<data_length;i++)
+//    {
+//  	  data[i]=2*i;
+//    }
+//	tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
 //	tcp_send_stat=tcp_output(pcb);
 //	while(tcp_send_stat!=ERR_OK);
 //	tcp_send_stat=-1;

@@ -45,8 +45,6 @@ Section Cross References
     main.o(i.main) refers to netconf.o(i.LwIP_Init) for LwIP_Init
     main.o(i.main) refers to main.o(i.TIM6_Config) for TIM6_Config
     main.o(i.main) refers to main.o(i.USART_Config) for USART_Config
-    main.o(i.main) refers to function.o(i._delay_ms) for _delay_ms
-    main.o(i.main) refers to main.o(i.tcp_echoclient_connect2) for tcp_echoclient_connect2
     main.o(i.main) refers to main.o(.data) for dac_data
     main.o(i.tcp_connected2) refers to tcp_out.o(i.tcp_write) for tcp_write
     main.o(i.tcp_connected2) refers to tcp.o(i.tcp_close) for tcp_close
@@ -1191,6 +1189,8 @@ Removing Unused input sections from the image.
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
     Removing main.o(i.fputc), (36 bytes).
+    Removing main.o(i.tcp_connected2), (66 bytes).
+    Removing main.o(i.tcp_echoclient_connect2), (60 bytes).
     Removing main.o(.bss), (131070 bytes).
     Removing stm32f4xx_it.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_it.o(.revsh_text), (4 bytes).
@@ -1226,6 +1226,8 @@ Removing Unused input sections from the image.
     Removing spi_max5541_dac.o(i.sMAX5541_DAC_WriteBuffer), (290 bytes).
     Removing spi_max5541_dac.o(i.sMAX5541_DAC_WriteEnable), (32 bytes).
     Removing spi_max5541_dac.o(i.sMAX5541_DAC_WritePage), (88 bytes).
+    Removing function.o(i._delay_ms), (14 bytes).
+    Removing function.o(i._delay_us), (18 bytes).
     Removing uart_com1.o(.rev16_text), (4 bytes).
     Removing uart_com1.o(.revsh_text), (4 bytes).
     Removing stm32f4x7_eth_bsp.o(.rev16_text), (4 bytes).
@@ -1234,7 +1236,7 @@ Removing Unused input sections from the image.
     Removing netconf.o(.revsh_text), (4 bytes).
     Removing tcp_echoclient.o(.rev16_text), (4 bytes).
     Removing tcp_echoclient.o(.revsh_text), (4 bytes).
-    Removing tcp_echoclient.o(i.tcp_echoclient_connected), (172 bytes).
+    Removing tcp_echoclient.o(i.tcp_echoclient_connected), (176 bytes).
     Removing tcp_echoclient.o(i.tcp_echoclient_connection_close), (48 bytes).
     Removing tcp_echoclient.o(i.tcp_echoclient_poll), (60 bytes).
     Removing tcp_echoclient.o(i.tcp_echoclient_recv), (132 bytes).
@@ -2105,7 +2107,7 @@ Removing Unused input sections from the image.
     Removing ethernetif.o(.rev16_text), (4 bytes).
     Removing ethernetif.o(.revsh_text), (4 bytes).
 
-916 unused section(s) (total 174422 bytes) removed from the image.
+920 unused section(s) (total 174584 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2115,22 +2117,22 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/string/memcmp.c         0x00000000   Number         0  memcmp.o ABSOLUTE
-    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
     ../clib/microlib/string/strlen.c         0x00000000   Number         0  strlen.o ABSOLUTE
     Libraries\STM32F4x7_ETH_Driver\src\stm32f4x7_eth.c 0x00000000   Number         0  stm32f4x7_eth.o ABSOLUTE
@@ -2374,246 +2376,241 @@ Image Symbol Table
     i.__scatterload_copy                     0x08001da4   Section       14  handlers.o(i.__scatterload_copy)
     i.__scatterload_null                     0x08001db2   Section        2  handlers.o(i.__scatterload_null)
     i.__scatterload_zeroinit                 0x08001db4   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i._delay_ms                              0x08001dc2   Section        0  function.o(i._delay_ms)
-    i._delay_us                              0x08001dd0   Section        0  function.o(i._delay_us)
-    i.dhcp_arp_reply                         0x08001de2   Section        0  dhcp.o(i.dhcp_arp_reply)
-    i.dhcp_bind                              0x08001e10   Section        0  dhcp.o(i.dhcp_bind)
-    dhcp_bind                                0x08001e11   Thumb Code   228  dhcp.o(i.dhcp_bind)
-    i.dhcp_check                             0x08001ef4   Section        0  dhcp.o(i.dhcp_check)
-    dhcp_check                               0x08001ef5   Thumb Code    56  dhcp.o(i.dhcp_check)
-    i.dhcp_coarse_tmr                        0x08001f2c   Section        0  dhcp.o(i.dhcp_coarse_tmr)
-    i.dhcp_create_msg                        0x08001f70   Section        0  dhcp.o(i.dhcp_create_msg)
-    dhcp_create_msg                          0x08001f71   Thumb Code   318  dhcp.o(i.dhcp_create_msg)
-    i.dhcp_decline                           0x080020b8   Section        0  dhcp.o(i.dhcp_decline)
-    dhcp_decline                             0x080020b9   Thumb Code   126  dhcp.o(i.dhcp_decline)
-    i.dhcp_delete_msg                        0x0800213c   Section        0  dhcp.o(i.dhcp_delete_msg)
-    dhcp_delete_msg                          0x0800213d   Thumb Code    40  dhcp.o(i.dhcp_delete_msg)
-    i.dhcp_discover                          0x08002164   Section        0  dhcp.o(i.dhcp_discover)
-    dhcp_discover                            0x08002165   Thumb Code   190  dhcp.o(i.dhcp_discover)
-    i.dhcp_fine_tmr                          0x08002228   Section        0  dhcp.o(i.dhcp_fine_tmr)
-    i.dhcp_handle_ack                        0x0800226c   Section        0  dhcp.o(i.dhcp_handle_ack)
-    dhcp_handle_ack                          0x0800226d   Thumb Code   112  dhcp.o(i.dhcp_handle_ack)
-    i.dhcp_handle_nak                        0x080022e4   Section        0  dhcp.o(i.dhcp_handle_nak)
-    dhcp_handle_nak                          0x080022e5   Thumb Code    52  dhcp.o(i.dhcp_handle_nak)
-    i.dhcp_handle_offer                      0x0800231c   Section        0  dhcp.o(i.dhcp_handle_offer)
-    dhcp_handle_offer                        0x0800231d   Thumb Code    36  dhcp.o(i.dhcp_handle_offer)
-    i.dhcp_network_changed                   0x08002348   Section        0  dhcp.o(i.dhcp_network_changed)
-    i.dhcp_option                            0x08002398   Section        0  dhcp.o(i.dhcp_option)
-    dhcp_option                              0x08002399   Thumb Code    32  dhcp.o(i.dhcp_option)
-    i.dhcp_option_byte                       0x080023b8   Section        0  dhcp.o(i.dhcp_option_byte)
-    dhcp_option_byte                         0x080023b9   Thumb Code    18  dhcp.o(i.dhcp_option_byte)
-    i.dhcp_option_long                       0x080023ca   Section        0  dhcp.o(i.dhcp_option_long)
-    dhcp_option_long                         0x080023cb   Thumb Code    66  dhcp.o(i.dhcp_option_long)
-    i.dhcp_option_short                      0x0800240c   Section        0  dhcp.o(i.dhcp_option_short)
-    dhcp_option_short                        0x0800240d   Thumb Code    34  dhcp.o(i.dhcp_option_short)
-    i.dhcp_option_trailer                    0x0800242e   Section        0  dhcp.o(i.dhcp_option_trailer)
-    dhcp_option_trailer                      0x0800242f   Thumb Code    70  dhcp.o(i.dhcp_option_trailer)
-    i.dhcp_parse_reply                       0x08002474   Section        0  dhcp.o(i.dhcp_parse_reply)
-    dhcp_parse_reply                         0x08002475   Thumb Code   780  dhcp.o(i.dhcp_parse_reply)
-    i.dhcp_rebind                            0x08002788   Section        0  dhcp.o(i.dhcp_rebind)
-    dhcp_rebind                              0x08002789   Thumb Code   132  dhcp.o(i.dhcp_rebind)
-    i.dhcp_reboot                            0x08002810   Section        0  dhcp.o(i.dhcp_reboot)
-    dhcp_reboot                              0x08002811   Thumb Code   164  dhcp.o(i.dhcp_reboot)
-    i.dhcp_recv                              0x080028b8   Section        0  dhcp.o(i.dhcp_recv)
-    dhcp_recv                                0x080028b9   Thumb Code   246  dhcp.o(i.dhcp_recv)
-    i.dhcp_release                           0x080029b8   Section        0  dhcp.o(i.dhcp_release)
-    i.dhcp_renew                             0x08002a60   Section        0  dhcp.o(i.dhcp_renew)
-    i.dhcp_select                            0x08002ae8   Section        0  dhcp.o(i.dhcp_select)
-    dhcp_select                              0x08002ae9   Thumb Code   240  dhcp.o(i.dhcp_select)
-    i.dhcp_set_state                         0x08002bdc   Section        0  dhcp.o(i.dhcp_set_state)
-    dhcp_set_state                           0x08002bdd   Thumb Code    16  dhcp.o(i.dhcp_set_state)
-    i.dhcp_start                             0x08002bec   Section        0  dhcp.o(i.dhcp_start)
-    i.dhcp_stop                              0x08002cc4   Section        0  dhcp.o(i.dhcp_stop)
-    i.dhcp_t1_timeout                        0x08002cfe   Section        0  dhcp.o(i.dhcp_t1_timeout)
-    dhcp_t1_timeout                          0x08002cff   Thumb Code    32  dhcp.o(i.dhcp_t1_timeout)
-    i.dhcp_t2_timeout                        0x08002d1e   Section        0  dhcp.o(i.dhcp_t2_timeout)
-    dhcp_t2_timeout                          0x08002d1f   Thumb Code    32  dhcp.o(i.dhcp_t2_timeout)
-    i.dhcp_timeout                           0x08002d3e   Section        0  dhcp.o(i.dhcp_timeout)
-    dhcp_timeout                             0x08002d3f   Thumb Code   164  dhcp.o(i.dhcp_timeout)
-    i.etharp_arp_input                       0x08002de2   Section        0  etharp.o(i.etharp_arp_input)
-    etharp_arp_input                         0x08002de3   Thumb Code   268  etharp.o(i.etharp_arp_input)
-    i.etharp_cleanup_netif                   0x08002ef0   Section        0  etharp.o(i.etharp_cleanup_netif)
-    i.etharp_find_entry                      0x08002f28   Section        0  etharp.o(i.etharp_find_entry)
-    etharp_find_entry                        0x08002f29   Thumb Code   348  etharp.o(i.etharp_find_entry)
-    i.etharp_free_entry                      0x08003088   Section        0  etharp.o(i.etharp_free_entry)
-    etharp_free_entry                        0x08003089   Thumb Code    58  etharp.o(i.etharp_free_entry)
-    i.etharp_output                          0x080030c8   Section        0  etharp.o(i.etharp_output)
-    i.etharp_output_to_arp_index             0x08003210   Section        0  etharp.o(i.etharp_output_to_arp_index)
-    etharp_output_to_arp_index               0x08003211   Thumb Code   104  etharp.o(i.etharp_output_to_arp_index)
-    i.etharp_query                           0x0800327c   Section        0  etharp.o(i.etharp_query)
-    i.etharp_raw                             0x080033d8   Section        0  etharp.o(i.etharp_raw)
-    etharp_raw                               0x080033d9   Thumb Code   178  etharp.o(i.etharp_raw)
-    i.etharp_request                         0x0800348c   Section        0  etharp.o(i.etharp_request)
-    i.etharp_send_ip                         0x080034b8   Section        0  etharp.o(i.etharp_send_ip)
-    etharp_send_ip                           0x080034b9   Thumb Code    56  etharp.o(i.etharp_send_ip)
-    i.etharp_tmr                             0x080034f0   Section        0  etharp.o(i.etharp_tmr)
-    i.etharp_update_arp_entry                0x0800357c   Section        0  etharp.o(i.etharp_update_arp_entry)
-    etharp_update_arp_entry                  0x0800357d   Thumb Code   178  etharp.o(i.etharp_update_arp_entry)
-    i.ethernet_input                         0x08003634   Section        0  etharp.o(i.ethernet_input)
-    i.ethernetif_init                        0x080036ec   Section        0  ethernetif.o(i.ethernetif_init)
-    i.ethernetif_input                       0x0800371c   Section        0  ethernetif.o(i.ethernetif_input)
-    i.icmp_dest_unreach                      0x08003746   Section        0  icmp.o(i.icmp_dest_unreach)
-    i.icmp_input                             0x08003758   Section        0  icmp.o(i.icmp_input)
-    i.icmp_send_response                     0x080038b4   Section        0  icmp.o(i.icmp_send_response)
-    icmp_send_response                       0x080038b5   Thumb Code   112  icmp.o(i.icmp_send_response)
-    i.icmp_time_exceeded                     0x08003924   Section        0  icmp.o(i.icmp_time_exceeded)
-    i.inet_chksum                            0x08003936   Section        0  inet_chksum.o(i.inet_chksum)
-    i.inet_chksum_pbuf                       0x0800394a   Section        0  inet_chksum.o(i.inet_chksum_pbuf)
-    i.ip4_addr_isbroadcast                   0x080039a0   Section        0  ip_addr.o(i.ip4_addr_isbroadcast)
-    i.ip_frag                                0x080039f0   Section        0  ip_frag.o(i.ip_frag)
-    i.ip_frag_alloc_pbuf_custom_ref          0x08003b9c   Section        0  ip_frag.o(i.ip_frag_alloc_pbuf_custom_ref)
-    ip_frag_alloc_pbuf_custom_ref            0x08003b9d   Thumb Code    10  ip_frag.o(i.ip_frag_alloc_pbuf_custom_ref)
-    i.ip_frag_free_pbuf_custom_ref           0x08003ba6   Section        0  ip_frag.o(i.ip_frag_free_pbuf_custom_ref)
-    ip_frag_free_pbuf_custom_ref             0x08003ba7   Thumb Code    18  ip_frag.o(i.ip_frag_free_pbuf_custom_ref)
-    i.ip_input                               0x08003bb8   Section        0  ip.o(i.ip_input)
-    i.ip_output                              0x08003d74   Section        0  ip.o(i.ip_output)
-    i.ip_output_if                           0x08003dac   Section        0  ip.o(i.ip_output_if)
-    i.ip_reass                               0x08003e70   Section        0  ip_frag.o(i.ip_reass)
-    i.ip_reass_chain_frag_into_datagram_and_validate 0x08003ffc   Section        0  ip_frag.o(i.ip_reass_chain_frag_into_datagram_and_validate)
-    ip_reass_chain_frag_into_datagram_and_validate 0x08003ffd   Thumb Code   352  ip_frag.o(i.ip_reass_chain_frag_into_datagram_and_validate)
-    i.ip_reass_dequeue_datagram              0x08004160   Section        0  ip_frag.o(i.ip_reass_dequeue_datagram)
-    ip_reass_dequeue_datagram                0x08004161   Thumb Code    40  ip_frag.o(i.ip_reass_dequeue_datagram)
-    i.ip_reass_enqueue_new_datagram          0x0800418c   Section        0  ip_frag.o(i.ip_reass_enqueue_new_datagram)
-    ip_reass_enqueue_new_datagram            0x0800418d   Thumb Code    80  ip_frag.o(i.ip_reass_enqueue_new_datagram)
-    i.ip_reass_free_complete_datagram        0x080041e0   Section        0  ip_frag.o(i.ip_reass_free_complete_datagram)
-    ip_reass_free_complete_datagram          0x080041e1   Thumb Code   156  ip_frag.o(i.ip_reass_free_complete_datagram)
-    i.ip_reass_remove_oldest_datagram        0x08004280   Section        0  ip_frag.o(i.ip_reass_remove_oldest_datagram)
-    ip_reass_remove_oldest_datagram          0x08004281   Thumb Code   118  ip_frag.o(i.ip_reass_remove_oldest_datagram)
-    i.ip_route                               0x080042fc   Section        0  ip.o(i.ip_route)
-    i.ipfrag_free_pbuf_custom                0x08004350   Section        0  ip_frag.o(i.ipfrag_free_pbuf_custom)
-    ipfrag_free_pbuf_custom                  0x08004351   Thumb Code    32  ip_frag.o(i.ipfrag_free_pbuf_custom)
-    i.low_level_init                         0x08004370   Section        0  ethernetif.o(i.low_level_init)
-    low_level_init                           0x08004371   Thumb Code   110  ethernetif.o(i.low_level_init)
-    i.low_level_input                        0x080043f0   Section        0  ethernetif.o(i.low_level_input)
-    low_level_input                          0x080043f1   Thumb Code   216  ethernetif.o(i.low_level_input)
-    i.low_level_output                       0x080044d0   Section        0  ethernetif.o(i.low_level_output)
-    low_level_output                         0x080044d1   Thumb Code   214  ethernetif.o(i.low_level_output)
-    i.lwip_htonl                             0x080045b0   Section        0  def.o(i.lwip_htonl)
-    i.lwip_htons                             0x080045ca   Section        0  def.o(i.lwip_htons)
-    i.lwip_ntohl                             0x080045d6   Section        0  def.o(i.lwip_ntohl)
-    i.lwip_ntohs                             0x080045e2   Section        0  def.o(i.lwip_ntohs)
-    i.lwip_standard_chksum                   0x080045ee   Section        0  inet_chksum.o(i.lwip_standard_chksum)
-    lwip_standard_chksum                     0x080045ef   Thumb Code    94  inet_chksum.o(i.lwip_standard_chksum)
-    i.main                                   0x0800464c   Section        0  main.o(i.main)
-    i.mem_free                               0x080046cc   Section        0  mem.o(i.mem_free)
-    i.mem_init                               0x0800471c   Section        0  mem.o(i.mem_init)
-    i.mem_malloc                             0x08004778   Section        0  mem.o(i.mem_malloc)
-    i.mem_trim                               0x08004864   Section        0  mem.o(i.mem_trim)
-    i.memp_free                              0x08004990   Section        0  memp.o(i.memp_free)
-    i.memp_init                              0x080049b0   Section        0  memp.o(i.memp_init)
-    i.memp_malloc                            0x08004a14   Section        0  memp.o(i.memp_malloc)
-    i.netif_add                              0x08004a40   Section        0  netif.o(i.netif_add)
-    i.netif_set_addr                         0x08004ab0   Section        0  netif.o(i.netif_set_addr)
-    i.netif_set_default                      0x08004ad8   Section        0  netif.o(i.netif_set_default)
-    i.netif_set_down                         0x08004ae4   Section        0  netif.o(i.netif_set_down)
-    i.netif_set_gw                           0x08004b0e   Section        0  netif.o(i.netif_set_gw)
-    i.netif_set_ipaddr                       0x08004b1c   Section        0  netif.o(i.netif_set_ipaddr)
-    i.netif_set_link_callback                0x08004b94   Section        0  netif.o(i.netif_set_link_callback)
-    i.netif_set_link_down                    0x08004b9a   Section        0  netif.o(i.netif_set_link_down)
-    i.netif_set_link_up                      0x08004bc4   Section        0  netif.o(i.netif_set_link_up)
-    i.netif_set_netmask                      0x08004c14   Section        0  netif.o(i.netif_set_netmask)
-    i.netif_set_up                           0x08004c20   Section        0  netif.o(i.netif_set_up)
-    i.pbuf_alloc                             0x08004c56   Section        0  pbuf.o(i.pbuf_alloc)
-    i.pbuf_alloced_custom                    0x08004de8   Section        0  pbuf.o(i.pbuf_alloced_custom)
-    i.pbuf_cat                               0x08004e54   Section        0  pbuf.o(i.pbuf_cat)
-    i.pbuf_chain                             0x08004e8c   Section        0  pbuf.o(i.pbuf_chain)
-    i.pbuf_clen                              0x08004ea2   Section        0  pbuf.o(i.pbuf_clen)
-    i.pbuf_copy                              0x08004eb4   Section        0  pbuf.o(i.pbuf_copy)
-    i.pbuf_copy_partial                      0x08004f74   Section        0  pbuf.o(i.pbuf_copy_partial)
-    i.pbuf_free                              0x08005006   Section        0  pbuf.o(i.pbuf_free)
-    i.pbuf_header                            0x0800508c   Section        0  pbuf.o(i.pbuf_header)
-    i.pbuf_realloc                           0x0800510a   Section        0  pbuf.o(i.pbuf_realloc)
-    i.pbuf_ref                               0x08005182   Section        0  pbuf.o(i.pbuf_ref)
-    i.plug_holes                             0x0800518c   Section        0  mem.o(i.plug_holes)
-    plug_holes                               0x0800518d   Thumb Code   124  mem.o(i.plug_holes)
-    i.raw_input                              0x08005214   Section        0  raw.o(i.raw_input)
-    i.sAD7980_ADC_Init                       0x08005288   Section        0  spi_ad7980_adc.o(i.sAD7980_ADC_Init)
-    i.sAD7980_ADC_LowLevel_Init              0x080052e4   Section        0  spi_ad7980_adc.o(i.sAD7980_ADC_LowLevel_Init)
-    i.sMAX5541_DAC_Init                      0x080053a8   Section        0  spi_max5541_dac.o(i.sMAX5541_DAC_Init)
-    i.sMAX5541_DAC_LowLevel_Init             0x08005410   Section        0  spi_max5541_dac.o(i.sMAX5541_DAC_LowLevel_Init)
-    i.tcp_abandon                            0x080054a0   Section        0  tcp.o(i.tcp_abandon)
-    i.tcp_abort                              0x08005534   Section        0  tcp.o(i.tcp_abort)
-    i.tcp_alloc                              0x08005544   Section        0  tcp.o(i.tcp_alloc)
-    i.tcp_close                              0x08005614   Section        0  tcp.o(i.tcp_close)
-    i.tcp_close_shutdown                     0x08005630   Section        0  tcp.o(i.tcp_close_shutdown)
-    tcp_close_shutdown                       0x08005631   Thumb Code   432  tcp.o(i.tcp_close_shutdown)
-    i.tcp_connect                            0x080057f8   Section        0  tcp.o(i.tcp_connect)
-    i.tcp_connected                          0x08005950   Section        0  tcp_echoclient.o(i.tcp_connected)
-    tcp_connected                            0x08005951   Thumb Code    94  tcp_echoclient.o(i.tcp_connected)
-    i.tcp_connected2                         0x080059b4   Section        0  main.o(i.tcp_connected2)
-    tcp_connected2                           0x080059b5   Thumb Code    66  main.o(i.tcp_connected2)
-    i.tcp_create_segment                     0x080059f6   Section        0  tcp_out.o(i.tcp_create_segment)
-    tcp_create_segment                       0x080059f7   Thumb Code   172  tcp_out.o(i.tcp_create_segment)
-    i.tcp_echoclient_connect                 0x08005aa4   Section        0  tcp_echoclient.o(i.tcp_echoclient_connect)
-    i.tcp_echoclient_connect2                0x08005ae0   Section        0  main.o(i.tcp_echoclient_connect2)
-    i.tcp_eff_send_mss                       0x08005b1c   Section        0  tcp.o(i.tcp_eff_send_mss)
-    i.tcp_enqueue_flags                      0x08005b4a   Section        0  tcp_out.o(i.tcp_enqueue_flags)
-    i.tcp_fasttmr                            0x08005c5c   Section        0  tcp.o(i.tcp_fasttmr)
-    i.tcp_input                              0x08005cd8   Section        0  tcp_in.o(i.tcp_input)
-    i.tcp_keepalive                          0x0800614c   Section        0  tcp_out.o(i.tcp_keepalive)
-    i.tcp_kill_prio                          0x08006190   Section        0  tcp.o(i.tcp_kill_prio)
-    tcp_kill_prio                            0x08006191   Thumb Code    76  tcp.o(i.tcp_kill_prio)
-    i.tcp_kill_timewait                      0x080061e4   Section        0  tcp.o(i.tcp_kill_timewait)
-    tcp_kill_timewait                        0x080061e5   Thumb Code    50  tcp.o(i.tcp_kill_timewait)
-    i.tcp_listen_input                       0x08006220   Section        0  tcp_in.o(i.tcp_listen_input)
-    tcp_listen_input                         0x08006221   Thumb Code   266  tcp_in.o(i.tcp_listen_input)
-    i.tcp_new                                0x08006350   Section        0  tcp.o(i.tcp_new)
-    i.tcp_new_port                           0x0800635c   Section        0  tcp.o(i.tcp_new_port)
-    tcp_new_port                             0x0800635d   Thumb Code    96  tcp.o(i.tcp_new_port)
-    i.tcp_next_iss                           0x080063c4   Section        0  tcp.o(i.tcp_next_iss)
-    i.tcp_output                             0x080063e0   Section        0  tcp_out.o(i.tcp_output)
-    i.tcp_output_alloc_header                0x080065a0   Section        0  tcp_out.o(i.tcp_output_alloc_header)
-    tcp_output_alloc_header                  0x080065a1   Thumb Code   120  tcp_out.o(i.tcp_output_alloc_header)
-    i.tcp_output_segment                     0x08006618   Section        0  tcp_out.o(i.tcp_output_segment)
-    tcp_output_segment                       0x08006619   Thumb Code   200  tcp_out.o(i.tcp_output_segment)
-    i.tcp_parseopt                           0x080066e4   Section        0  tcp_in.o(i.tcp_parseopt)
-    tcp_parseopt                             0x080066e5   Thumb Code   178  tcp_in.o(i.tcp_parseopt)
-    i.tcp_pbuf_prealloc                      0x0800679c   Section        0  tcp_out.o(i.tcp_pbuf_prealloc)
-    tcp_pbuf_prealloc                        0x0800679d   Thumb Code   120  tcp_out.o(i.tcp_pbuf_prealloc)
-    i.tcp_pcb_purge                          0x08006814   Section        0  tcp.o(i.tcp_pcb_purge)
-    i.tcp_pcb_remove                         0x08006854   Section        0  tcp.o(i.tcp_pcb_remove)
-    i.tcp_process                            0x080068e4   Section        0  tcp_in.o(i.tcp_process)
-    tcp_process                              0x080068e5   Thumb Code  1392  tcp_in.o(i.tcp_process)
-    i.tcp_process_refused_data               0x08006e70   Section        0  tcp.o(i.tcp_process_refused_data)
-    i.tcp_receive                            0x08006efc   Section        0  tcp_in.o(i.tcp_receive)
-    tcp_receive                              0x08006efd   Thumb Code  1592  tcp_in.o(i.tcp_receive)
-    i.tcp_recv_null                          0x08007548   Section        0  tcp.o(i.tcp_recv_null)
-    i.tcp_recved                             0x08007576   Section        0  tcp.o(i.tcp_recved)
-    i.tcp_rexmit                             0x080075bc   Section        0  tcp_out.o(i.tcp_rexmit)
-    i.tcp_rexmit_fast                        0x08007616   Section        0  tcp_out.o(i.tcp_rexmit_fast)
-    i.tcp_rexmit_rto                         0x08007686   Section        0  tcp_out.o(i.tcp_rexmit_rto)
-    i.tcp_rst                                0x080076c0   Section        0  tcp_out.o(i.tcp_rst)
-    i.tcp_seg_free                           0x0800773c   Section        0  tcp.o(i.tcp_seg_free)
-    i.tcp_segs_free                          0x08007756   Section        0  tcp.o(i.tcp_segs_free)
-    i.tcp_send_empty_ack                     0x0800776e   Section        0  tcp_out.o(i.tcp_send_empty_ack)
-    i.tcp_send_fin                           0x080077bc   Section        0  tcp_out.o(i.tcp_send_fin)
-    i.tcp_slowtmr                            0x08007808   Section        0  tcp.o(i.tcp_slowtmr)
-    i.tcp_timer_needed                       0x08007b4c   Section        0  timers.o(i.tcp_timer_needed)
-    i.tcp_timewait_input                     0x08007b50   Section        0  tcp_in.o(i.tcp_timewait_input)
-    tcp_timewait_input                       0x08007b51   Thumb Code   140  tcp_in.o(i.tcp_timewait_input)
-    i.tcp_tmr                                0x08007bfc   Section        0  tcp.o(i.tcp_tmr)
-    i.tcp_update_rcv_ann_wnd                 0x08007c20   Section        0  tcp.o(i.tcp_update_rcv_ann_wnd)
-    i.tcp_write                              0x08007c6e   Section        0  tcp_out.o(i.tcp_write)
-    i.tcp_write_checks                       0x08007ff4   Section        0  tcp_out.o(i.tcp_write_checks)
-    tcp_write_checks                         0x08007ff5   Thumb Code   112  tcp_out.o(i.tcp_write_checks)
-    i.tcp_zero_window_probe                  0x08008064   Section        0  tcp_out.o(i.tcp_zero_window_probe)
-    i.udp_bind                               0x08008108   Section        0  udp.o(i.udp_bind)
-    i.udp_connect                            0x08008188   Section        0  udp.o(i.udp_connect)
-    i.udp_input                              0x080081ec   Section        0  udp.o(i.udp_input)
-    i.udp_new                                0x080083bc   Section        0  udp.o(i.udp_new)
-    i.udp_new_port                           0x080083d8   Section        0  udp.o(i.udp_new_port)
-    udp_new_port                             0x080083d9   Thumb Code    80  udp.o(i.udp_new_port)
-    i.udp_recv                               0x08008430   Section        0  udp.o(i.udp_recv)
-    i.udp_remove                             0x08008438   Section        0  udp.o(i.udp_remove)
-    i.udp_sendto_if                          0x08008478   Section        0  udp.o(i.udp_sendto_if)
-    .constdata                               0x08008548   Section       24  uart_com1.o(.constdata)
-    .constdata                               0x08008560   Section       36  memp.o(.constdata)
-    memp_sizes                               0x08008560   Data          18  memp.o(.constdata)
-    memp_num                                 0x08008572   Data          18  memp.o(.constdata)
-    .constdata                               0x08008584   Section       80  tcp.o(.constdata)
-    .constdata                               0x080085d4   Section        8  ip_addr.o(.constdata)
-    .constdata                               0x080085dc   Section       12  etharp.o(.constdata)
-    .conststring                             0x080085e8   Section      104  tcp.o(.conststring)
+    i.dhcp_arp_reply                         0x08001dc2   Section        0  dhcp.o(i.dhcp_arp_reply)
+    i.dhcp_bind                              0x08001df0   Section        0  dhcp.o(i.dhcp_bind)
+    dhcp_bind                                0x08001df1   Thumb Code   228  dhcp.o(i.dhcp_bind)
+    i.dhcp_check                             0x08001ed4   Section        0  dhcp.o(i.dhcp_check)
+    dhcp_check                               0x08001ed5   Thumb Code    56  dhcp.o(i.dhcp_check)
+    i.dhcp_coarse_tmr                        0x08001f0c   Section        0  dhcp.o(i.dhcp_coarse_tmr)
+    i.dhcp_create_msg                        0x08001f50   Section        0  dhcp.o(i.dhcp_create_msg)
+    dhcp_create_msg                          0x08001f51   Thumb Code   318  dhcp.o(i.dhcp_create_msg)
+    i.dhcp_decline                           0x08002098   Section        0  dhcp.o(i.dhcp_decline)
+    dhcp_decline                             0x08002099   Thumb Code   126  dhcp.o(i.dhcp_decline)
+    i.dhcp_delete_msg                        0x0800211c   Section        0  dhcp.o(i.dhcp_delete_msg)
+    dhcp_delete_msg                          0x0800211d   Thumb Code    40  dhcp.o(i.dhcp_delete_msg)
+    i.dhcp_discover                          0x08002144   Section        0  dhcp.o(i.dhcp_discover)
+    dhcp_discover                            0x08002145   Thumb Code   190  dhcp.o(i.dhcp_discover)
+    i.dhcp_fine_tmr                          0x08002208   Section        0  dhcp.o(i.dhcp_fine_tmr)
+    i.dhcp_handle_ack                        0x0800224c   Section        0  dhcp.o(i.dhcp_handle_ack)
+    dhcp_handle_ack                          0x0800224d   Thumb Code   112  dhcp.o(i.dhcp_handle_ack)
+    i.dhcp_handle_nak                        0x080022c4   Section        0  dhcp.o(i.dhcp_handle_nak)
+    dhcp_handle_nak                          0x080022c5   Thumb Code    52  dhcp.o(i.dhcp_handle_nak)
+    i.dhcp_handle_offer                      0x080022fc   Section        0  dhcp.o(i.dhcp_handle_offer)
+    dhcp_handle_offer                        0x080022fd   Thumb Code    36  dhcp.o(i.dhcp_handle_offer)
+    i.dhcp_network_changed                   0x08002328   Section        0  dhcp.o(i.dhcp_network_changed)
+    i.dhcp_option                            0x08002378   Section        0  dhcp.o(i.dhcp_option)
+    dhcp_option                              0x08002379   Thumb Code    32  dhcp.o(i.dhcp_option)
+    i.dhcp_option_byte                       0x08002398   Section        0  dhcp.o(i.dhcp_option_byte)
+    dhcp_option_byte                         0x08002399   Thumb Code    18  dhcp.o(i.dhcp_option_byte)
+    i.dhcp_option_long                       0x080023aa   Section        0  dhcp.o(i.dhcp_option_long)
+    dhcp_option_long                         0x080023ab   Thumb Code    66  dhcp.o(i.dhcp_option_long)
+    i.dhcp_option_short                      0x080023ec   Section        0  dhcp.o(i.dhcp_option_short)
+    dhcp_option_short                        0x080023ed   Thumb Code    34  dhcp.o(i.dhcp_option_short)
+    i.dhcp_option_trailer                    0x0800240e   Section        0  dhcp.o(i.dhcp_option_trailer)
+    dhcp_option_trailer                      0x0800240f   Thumb Code    70  dhcp.o(i.dhcp_option_trailer)
+    i.dhcp_parse_reply                       0x08002454   Section        0  dhcp.o(i.dhcp_parse_reply)
+    dhcp_parse_reply                         0x08002455   Thumb Code   780  dhcp.o(i.dhcp_parse_reply)
+    i.dhcp_rebind                            0x08002768   Section        0  dhcp.o(i.dhcp_rebind)
+    dhcp_rebind                              0x08002769   Thumb Code   132  dhcp.o(i.dhcp_rebind)
+    i.dhcp_reboot                            0x080027f0   Section        0  dhcp.o(i.dhcp_reboot)
+    dhcp_reboot                              0x080027f1   Thumb Code   164  dhcp.o(i.dhcp_reboot)
+    i.dhcp_recv                              0x08002898   Section        0  dhcp.o(i.dhcp_recv)
+    dhcp_recv                                0x08002899   Thumb Code   246  dhcp.o(i.dhcp_recv)
+    i.dhcp_release                           0x08002998   Section        0  dhcp.o(i.dhcp_release)
+    i.dhcp_renew                             0x08002a40   Section        0  dhcp.o(i.dhcp_renew)
+    i.dhcp_select                            0x08002ac8   Section        0  dhcp.o(i.dhcp_select)
+    dhcp_select                              0x08002ac9   Thumb Code   240  dhcp.o(i.dhcp_select)
+    i.dhcp_set_state                         0x08002bbc   Section        0  dhcp.o(i.dhcp_set_state)
+    dhcp_set_state                           0x08002bbd   Thumb Code    16  dhcp.o(i.dhcp_set_state)
+    i.dhcp_start                             0x08002bcc   Section        0  dhcp.o(i.dhcp_start)
+    i.dhcp_stop                              0x08002ca4   Section        0  dhcp.o(i.dhcp_stop)
+    i.dhcp_t1_timeout                        0x08002cde   Section        0  dhcp.o(i.dhcp_t1_timeout)
+    dhcp_t1_timeout                          0x08002cdf   Thumb Code    32  dhcp.o(i.dhcp_t1_timeout)
+    i.dhcp_t2_timeout                        0x08002cfe   Section        0  dhcp.o(i.dhcp_t2_timeout)
+    dhcp_t2_timeout                          0x08002cff   Thumb Code    32  dhcp.o(i.dhcp_t2_timeout)
+    i.dhcp_timeout                           0x08002d1e   Section        0  dhcp.o(i.dhcp_timeout)
+    dhcp_timeout                             0x08002d1f   Thumb Code   164  dhcp.o(i.dhcp_timeout)
+    i.etharp_arp_input                       0x08002dc2   Section        0  etharp.o(i.etharp_arp_input)
+    etharp_arp_input                         0x08002dc3   Thumb Code   268  etharp.o(i.etharp_arp_input)
+    i.etharp_cleanup_netif                   0x08002ed0   Section        0  etharp.o(i.etharp_cleanup_netif)
+    i.etharp_find_entry                      0x08002f08   Section        0  etharp.o(i.etharp_find_entry)
+    etharp_find_entry                        0x08002f09   Thumb Code   348  etharp.o(i.etharp_find_entry)
+    i.etharp_free_entry                      0x08003068   Section        0  etharp.o(i.etharp_free_entry)
+    etharp_free_entry                        0x08003069   Thumb Code    58  etharp.o(i.etharp_free_entry)
+    i.etharp_output                          0x080030a8   Section        0  etharp.o(i.etharp_output)
+    i.etharp_output_to_arp_index             0x080031f0   Section        0  etharp.o(i.etharp_output_to_arp_index)
+    etharp_output_to_arp_index               0x080031f1   Thumb Code   104  etharp.o(i.etharp_output_to_arp_index)
+    i.etharp_query                           0x0800325c   Section        0  etharp.o(i.etharp_query)
+    i.etharp_raw                             0x080033b8   Section        0  etharp.o(i.etharp_raw)
+    etharp_raw                               0x080033b9   Thumb Code   178  etharp.o(i.etharp_raw)
+    i.etharp_request                         0x0800346c   Section        0  etharp.o(i.etharp_request)
+    i.etharp_send_ip                         0x08003498   Section        0  etharp.o(i.etharp_send_ip)
+    etharp_send_ip                           0x08003499   Thumb Code    56  etharp.o(i.etharp_send_ip)
+    i.etharp_tmr                             0x080034d0   Section        0  etharp.o(i.etharp_tmr)
+    i.etharp_update_arp_entry                0x0800355c   Section        0  etharp.o(i.etharp_update_arp_entry)
+    etharp_update_arp_entry                  0x0800355d   Thumb Code   178  etharp.o(i.etharp_update_arp_entry)
+    i.ethernet_input                         0x08003614   Section        0  etharp.o(i.ethernet_input)
+    i.ethernetif_init                        0x080036cc   Section        0  ethernetif.o(i.ethernetif_init)
+    i.ethernetif_input                       0x080036fc   Section        0  ethernetif.o(i.ethernetif_input)
+    i.icmp_dest_unreach                      0x08003726   Section        0  icmp.o(i.icmp_dest_unreach)
+    i.icmp_input                             0x08003738   Section        0  icmp.o(i.icmp_input)
+    i.icmp_send_response                     0x08003894   Section        0  icmp.o(i.icmp_send_response)
+    icmp_send_response                       0x08003895   Thumb Code   112  icmp.o(i.icmp_send_response)
+    i.icmp_time_exceeded                     0x08003904   Section        0  icmp.o(i.icmp_time_exceeded)
+    i.inet_chksum                            0x08003916   Section        0  inet_chksum.o(i.inet_chksum)
+    i.inet_chksum_pbuf                       0x0800392a   Section        0  inet_chksum.o(i.inet_chksum_pbuf)
+    i.ip4_addr_isbroadcast                   0x08003980   Section        0  ip_addr.o(i.ip4_addr_isbroadcast)
+    i.ip_frag                                0x080039d0   Section        0  ip_frag.o(i.ip_frag)
+    i.ip_frag_alloc_pbuf_custom_ref          0x08003b7c   Section        0  ip_frag.o(i.ip_frag_alloc_pbuf_custom_ref)
+    ip_frag_alloc_pbuf_custom_ref            0x08003b7d   Thumb Code    10  ip_frag.o(i.ip_frag_alloc_pbuf_custom_ref)
+    i.ip_frag_free_pbuf_custom_ref           0x08003b86   Section        0  ip_frag.o(i.ip_frag_free_pbuf_custom_ref)
+    ip_frag_free_pbuf_custom_ref             0x08003b87   Thumb Code    18  ip_frag.o(i.ip_frag_free_pbuf_custom_ref)
+    i.ip_input                               0x08003b98   Section        0  ip.o(i.ip_input)
+    i.ip_output                              0x08003d54   Section        0  ip.o(i.ip_output)
+    i.ip_output_if                           0x08003d8c   Section        0  ip.o(i.ip_output_if)
+    i.ip_reass                               0x08003e50   Section        0  ip_frag.o(i.ip_reass)
+    i.ip_reass_chain_frag_into_datagram_and_validate 0x08003fdc   Section        0  ip_frag.o(i.ip_reass_chain_frag_into_datagram_and_validate)
+    ip_reass_chain_frag_into_datagram_and_validate 0x08003fdd   Thumb Code   352  ip_frag.o(i.ip_reass_chain_frag_into_datagram_and_validate)
+    i.ip_reass_dequeue_datagram              0x08004140   Section        0  ip_frag.o(i.ip_reass_dequeue_datagram)
+    ip_reass_dequeue_datagram                0x08004141   Thumb Code    40  ip_frag.o(i.ip_reass_dequeue_datagram)
+    i.ip_reass_enqueue_new_datagram          0x0800416c   Section        0  ip_frag.o(i.ip_reass_enqueue_new_datagram)
+    ip_reass_enqueue_new_datagram            0x0800416d   Thumb Code    80  ip_frag.o(i.ip_reass_enqueue_new_datagram)
+    i.ip_reass_free_complete_datagram        0x080041c0   Section        0  ip_frag.o(i.ip_reass_free_complete_datagram)
+    ip_reass_free_complete_datagram          0x080041c1   Thumb Code   156  ip_frag.o(i.ip_reass_free_complete_datagram)
+    i.ip_reass_remove_oldest_datagram        0x08004260   Section        0  ip_frag.o(i.ip_reass_remove_oldest_datagram)
+    ip_reass_remove_oldest_datagram          0x08004261   Thumb Code   118  ip_frag.o(i.ip_reass_remove_oldest_datagram)
+    i.ip_route                               0x080042dc   Section        0  ip.o(i.ip_route)
+    i.ipfrag_free_pbuf_custom                0x08004330   Section        0  ip_frag.o(i.ipfrag_free_pbuf_custom)
+    ipfrag_free_pbuf_custom                  0x08004331   Thumb Code    32  ip_frag.o(i.ipfrag_free_pbuf_custom)
+    i.low_level_init                         0x08004350   Section        0  ethernetif.o(i.low_level_init)
+    low_level_init                           0x08004351   Thumb Code   110  ethernetif.o(i.low_level_init)
+    i.low_level_input                        0x080043d0   Section        0  ethernetif.o(i.low_level_input)
+    low_level_input                          0x080043d1   Thumb Code   216  ethernetif.o(i.low_level_input)
+    i.low_level_output                       0x080044b0   Section        0  ethernetif.o(i.low_level_output)
+    low_level_output                         0x080044b1   Thumb Code   214  ethernetif.o(i.low_level_output)
+    i.lwip_htonl                             0x08004590   Section        0  def.o(i.lwip_htonl)
+    i.lwip_htons                             0x080045aa   Section        0  def.o(i.lwip_htons)
+    i.lwip_ntohl                             0x080045b6   Section        0  def.o(i.lwip_ntohl)
+    i.lwip_ntohs                             0x080045c2   Section        0  def.o(i.lwip_ntohs)
+    i.lwip_standard_chksum                   0x080045ce   Section        0  inet_chksum.o(i.lwip_standard_chksum)
+    lwip_standard_chksum                     0x080045cf   Thumb Code    94  inet_chksum.o(i.lwip_standard_chksum)
+    i.main                                   0x0800462c   Section        0  main.o(i.main)
+    i.mem_free                               0x08004684   Section        0  mem.o(i.mem_free)
+    i.mem_init                               0x080046d4   Section        0  mem.o(i.mem_init)
+    i.mem_malloc                             0x08004730   Section        0  mem.o(i.mem_malloc)
+    i.mem_trim                               0x0800481c   Section        0  mem.o(i.mem_trim)
+    i.memp_free                              0x08004948   Section        0  memp.o(i.memp_free)
+    i.memp_init                              0x08004968   Section        0  memp.o(i.memp_init)
+    i.memp_malloc                            0x080049cc   Section        0  memp.o(i.memp_malloc)
+    i.netif_add                              0x080049f8   Section        0  netif.o(i.netif_add)
+    i.netif_set_addr                         0x08004a68   Section        0  netif.o(i.netif_set_addr)
+    i.netif_set_default                      0x08004a90   Section        0  netif.o(i.netif_set_default)
+    i.netif_set_down                         0x08004a9c   Section        0  netif.o(i.netif_set_down)
+    i.netif_set_gw                           0x08004ac6   Section        0  netif.o(i.netif_set_gw)
+    i.netif_set_ipaddr                       0x08004ad4   Section        0  netif.o(i.netif_set_ipaddr)
+    i.netif_set_link_callback                0x08004b4c   Section        0  netif.o(i.netif_set_link_callback)
+    i.netif_set_link_down                    0x08004b52   Section        0  netif.o(i.netif_set_link_down)
+    i.netif_set_link_up                      0x08004b7c   Section        0  netif.o(i.netif_set_link_up)
+    i.netif_set_netmask                      0x08004bcc   Section        0  netif.o(i.netif_set_netmask)
+    i.netif_set_up                           0x08004bd8   Section        0  netif.o(i.netif_set_up)
+    i.pbuf_alloc                             0x08004c0e   Section        0  pbuf.o(i.pbuf_alloc)
+    i.pbuf_alloced_custom                    0x08004da0   Section        0  pbuf.o(i.pbuf_alloced_custom)
+    i.pbuf_cat                               0x08004e0c   Section        0  pbuf.o(i.pbuf_cat)
+    i.pbuf_chain                             0x08004e44   Section        0  pbuf.o(i.pbuf_chain)
+    i.pbuf_clen                              0x08004e5a   Section        0  pbuf.o(i.pbuf_clen)
+    i.pbuf_copy                              0x08004e6c   Section        0  pbuf.o(i.pbuf_copy)
+    i.pbuf_copy_partial                      0x08004f2c   Section        0  pbuf.o(i.pbuf_copy_partial)
+    i.pbuf_free                              0x08004fbe   Section        0  pbuf.o(i.pbuf_free)
+    i.pbuf_header                            0x08005044   Section        0  pbuf.o(i.pbuf_header)
+    i.pbuf_realloc                           0x080050c2   Section        0  pbuf.o(i.pbuf_realloc)
+    i.pbuf_ref                               0x0800513a   Section        0  pbuf.o(i.pbuf_ref)
+    i.plug_holes                             0x08005144   Section        0  mem.o(i.plug_holes)
+    plug_holes                               0x08005145   Thumb Code   124  mem.o(i.plug_holes)
+    i.raw_input                              0x080051cc   Section        0  raw.o(i.raw_input)
+    i.sAD7980_ADC_Init                       0x08005240   Section        0  spi_ad7980_adc.o(i.sAD7980_ADC_Init)
+    i.sAD7980_ADC_LowLevel_Init              0x0800529c   Section        0  spi_ad7980_adc.o(i.sAD7980_ADC_LowLevel_Init)
+    i.sMAX5541_DAC_Init                      0x08005360   Section        0  spi_max5541_dac.o(i.sMAX5541_DAC_Init)
+    i.sMAX5541_DAC_LowLevel_Init             0x080053c8   Section        0  spi_max5541_dac.o(i.sMAX5541_DAC_LowLevel_Init)
+    i.tcp_abandon                            0x08005458   Section        0  tcp.o(i.tcp_abandon)
+    i.tcp_abort                              0x080054ec   Section        0  tcp.o(i.tcp_abort)
+    i.tcp_alloc                              0x080054fc   Section        0  tcp.o(i.tcp_alloc)
+    i.tcp_close                              0x080055cc   Section        0  tcp.o(i.tcp_close)
+    i.tcp_close_shutdown                     0x080055e8   Section        0  tcp.o(i.tcp_close_shutdown)
+    tcp_close_shutdown                       0x080055e9   Thumb Code   432  tcp.o(i.tcp_close_shutdown)
+    i.tcp_connect                            0x080057b0   Section        0  tcp.o(i.tcp_connect)
+    i.tcp_connected                          0x08005908   Section        0  tcp_echoclient.o(i.tcp_connected)
+    tcp_connected                            0x08005909   Thumb Code   130  tcp_echoclient.o(i.tcp_connected)
+    i.tcp_create_segment                     0x080059a4   Section        0  tcp_out.o(i.tcp_create_segment)
+    tcp_create_segment                       0x080059a5   Thumb Code   172  tcp_out.o(i.tcp_create_segment)
+    i.tcp_echoclient_connect                 0x08005a50   Section        0  tcp_echoclient.o(i.tcp_echoclient_connect)
+    i.tcp_eff_send_mss                       0x08005a8c   Section        0  tcp.o(i.tcp_eff_send_mss)
+    i.tcp_enqueue_flags                      0x08005aba   Section        0  tcp_out.o(i.tcp_enqueue_flags)
+    i.tcp_fasttmr                            0x08005bcc   Section        0  tcp.o(i.tcp_fasttmr)
+    i.tcp_input                              0x08005c48   Section        0  tcp_in.o(i.tcp_input)
+    i.tcp_keepalive                          0x080060bc   Section        0  tcp_out.o(i.tcp_keepalive)
+    i.tcp_kill_prio                          0x08006100   Section        0  tcp.o(i.tcp_kill_prio)
+    tcp_kill_prio                            0x08006101   Thumb Code    76  tcp.o(i.tcp_kill_prio)
+    i.tcp_kill_timewait                      0x08006154   Section        0  tcp.o(i.tcp_kill_timewait)
+    tcp_kill_timewait                        0x08006155   Thumb Code    50  tcp.o(i.tcp_kill_timewait)
+    i.tcp_listen_input                       0x08006190   Section        0  tcp_in.o(i.tcp_listen_input)
+    tcp_listen_input                         0x08006191   Thumb Code   266  tcp_in.o(i.tcp_listen_input)
+    i.tcp_new                                0x080062c0   Section        0  tcp.o(i.tcp_new)
+    i.tcp_new_port                           0x080062cc   Section        0  tcp.o(i.tcp_new_port)
+    tcp_new_port                             0x080062cd   Thumb Code    96  tcp.o(i.tcp_new_port)
+    i.tcp_next_iss                           0x08006334   Section        0  tcp.o(i.tcp_next_iss)
+    i.tcp_output                             0x08006350   Section        0  tcp_out.o(i.tcp_output)
+    i.tcp_output_alloc_header                0x08006510   Section        0  tcp_out.o(i.tcp_output_alloc_header)
+    tcp_output_alloc_header                  0x08006511   Thumb Code   120  tcp_out.o(i.tcp_output_alloc_header)
+    i.tcp_output_segment                     0x08006588   Section        0  tcp_out.o(i.tcp_output_segment)
+    tcp_output_segment                       0x08006589   Thumb Code   200  tcp_out.o(i.tcp_output_segment)
+    i.tcp_parseopt                           0x08006654   Section        0  tcp_in.o(i.tcp_parseopt)
+    tcp_parseopt                             0x08006655   Thumb Code   178  tcp_in.o(i.tcp_parseopt)
+    i.tcp_pbuf_prealloc                      0x0800670c   Section        0  tcp_out.o(i.tcp_pbuf_prealloc)
+    tcp_pbuf_prealloc                        0x0800670d   Thumb Code   120  tcp_out.o(i.tcp_pbuf_prealloc)
+    i.tcp_pcb_purge                          0x08006784   Section        0  tcp.o(i.tcp_pcb_purge)
+    i.tcp_pcb_remove                         0x080067c4   Section        0  tcp.o(i.tcp_pcb_remove)
+    i.tcp_process                            0x08006854   Section        0  tcp_in.o(i.tcp_process)
+    tcp_process                              0x08006855   Thumb Code  1392  tcp_in.o(i.tcp_process)
+    i.tcp_process_refused_data               0x08006de0   Section        0  tcp.o(i.tcp_process_refused_data)
+    i.tcp_receive                            0x08006e6c   Section        0  tcp_in.o(i.tcp_receive)
+    tcp_receive                              0x08006e6d   Thumb Code  1592  tcp_in.o(i.tcp_receive)
+    i.tcp_recv_null                          0x080074b8   Section        0  tcp.o(i.tcp_recv_null)
+    i.tcp_recved                             0x080074e6   Section        0  tcp.o(i.tcp_recved)
+    i.tcp_rexmit                             0x0800752c   Section        0  tcp_out.o(i.tcp_rexmit)
+    i.tcp_rexmit_fast                        0x08007586   Section        0  tcp_out.o(i.tcp_rexmit_fast)
+    i.tcp_rexmit_rto                         0x080075f6   Section        0  tcp_out.o(i.tcp_rexmit_rto)
+    i.tcp_rst                                0x08007630   Section        0  tcp_out.o(i.tcp_rst)
+    i.tcp_seg_free                           0x080076ac   Section        0  tcp.o(i.tcp_seg_free)
+    i.tcp_segs_free                          0x080076c6   Section        0  tcp.o(i.tcp_segs_free)
+    i.tcp_send_empty_ack                     0x080076de   Section        0  tcp_out.o(i.tcp_send_empty_ack)
+    i.tcp_send_fin                           0x0800772c   Section        0  tcp_out.o(i.tcp_send_fin)
+    i.tcp_slowtmr                            0x08007778   Section        0  tcp.o(i.tcp_slowtmr)
+    i.tcp_timer_needed                       0x08007abc   Section        0  timers.o(i.tcp_timer_needed)
+    i.tcp_timewait_input                     0x08007ac0   Section        0  tcp_in.o(i.tcp_timewait_input)
+    tcp_timewait_input                       0x08007ac1   Thumb Code   140  tcp_in.o(i.tcp_timewait_input)
+    i.tcp_tmr                                0x08007b6c   Section        0  tcp.o(i.tcp_tmr)
+    i.tcp_update_rcv_ann_wnd                 0x08007b90   Section        0  tcp.o(i.tcp_update_rcv_ann_wnd)
+    i.tcp_write                              0x08007bde   Section        0  tcp_out.o(i.tcp_write)
+    i.tcp_write_checks                       0x08007f64   Section        0  tcp_out.o(i.tcp_write_checks)
+    tcp_write_checks                         0x08007f65   Thumb Code   112  tcp_out.o(i.tcp_write_checks)
+    i.tcp_zero_window_probe                  0x08007fd4   Section        0  tcp_out.o(i.tcp_zero_window_probe)
+    i.udp_bind                               0x08008078   Section        0  udp.o(i.udp_bind)
+    i.udp_connect                            0x080080f8   Section        0  udp.o(i.udp_connect)
+    i.udp_input                              0x0800815c   Section        0  udp.o(i.udp_input)
+    i.udp_new                                0x0800832c   Section        0  udp.o(i.udp_new)
+    i.udp_new_port                           0x08008348   Section        0  udp.o(i.udp_new_port)
+    udp_new_port                             0x08008349   Thumb Code    80  udp.o(i.udp_new_port)
+    i.udp_recv                               0x080083a0   Section        0  udp.o(i.udp_recv)
+    i.udp_remove                             0x080083a8   Section        0  udp.o(i.udp_remove)
+    i.udp_sendto_if                          0x080083e8   Section        0  udp.o(i.udp_sendto_if)
+    .constdata                               0x080084b8   Section       24  uart_com1.o(.constdata)
+    .constdata                               0x080084d0   Section       36  memp.o(.constdata)
+    memp_sizes                               0x080084d0   Data          18  memp.o(.constdata)
+    memp_num                                 0x080084e2   Data          18  memp.o(.constdata)
+    .constdata                               0x080084f4   Section       80  tcp.o(.constdata)
+    .constdata                               0x08008544   Section        8  ip_addr.o(.constdata)
+    .constdata                               0x0800854c   Section       12  etharp.o(.constdata)
+    .conststring                             0x08008558   Section      104  tcp.o(.conststring)
     .data                                    0x20000000   Section       24  main.o(.data)
     TimingDelay                              0x20000010   Data           4  main.o(.data)
     .data                                    0x20000018   Section        4  stm32f4xx_it.o(.data)
@@ -2661,18 +2658,18 @@ Image Symbol Table
     etharp_cached_entry                      0x2000010a   Data           1  etharp.o(.data)
     .bss                                     0x2000010c   Section      188  stm32f4x7_eth_bsp.o(.bss)
     .bss                                     0x200001c8   Section       56  netconf.o(.bss)
-    .bss                                     0x20000200   Section     2050  tcp_echoclient.o(.bss)
-    .bss                                     0x20000a04   Section    12460  stm32f4x7_eth.o(.bss)
-    .bss                                     0x20003ab0   Section       50  dhcp.o(.bss)
-    .bss                                     0x20003ae2   Section    10260  mem.o(.bss)
-    .bss                                     0x200062f8   Section     8663  memp.o(.bss)
-    memp_tab                                 0x200062f8   Data          36  memp.o(.bss)
-    memp_memory                              0x2000631c   Data        8627  memp.o(.bss)
-    .bss                                     0x200084d0   Section       16  tcp_in.o(.bss)
-    inseg                                    0x200084d0   Data          16  tcp_in.o(.bss)
-    .bss                                     0x200084e0   Section      200  etharp.o(.bss)
-    arp_table                                0x200084e0   Data         200  etharp.o(.bss)
-    STACK                                    0x200085a8   Section     1024  startup_stm32f429_439xx.o(STACK)
+    .bss                                     0x20000200   Section    20050  tcp_echoclient.o(.bss)
+    .bss                                     0x20005054   Section    12460  stm32f4x7_eth.o(.bss)
+    .bss                                     0x20008100   Section       50  dhcp.o(.bss)
+    .bss                                     0x20008132   Section    10260  mem.o(.bss)
+    .bss                                     0x2000a948   Section     8663  memp.o(.bss)
+    memp_tab                                 0x2000a948   Data          36  memp.o(.bss)
+    memp_memory                              0x2000a96c   Data        8627  memp.o(.bss)
+    .bss                                     0x2000cb20   Section       16  tcp_in.o(.bss)
+    inseg                                    0x2000cb20   Data          16  tcp_in.o(.bss)
+    .bss                                     0x2000cb30   Section      200  etharp.o(.bss)
+    arp_table                                0x2000cb30   Data         200  etharp.o(.bss)
+    STACK                                    0x2000cbf8   Section     1024  startup_stm32f429_439xx.o(STACK)
 
     Global Symbols
 
@@ -2885,135 +2882,132 @@ Image Symbol Table
     __scatterload_copy                       0x08001da5   Thumb Code    14  handlers.o(i.__scatterload_copy)
     __scatterload_null                       0x08001db3   Thumb Code     2  handlers.o(i.__scatterload_null)
     __scatterload_zeroinit                   0x08001db5   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    _delay_ms                                0x08001dc3   Thumb Code    14  function.o(i._delay_ms)
-    _delay_us                                0x08001dd1   Thumb Code    18  function.o(i._delay_us)
-    dhcp_arp_reply                           0x08001de3   Thumb Code    46  dhcp.o(i.dhcp_arp_reply)
-    dhcp_coarse_tmr                          0x08001f2d   Thumb Code    62  dhcp.o(i.dhcp_coarse_tmr)
-    dhcp_fine_tmr                            0x08002229   Thumb Code    64  dhcp.o(i.dhcp_fine_tmr)
-    dhcp_network_changed                     0x08002349   Thumb Code    80  dhcp.o(i.dhcp_network_changed)
-    dhcp_release                             0x080029b9   Thumb Code   162  dhcp.o(i.dhcp_release)
-    dhcp_renew                               0x08002a61   Thumb Code   134  dhcp.o(i.dhcp_renew)
-    dhcp_start                               0x08002bed   Thumb Code   206  dhcp.o(i.dhcp_start)
-    dhcp_stop                                0x08002cc5   Thumb Code    58  dhcp.o(i.dhcp_stop)
-    etharp_cleanup_netif                     0x08002ef1   Thumb Code    52  etharp.o(i.etharp_cleanup_netif)
-    etharp_output                            0x080030c9   Thumb Code   314  etharp.o(i.etharp_output)
-    etharp_query                             0x0800327d   Thumb Code   338  etharp.o(i.etharp_query)
-    etharp_request                           0x0800348d   Thumb Code    36  etharp.o(i.etharp_request)
-    etharp_tmr                               0x080034f1   Thumb Code   136  etharp.o(i.etharp_tmr)
-    ethernet_input                           0x08003635   Thumb Code   178  etharp.o(i.ethernet_input)
-    ethernetif_init                          0x080036ed   Thumb Code    38  ethernetif.o(i.ethernetif_init)
-    ethernetif_input                         0x0800371d   Thumb Code    42  ethernetif.o(i.ethernetif_input)
-    icmp_dest_unreach                        0x08003747   Thumb Code    18  icmp.o(i.icmp_dest_unreach)
-    icmp_input                               0x08003759   Thumb Code   340  icmp.o(i.icmp_input)
-    icmp_time_exceeded                       0x08003925   Thumb Code    18  icmp.o(i.icmp_time_exceeded)
-    inet_chksum                              0x08003937   Thumb Code    20  inet_chksum.o(i.inet_chksum)
-    inet_chksum_pbuf                         0x0800394b   Thumb Code    86  inet_chksum.o(i.inet_chksum_pbuf)
-    ip4_addr_isbroadcast                     0x080039a1   Thumb Code    78  ip_addr.o(i.ip4_addr_isbroadcast)
-    ip_frag                                  0x080039f1   Thumb Code   424  ip_frag.o(i.ip_frag)
-    ip_input                                 0x08003bb9   Thumb Code   422  ip.o(i.ip_input)
-    ip_output                                0x08003d75   Thumb Code    56  ip.o(i.ip_output)
-    ip_output_if                             0x08003dad   Thumb Code   192  ip.o(i.ip_output_if)
-    ip_reass                                 0x08003e71   Thumb Code   386  ip_frag.o(i.ip_reass)
-    ip_route                                 0x080042fd   Thumb Code    76  ip.o(i.ip_route)
-    lwip_htonl                               0x080045b1   Thumb Code    26  def.o(i.lwip_htonl)
-    lwip_htons                               0x080045cb   Thumb Code    12  def.o(i.lwip_htons)
-    lwip_ntohl                               0x080045d7   Thumb Code    12  def.o(i.lwip_ntohl)
-    lwip_ntohs                               0x080045e3   Thumb Code    12  def.o(i.lwip_ntohs)
-    main                                     0x0800464d   Thumb Code   118  main.o(i.main)
-    mem_free                                 0x080046cd   Thumb Code    68  mem.o(i.mem_free)
-    mem_init                                 0x0800471d   Thumb Code    74  mem.o(i.mem_init)
-    mem_malloc                               0x08004779   Thumb Code   222  mem.o(i.mem_malloc)
-    mem_trim                                 0x08004865   Thumb Code   288  mem.o(i.mem_trim)
-    memp_free                                0x08004991   Thumb Code    28  memp.o(i.memp_free)
-    memp_init                                0x080049b1   Thumb Code    82  memp.o(i.memp_init)
-    memp_malloc                              0x08004a15   Thumb Code    40  memp.o(i.memp_malloc)
-    netif_add                                0x08004a41   Thumb Code   104  netif.o(i.netif_add)
-    netif_set_addr                           0x08004ab1   Thumb Code    40  netif.o(i.netif_set_addr)
-    netif_set_default                        0x08004ad9   Thumb Code     6  netif.o(i.netif_set_default)
-    netif_set_down                           0x08004ae5   Thumb Code    42  netif.o(i.netif_set_down)
-    netif_set_gw                             0x08004b0f   Thumb Code    12  netif.o(i.netif_set_gw)
-    netif_set_ipaddr                         0x08004b1d   Thumb Code   110  netif.o(i.netif_set_ipaddr)
-    netif_set_link_callback                  0x08004b95   Thumb Code     6  netif.o(i.netif_set_link_callback)
-    netif_set_link_down                      0x08004b9b   Thumb Code    42  netif.o(i.netif_set_link_down)
-    netif_set_link_up                        0x08004bc5   Thumb Code    80  netif.o(i.netif_set_link_up)
-    netif_set_netmask                        0x08004c15   Thumb Code    12  netif.o(i.netif_set_netmask)
-    netif_set_up                             0x08004c21   Thumb Code    54  netif.o(i.netif_set_up)
-    pbuf_alloc                               0x08004c57   Thumb Code   402  pbuf.o(i.pbuf_alloc)
-    pbuf_alloced_custom                      0x08004de9   Thumb Code   108  pbuf.o(i.pbuf_alloced_custom)
-    pbuf_cat                                 0x08004e55   Thumb Code    56  pbuf.o(i.pbuf_cat)
-    pbuf_chain                               0x08004e8d   Thumb Code    22  pbuf.o(i.pbuf_chain)
-    pbuf_clen                                0x08004ea3   Thumb Code    18  pbuf.o(i.pbuf_clen)
-    pbuf_copy                                0x08004eb5   Thumb Code   192  pbuf.o(i.pbuf_copy)
-    pbuf_copy_partial                        0x08004f75   Thumb Code   146  pbuf.o(i.pbuf_copy_partial)
-    pbuf_free                                0x08005007   Thumb Code   134  pbuf.o(i.pbuf_free)
-    pbuf_header                              0x0800508d   Thumb Code   126  pbuf.o(i.pbuf_header)
-    pbuf_realloc                             0x0800510b   Thumb Code   120  pbuf.o(i.pbuf_realloc)
-    pbuf_ref                                 0x08005183   Thumb Code    10  pbuf.o(i.pbuf_ref)
-    raw_input                                0x08005215   Thumb Code   102  raw.o(i.raw_input)
-    sAD7980_ADC_Init                         0x08005289   Thumb Code    86  spi_ad7980_adc.o(i.sAD7980_ADC_Init)
-    sAD7980_ADC_LowLevel_Init                0x080052e5   Thumb Code   188  spi_ad7980_adc.o(i.sAD7980_ADC_LowLevel_Init)
-    sMAX5541_DAC_Init                        0x080053a9   Thumb Code    94  spi_max5541_dac.o(i.sMAX5541_DAC_Init)
-    sMAX5541_DAC_LowLevel_Init               0x08005411   Thumb Code   140  spi_max5541_dac.o(i.sMAX5541_DAC_LowLevel_Init)
-    tcp_abandon                              0x080054a1   Thumb Code   136  tcp.o(i.tcp_abandon)
-    tcp_abort                                0x08005535   Thumb Code    14  tcp.o(i.tcp_abort)
-    tcp_alloc                                0x08005545   Thumb Code   192  tcp.o(i.tcp_alloc)
-    tcp_close                                0x08005615   Thumb Code    28  tcp.o(i.tcp_close)
-    tcp_connect                              0x080057f9   Thumb Code   328  tcp.o(i.tcp_connect)
-    tcp_echoclient_connect                   0x08005aa5   Thumb Code    48  tcp_echoclient.o(i.tcp_echoclient_connect)
-    tcp_echoclient_connect2                  0x08005ae1   Thumb Code    48  main.o(i.tcp_echoclient_connect2)
-    tcp_eff_send_mss                         0x08005b1d   Thumb Code    46  tcp.o(i.tcp_eff_send_mss)
-    tcp_enqueue_flags                        0x08005b4b   Thumb Code   272  tcp_out.o(i.tcp_enqueue_flags)
-    tcp_fasttmr                              0x08005c5d   Thumb Code   110  tcp.o(i.tcp_fasttmr)
-    tcp_input                                0x08005cd9   Thumb Code  1128  tcp_in.o(i.tcp_input)
-    tcp_keepalive                            0x0800614d   Thumb Code    68  tcp_out.o(i.tcp_keepalive)
-    tcp_new                                  0x08006351   Thumb Code    10  tcp.o(i.tcp_new)
-    tcp_next_iss                             0x080063c5   Thumb Code    20  tcp.o(i.tcp_next_iss)
-    tcp_output                               0x080063e1   Thumb Code   444  tcp_out.o(i.tcp_output)
-    tcp_pcb_purge                            0x08006815   Thumb Code    64  tcp.o(i.tcp_pcb_purge)
-    tcp_pcb_remove                           0x08006855   Thumb Code   140  tcp.o(i.tcp_pcb_remove)
-    tcp_process_refused_data                 0x08006e71   Thumb Code   140  tcp.o(i.tcp_process_refused_data)
-    tcp_recv_null                            0x08007549   Thumb Code    46  tcp.o(i.tcp_recv_null)
-    tcp_recved                               0x08007577   Thumb Code    70  tcp.o(i.tcp_recved)
-    tcp_rexmit                               0x080075bd   Thumb Code    90  tcp_out.o(i.tcp_rexmit)
-    tcp_rexmit_fast                          0x08007617   Thumb Code   112  tcp_out.o(i.tcp_rexmit_fast)
-    tcp_rexmit_rto                           0x08007687   Thumb Code    58  tcp_out.o(i.tcp_rexmit_rto)
-    tcp_rst                                  0x080076c1   Thumb Code   124  tcp_out.o(i.tcp_rst)
-    tcp_seg_free                             0x0800773d   Thumb Code    26  tcp.o(i.tcp_seg_free)
-    tcp_segs_free                            0x08007757   Thumb Code    24  tcp.o(i.tcp_segs_free)
-    tcp_send_empty_ack                       0x0800776f   Thumb Code    78  tcp_out.o(i.tcp_send_empty_ack)
-    tcp_send_fin                             0x080077bd   Thumb Code    74  tcp_out.o(i.tcp_send_fin)
-    tcp_slowtmr                              0x08007809   Thumb Code   802  tcp.o(i.tcp_slowtmr)
-    tcp_timer_needed                         0x08007b4d   Thumb Code     2  timers.o(i.tcp_timer_needed)
-    tcp_tmr                                  0x08007bfd   Thumb Code    30  tcp.o(i.tcp_tmr)
-    tcp_update_rcv_ann_wnd                   0x08007c21   Thumb Code    78  tcp.o(i.tcp_update_rcv_ann_wnd)
-    tcp_write                                0x08007c6f   Thumb Code   902  tcp_out.o(i.tcp_write)
-    tcp_zero_window_probe                    0x08008065   Thumb Code   164  tcp_out.o(i.tcp_zero_window_probe)
-    udp_bind                                 0x08008109   Thumb Code   122  udp.o(i.udp_bind)
-    udp_connect                              0x08008189   Thumb Code    94  udp.o(i.udp_connect)
-    udp_input                                0x080081ed   Thumb Code   450  udp.o(i.udp_input)
-    udp_new                                  0x080083bd   Thumb Code    28  udp.o(i.udp_new)
-    udp_recv                                 0x08008431   Thumb Code     6  udp.o(i.udp_recv)
-    udp_remove                               0x08008439   Thumb Code    60  udp.o(i.udp_remove)
-    udp_sendto_if                            0x08008479   Thumb Code   206  udp.o(i.udp_sendto_if)
-    COM_USART_CLK                            0x08008548   Data           4  uart_com1.o(.constdata)
-    COM_TX_PORT_CLK                          0x0800854c   Data           4  uart_com1.o(.constdata)
-    COM_RX_PORT_CLK                          0x08008550   Data           4  uart_com1.o(.constdata)
-    COM_TX_PIN                               0x08008554   Data           2  uart_com1.o(.constdata)
-    COM_RX_PIN                               0x08008556   Data           2  uart_com1.o(.constdata)
-    COM_TX_PIN_SOURCE                        0x08008558   Data           2  uart_com1.o(.constdata)
-    COM_RX_PIN_SOURCE                        0x0800855a   Data           2  uart_com1.o(.constdata)
-    COM_TX_AF                                0x0800855c   Data           2  uart_com1.o(.constdata)
-    COM_RX_AF                                0x0800855e   Data           2  uart_com1.o(.constdata)
-    tcp_state_str                            0x08008584   Data          44  tcp.o(.constdata)
-    tcp_backoff                              0x080085b0   Data          13  tcp.o(.constdata)
-    tcp_persist_backoff                      0x080085bd   Data           7  tcp.o(.constdata)
-    tcp_pcb_lists                            0x080085c4   Data          16  tcp.o(.constdata)
-    ip_addr_any                              0x080085d4   Data           4  ip_addr.o(.constdata)
-    ip_addr_broadcast                        0x080085d8   Data           4  ip_addr.o(.constdata)
-    ethbroadcast                             0x080085dc   Data           6  etharp.o(.constdata)
-    ethzero                                  0x080085e2   Data           6  etharp.o(.constdata)
-    Region$$Table$$Base                      0x08008650   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08008670   Number         0  anon$$obj.o(Region$$Table)
+    dhcp_arp_reply                           0x08001dc3   Thumb Code    46  dhcp.o(i.dhcp_arp_reply)
+    dhcp_coarse_tmr                          0x08001f0d   Thumb Code    62  dhcp.o(i.dhcp_coarse_tmr)
+    dhcp_fine_tmr                            0x08002209   Thumb Code    64  dhcp.o(i.dhcp_fine_tmr)
+    dhcp_network_changed                     0x08002329   Thumb Code    80  dhcp.o(i.dhcp_network_changed)
+    dhcp_release                             0x08002999   Thumb Code   162  dhcp.o(i.dhcp_release)
+    dhcp_renew                               0x08002a41   Thumb Code   134  dhcp.o(i.dhcp_renew)
+    dhcp_start                               0x08002bcd   Thumb Code   206  dhcp.o(i.dhcp_start)
+    dhcp_stop                                0x08002ca5   Thumb Code    58  dhcp.o(i.dhcp_stop)
+    etharp_cleanup_netif                     0x08002ed1   Thumb Code    52  etharp.o(i.etharp_cleanup_netif)
+    etharp_output                            0x080030a9   Thumb Code   314  etharp.o(i.etharp_output)
+    etharp_query                             0x0800325d   Thumb Code   338  etharp.o(i.etharp_query)
+    etharp_request                           0x0800346d   Thumb Code    36  etharp.o(i.etharp_request)
+    etharp_tmr                               0x080034d1   Thumb Code   136  etharp.o(i.etharp_tmr)
+    ethernet_input                           0x08003615   Thumb Code   178  etharp.o(i.ethernet_input)
+    ethernetif_init                          0x080036cd   Thumb Code    38  ethernetif.o(i.ethernetif_init)
+    ethernetif_input                         0x080036fd   Thumb Code    42  ethernetif.o(i.ethernetif_input)
+    icmp_dest_unreach                        0x08003727   Thumb Code    18  icmp.o(i.icmp_dest_unreach)
+    icmp_input                               0x08003739   Thumb Code   340  icmp.o(i.icmp_input)
+    icmp_time_exceeded                       0x08003905   Thumb Code    18  icmp.o(i.icmp_time_exceeded)
+    inet_chksum                              0x08003917   Thumb Code    20  inet_chksum.o(i.inet_chksum)
+    inet_chksum_pbuf                         0x0800392b   Thumb Code    86  inet_chksum.o(i.inet_chksum_pbuf)
+    ip4_addr_isbroadcast                     0x08003981   Thumb Code    78  ip_addr.o(i.ip4_addr_isbroadcast)
+    ip_frag                                  0x080039d1   Thumb Code   424  ip_frag.o(i.ip_frag)
+    ip_input                                 0x08003b99   Thumb Code   422  ip.o(i.ip_input)
+    ip_output                                0x08003d55   Thumb Code    56  ip.o(i.ip_output)
+    ip_output_if                             0x08003d8d   Thumb Code   192  ip.o(i.ip_output_if)
+    ip_reass                                 0x08003e51   Thumb Code   386  ip_frag.o(i.ip_reass)
+    ip_route                                 0x080042dd   Thumb Code    76  ip.o(i.ip_route)
+    lwip_htonl                               0x08004591   Thumb Code    26  def.o(i.lwip_htonl)
+    lwip_htons                               0x080045ab   Thumb Code    12  def.o(i.lwip_htons)
+    lwip_ntohl                               0x080045b7   Thumb Code    12  def.o(i.lwip_ntohl)
+    lwip_ntohs                               0x080045c3   Thumb Code    12  def.o(i.lwip_ntohs)
+    main                                     0x0800462d   Thumb Code    78  main.o(i.main)
+    mem_free                                 0x08004685   Thumb Code    68  mem.o(i.mem_free)
+    mem_init                                 0x080046d5   Thumb Code    74  mem.o(i.mem_init)
+    mem_malloc                               0x08004731   Thumb Code   222  mem.o(i.mem_malloc)
+    mem_trim                                 0x0800481d   Thumb Code   288  mem.o(i.mem_trim)
+    memp_free                                0x08004949   Thumb Code    28  memp.o(i.memp_free)
+    memp_init                                0x08004969   Thumb Code    82  memp.o(i.memp_init)
+    memp_malloc                              0x080049cd   Thumb Code    40  memp.o(i.memp_malloc)
+    netif_add                                0x080049f9   Thumb Code   104  netif.o(i.netif_add)
+    netif_set_addr                           0x08004a69   Thumb Code    40  netif.o(i.netif_set_addr)
+    netif_set_default                        0x08004a91   Thumb Code     6  netif.o(i.netif_set_default)
+    netif_set_down                           0x08004a9d   Thumb Code    42  netif.o(i.netif_set_down)
+    netif_set_gw                             0x08004ac7   Thumb Code    12  netif.o(i.netif_set_gw)
+    netif_set_ipaddr                         0x08004ad5   Thumb Code   110  netif.o(i.netif_set_ipaddr)
+    netif_set_link_callback                  0x08004b4d   Thumb Code     6  netif.o(i.netif_set_link_callback)
+    netif_set_link_down                      0x08004b53   Thumb Code    42  netif.o(i.netif_set_link_down)
+    netif_set_link_up                        0x08004b7d   Thumb Code    80  netif.o(i.netif_set_link_up)
+    netif_set_netmask                        0x08004bcd   Thumb Code    12  netif.o(i.netif_set_netmask)
+    netif_set_up                             0x08004bd9   Thumb Code    54  netif.o(i.netif_set_up)
+    pbuf_alloc                               0x08004c0f   Thumb Code   402  pbuf.o(i.pbuf_alloc)
+    pbuf_alloced_custom                      0x08004da1   Thumb Code   108  pbuf.o(i.pbuf_alloced_custom)
+    pbuf_cat                                 0x08004e0d   Thumb Code    56  pbuf.o(i.pbuf_cat)
+    pbuf_chain                               0x08004e45   Thumb Code    22  pbuf.o(i.pbuf_chain)
+    pbuf_clen                                0x08004e5b   Thumb Code    18  pbuf.o(i.pbuf_clen)
+    pbuf_copy                                0x08004e6d   Thumb Code   192  pbuf.o(i.pbuf_copy)
+    pbuf_copy_partial                        0x08004f2d   Thumb Code   146  pbuf.o(i.pbuf_copy_partial)
+    pbuf_free                                0x08004fbf   Thumb Code   134  pbuf.o(i.pbuf_free)
+    pbuf_header                              0x08005045   Thumb Code   126  pbuf.o(i.pbuf_header)
+    pbuf_realloc                             0x080050c3   Thumb Code   120  pbuf.o(i.pbuf_realloc)
+    pbuf_ref                                 0x0800513b   Thumb Code    10  pbuf.o(i.pbuf_ref)
+    raw_input                                0x080051cd   Thumb Code   102  raw.o(i.raw_input)
+    sAD7980_ADC_Init                         0x08005241   Thumb Code    86  spi_ad7980_adc.o(i.sAD7980_ADC_Init)
+    sAD7980_ADC_LowLevel_Init                0x0800529d   Thumb Code   188  spi_ad7980_adc.o(i.sAD7980_ADC_LowLevel_Init)
+    sMAX5541_DAC_Init                        0x08005361   Thumb Code    94  spi_max5541_dac.o(i.sMAX5541_DAC_Init)
+    sMAX5541_DAC_LowLevel_Init               0x080053c9   Thumb Code   140  spi_max5541_dac.o(i.sMAX5541_DAC_LowLevel_Init)
+    tcp_abandon                              0x08005459   Thumb Code   136  tcp.o(i.tcp_abandon)
+    tcp_abort                                0x080054ed   Thumb Code    14  tcp.o(i.tcp_abort)
+    tcp_alloc                                0x080054fd   Thumb Code   192  tcp.o(i.tcp_alloc)
+    tcp_close                                0x080055cd   Thumb Code    28  tcp.o(i.tcp_close)
+    tcp_connect                              0x080057b1   Thumb Code   328  tcp.o(i.tcp_connect)
+    tcp_echoclient_connect                   0x08005a51   Thumb Code    48  tcp_echoclient.o(i.tcp_echoclient_connect)
+    tcp_eff_send_mss                         0x08005a8d   Thumb Code    46  tcp.o(i.tcp_eff_send_mss)
+    tcp_enqueue_flags                        0x08005abb   Thumb Code   272  tcp_out.o(i.tcp_enqueue_flags)
+    tcp_fasttmr                              0x08005bcd   Thumb Code   110  tcp.o(i.tcp_fasttmr)
+    tcp_input                                0x08005c49   Thumb Code  1128  tcp_in.o(i.tcp_input)
+    tcp_keepalive                            0x080060bd   Thumb Code    68  tcp_out.o(i.tcp_keepalive)
+    tcp_new                                  0x080062c1   Thumb Code    10  tcp.o(i.tcp_new)
+    tcp_next_iss                             0x08006335   Thumb Code    20  tcp.o(i.tcp_next_iss)
+    tcp_output                               0x08006351   Thumb Code   444  tcp_out.o(i.tcp_output)
+    tcp_pcb_purge                            0x08006785   Thumb Code    64  tcp.o(i.tcp_pcb_purge)
+    tcp_pcb_remove                           0x080067c5   Thumb Code   140  tcp.o(i.tcp_pcb_remove)
+    tcp_process_refused_data                 0x08006de1   Thumb Code   140  tcp.o(i.tcp_process_refused_data)
+    tcp_recv_null                            0x080074b9   Thumb Code    46  tcp.o(i.tcp_recv_null)
+    tcp_recved                               0x080074e7   Thumb Code    70  tcp.o(i.tcp_recved)
+    tcp_rexmit                               0x0800752d   Thumb Code    90  tcp_out.o(i.tcp_rexmit)
+    tcp_rexmit_fast                          0x08007587   Thumb Code   112  tcp_out.o(i.tcp_rexmit_fast)
+    tcp_rexmit_rto                           0x080075f7   Thumb Code    58  tcp_out.o(i.tcp_rexmit_rto)
+    tcp_rst                                  0x08007631   Thumb Code   124  tcp_out.o(i.tcp_rst)
+    tcp_seg_free                             0x080076ad   Thumb Code    26  tcp.o(i.tcp_seg_free)
+    tcp_segs_free                            0x080076c7   Thumb Code    24  tcp.o(i.tcp_segs_free)
+    tcp_send_empty_ack                       0x080076df   Thumb Code    78  tcp_out.o(i.tcp_send_empty_ack)
+    tcp_send_fin                             0x0800772d   Thumb Code    74  tcp_out.o(i.tcp_send_fin)
+    tcp_slowtmr                              0x08007779   Thumb Code   802  tcp.o(i.tcp_slowtmr)
+    tcp_timer_needed                         0x08007abd   Thumb Code     2  timers.o(i.tcp_timer_needed)
+    tcp_tmr                                  0x08007b6d   Thumb Code    30  tcp.o(i.tcp_tmr)
+    tcp_update_rcv_ann_wnd                   0x08007b91   Thumb Code    78  tcp.o(i.tcp_update_rcv_ann_wnd)
+    tcp_write                                0x08007bdf   Thumb Code   902  tcp_out.o(i.tcp_write)
+    tcp_zero_window_probe                    0x08007fd5   Thumb Code   164  tcp_out.o(i.tcp_zero_window_probe)
+    udp_bind                                 0x08008079   Thumb Code   122  udp.o(i.udp_bind)
+    udp_connect                              0x080080f9   Thumb Code    94  udp.o(i.udp_connect)
+    udp_input                                0x0800815d   Thumb Code   450  udp.o(i.udp_input)
+    udp_new                                  0x0800832d   Thumb Code    28  udp.o(i.udp_new)
+    udp_recv                                 0x080083a1   Thumb Code     6  udp.o(i.udp_recv)
+    udp_remove                               0x080083a9   Thumb Code    60  udp.o(i.udp_remove)
+    udp_sendto_if                            0x080083e9   Thumb Code   206  udp.o(i.udp_sendto_if)
+    COM_USART_CLK                            0x080084b8   Data           4  uart_com1.o(.constdata)
+    COM_TX_PORT_CLK                          0x080084bc   Data           4  uart_com1.o(.constdata)
+    COM_RX_PORT_CLK                          0x080084c0   Data           4  uart_com1.o(.constdata)
+    COM_TX_PIN                               0x080084c4   Data           2  uart_com1.o(.constdata)
+    COM_RX_PIN                               0x080084c6   Data           2  uart_com1.o(.constdata)
+    COM_TX_PIN_SOURCE                        0x080084c8   Data           2  uart_com1.o(.constdata)
+    COM_RX_PIN_SOURCE                        0x080084ca   Data           2  uart_com1.o(.constdata)
+    COM_TX_AF                                0x080084cc   Data           2  uart_com1.o(.constdata)
+    COM_RX_AF                                0x080084ce   Data           2  uart_com1.o(.constdata)
+    tcp_state_str                            0x080084f4   Data          44  tcp.o(.constdata)
+    tcp_backoff                              0x08008520   Data          13  tcp.o(.constdata)
+    tcp_persist_backoff                      0x0800852d   Data           7  tcp.o(.constdata)
+    tcp_pcb_lists                            0x08008534   Data          16  tcp.o(.constdata)
+    ip_addr_any                              0x08008544   Data           4  ip_addr.o(.constdata)
+    ip_addr_broadcast                        0x08008548   Data           4  ip_addr.o(.constdata)
+    ethbroadcast                             0x0800854c   Data           6  etharp.o(.constdata)
+    ethzero                                  0x08008552   Data           6  etharp.o(.constdata)
+    Region$$Table$$Base                      0x080085c0   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080085e0   Number         0  anon$$obj.o(Region$$Table)
     dac_step                                 0x20000000   Data           1  main.o(.data)
     LocalTime                                0x20000004   Data           4  main.o(.data)
     tcp_conneced                             0x20000008   Data           1  main.o(.data)
@@ -3057,16 +3051,16 @@ Image Symbol Table
     ETH_InitStructure                        0x2000010c   Data         188  stm32f4x7_eth_bsp.o(.bss)
     gnetif                                   0x200001c8   Data          56  netconf.o(.bss)
     recev_buf                                0x20000200   Data          50  tcp_echoclient.o(.bss)
-    data                                     0x20000232   Data        2000  tcp_echoclient.o(.bss)
-    DMARxDscrTab                             0x20000a04   Data         128  stm32f4x7_eth.o(.bss)
-    DMATxDscrTab                             0x20000a84   Data         128  stm32f4x7_eth.o(.bss)
-    Rx_Buff                                  0x20000b04   Data        6096  stm32f4x7_eth.o(.bss)
-    Tx_Buff                                  0x200022d4   Data        6096  stm32f4x7_eth.o(.bss)
-    RX_Frame_Descriptor                      0x20003aa4   Data          12  stm32f4x7_eth.o(.bss)
-    dhcp_rx_options_val                      0x20003ab0   Data          40  dhcp.o(.bss)
-    dhcp_rx_options_given                    0x20003ad8   Data          10  dhcp.o(.bss)
-    ram_heap                                 0x20003ae2   Data       10260  mem.o(.bss)
-    __initial_sp                             0x200089a8   Data           0  startup_stm32f429_439xx.o(STACK)
+    data                                     0x20000232   Data       20000  tcp_echoclient.o(.bss)
+    DMARxDscrTab                             0x20005054   Data         128  stm32f4x7_eth.o(.bss)
+    DMATxDscrTab                             0x200050d4   Data         128  stm32f4x7_eth.o(.bss)
+    Rx_Buff                                  0x20005154   Data        6096  stm32f4x7_eth.o(.bss)
+    Tx_Buff                                  0x20006924   Data        6096  stm32f4x7_eth.o(.bss)
+    RX_Frame_Descriptor                      0x200080f4   Data          12  stm32f4x7_eth.o(.bss)
+    dhcp_rx_options_val                      0x20008100   Data          40  dhcp.o(.bss)
+    dhcp_rx_options_given                    0x20008128   Data          10  dhcp.o(.bss)
+    ram_heap                                 0x20008132   Data       10260  mem.o(.bss)
+    __initial_sp                             0x2000cff8   Data           0  startup_stm32f429_439xx.o(STACK)
 
 
 
@@ -3076,9 +3070,9 @@ Memory Map of the image
 
   Image Entry point : 0x080001ad
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000877c, Max: 0x00100000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000086ec, Max: 0x00100000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00008670, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000085e0, Max: 0x00100000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3196,200 +3190,195 @@ Memory Map of the image
     0x08001da4   0x0000000e   Code   RO         7894    i.__scatterload_copy  mc_w.l(handlers.o)
     0x08001db2   0x00000002   Code   RO         7895    i.__scatterload_null  mc_w.l(handlers.o)
     0x08001db4   0x0000000e   Code   RO         7896    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08001dc2   0x0000000e   Code   RO          728    i._delay_ms         function.o
-    0x08001dd0   0x00000012   Code   RO          729    i._delay_us         function.o
-    0x08001de2   0x0000002e   Code   RO         6368    i.dhcp_arp_reply    dhcp.o
-    0x08001e10   0x000000e4   Code   RO         6369    i.dhcp_bind         dhcp.o
-    0x08001ef4   0x00000038   Code   RO         6370    i.dhcp_check        dhcp.o
-    0x08001f2c   0x00000044   Code   RO         6372    i.dhcp_coarse_tmr   dhcp.o
-    0x08001f70   0x00000148   Code   RO         6373    i.dhcp_create_msg   dhcp.o
-    0x080020b8   0x00000084   Code   RO         6374    i.dhcp_decline      dhcp.o
-    0x0800213c   0x00000028   Code   RO         6375    i.dhcp_delete_msg   dhcp.o
-    0x08002164   0x000000c4   Code   RO         6376    i.dhcp_discover     dhcp.o
-    0x08002228   0x00000044   Code   RO         6377    i.dhcp_fine_tmr     dhcp.o
-    0x0800226c   0x00000078   Code   RO         6378    i.dhcp_handle_ack   dhcp.o
-    0x080022e4   0x00000038   Code   RO         6379    i.dhcp_handle_nak   dhcp.o
-    0x0800231c   0x0000002c   Code   RO         6380    i.dhcp_handle_offer  dhcp.o
-    0x08002348   0x00000050   Code   RO         6382    i.dhcp_network_changed  dhcp.o
-    0x08002398   0x00000020   Code   RO         6383    i.dhcp_option       dhcp.o
-    0x080023b8   0x00000012   Code   RO         6384    i.dhcp_option_byte  dhcp.o
-    0x080023ca   0x00000042   Code   RO         6385    i.dhcp_option_long  dhcp.o
-    0x0800240c   0x00000022   Code   RO         6386    i.dhcp_option_short  dhcp.o
-    0x0800242e   0x00000046   Code   RO         6387    i.dhcp_option_trailer  dhcp.o
-    0x08002474   0x00000314   Code   RO         6388    i.dhcp_parse_reply  dhcp.o
-    0x08002788   0x00000088   Code   RO         6389    i.dhcp_rebind       dhcp.o
-    0x08002810   0x000000a8   Code   RO         6390    i.dhcp_reboot       dhcp.o
-    0x080028b8   0x00000100   Code   RO         6391    i.dhcp_recv         dhcp.o
-    0x080029b8   0x000000a8   Code   RO         6392    i.dhcp_release      dhcp.o
-    0x08002a60   0x00000086   Code   RO         6393    i.dhcp_renew        dhcp.o
-    0x08002ae6   0x00000002   PAD
-    0x08002ae8   0x000000f4   Code   RO         6394    i.dhcp_select       dhcp.o
-    0x08002bdc   0x00000010   Code   RO         6395    i.dhcp_set_state    dhcp.o
-    0x08002bec   0x000000d8   Code   RO         6397    i.dhcp_start        dhcp.o
-    0x08002cc4   0x0000003a   Code   RO         6398    i.dhcp_stop         dhcp.o
-    0x08002cfe   0x00000020   Code   RO         6399    i.dhcp_t1_timeout   dhcp.o
-    0x08002d1e   0x00000020   Code   RO         6400    i.dhcp_t2_timeout   dhcp.o
-    0x08002d3e   0x000000a4   Code   RO         6401    i.dhcp_timeout      dhcp.o
-    0x08002de2   0x0000010c   Code   RO         7718    i.etharp_arp_input  etharp.o
-    0x08002eee   0x00000002   PAD
-    0x08002ef0   0x00000038   Code   RO         7719    i.etharp_cleanup_netif  etharp.o
-    0x08002f28   0x00000160   Code   RO         7721    i.etharp_find_entry  etharp.o
-    0x08003088   0x00000040   Code   RO         7722    i.etharp_free_entry  etharp.o
-    0x080030c8   0x00000148   Code   RO         7723    i.etharp_output     etharp.o
-    0x08003210   0x0000006c   Code   RO         7724    i.etharp_output_to_arp_index  etharp.o
-    0x0800327c   0x0000015c   Code   RO         7725    i.etharp_query      etharp.o
-    0x080033d8   0x000000b2   Code   RO         7726    i.etharp_raw        etharp.o
-    0x0800348a   0x00000002   PAD
-    0x0800348c   0x0000002c   Code   RO         7727    i.etharp_request    etharp.o
-    0x080034b8   0x00000038   Code   RO         7728    i.etharp_send_ip    etharp.o
-    0x080034f0   0x0000008c   Code   RO         7729    i.etharp_tmr        etharp.o
-    0x0800357c   0x000000b8   Code   RO         7730    i.etharp_update_arp_entry  etharp.o
-    0x08003634   0x000000b8   Code   RO         7731    i.ethernet_input    etharp.o
-    0x080036ec   0x00000030   Code   RO         7820    i.ethernetif_init   ethernetif.o
-    0x0800371c   0x0000002a   Code   RO         7821    i.ethernetif_input  ethernetif.o
-    0x08003746   0x00000012   Code   RO         7474    i.icmp_dest_unreach  icmp.o
-    0x08003758   0x0000015c   Code   RO         7475    i.icmp_input        icmp.o
-    0x080038b4   0x00000070   Code   RO         7476    i.icmp_send_response  icmp.o
-    0x08003924   0x00000012   Code   RO         7477    i.icmp_time_exceeded  icmp.o
-    0x08003936   0x00000014   Code   RO         7522    i.inet_chksum       inet_chksum.o
-    0x0800394a   0x00000056   Code   RO         7523    i.inet_chksum_pbuf  inet_chksum.o
-    0x080039a0   0x0000004e   Code   RO         7599    i.ip4_addr_isbroadcast  ip_addr.o
-    0x080039ee   0x00000002   PAD
-    0x080039f0   0x000001ac   Code   RO         7652    i.ip_frag           ip_frag.o
-    0x08003b9c   0x0000000a   Code   RO         7653    i.ip_frag_alloc_pbuf_custom_ref  ip_frag.o
-    0x08003ba6   0x00000012   Code   RO         7654    i.ip_frag_free_pbuf_custom_ref  ip_frag.o
-    0x08003bb8   0x000001bc   Code   RO         7560    i.ip_input          ip.o
-    0x08003d74   0x00000038   Code   RO         7561    i.ip_output         ip.o
-    0x08003dac   0x000000c4   Code   RO         7562    i.ip_output_if      ip.o
-    0x08003e70   0x0000018c   Code   RO         7655    i.ip_reass          ip_frag.o
-    0x08003ffc   0x00000164   Code   RO         7656    i.ip_reass_chain_frag_into_datagram_and_validate  ip_frag.o
-    0x08004160   0x0000002c   Code   RO         7657    i.ip_reass_dequeue_datagram  ip_frag.o
-    0x0800418c   0x00000054   Code   RO         7658    i.ip_reass_enqueue_new_datagram  ip_frag.o
-    0x080041e0   0x000000a0   Code   RO         7659    i.ip_reass_free_complete_datagram  ip_frag.o
-    0x08004280   0x0000007c   Code   RO         7660    i.ip_reass_remove_oldest_datagram  ip_frag.o
-    0x080042fc   0x00000054   Code   RO         7563    i.ip_route          ip.o
-    0x08004350   0x00000020   Code   RO         7662    i.ipfrag_free_pbuf_custom  ip_frag.o
-    0x08004370   0x00000080   Code   RO         7822    i.low_level_init    ethernetif.o
-    0x080043f0   0x000000e0   Code   RO         7823    i.low_level_input   ethernetif.o
-    0x080044d0   0x000000e0   Code   RO         7824    i.low_level_output  ethernetif.o
-    0x080045b0   0x0000001a   Code   RO         6338    i.lwip_htonl        def.o
-    0x080045ca   0x0000000c   Code   RO         6339    i.lwip_htons        def.o
-    0x080045d6   0x0000000c   Code   RO         6340    i.lwip_ntohl        def.o
-    0x080045e2   0x0000000c   Code   RO         6341    i.lwip_ntohs        def.o
-    0x080045ee   0x0000005e   Code   RO         7526    i.lwip_standard_chksum  inet_chksum.o
-    0x0800464c   0x00000080   Code   RO           12    i.main              main.o
-    0x080046cc   0x00000050   Code   RO         6611    i.mem_free          mem.o
-    0x0800471c   0x0000005c   Code   RO         6612    i.mem_init          mem.o
-    0x08004778   0x000000ec   Code   RO         6613    i.mem_malloc        mem.o
-    0x08004864   0x0000012c   Code   RO         6614    i.mem_trim          mem.o
-    0x08004990   0x00000020   Code   RO         6655    i.memp_free         memp.o
-    0x080049b0   0x00000064   Code   RO         6656    i.memp_init         memp.o
-    0x08004a14   0x0000002c   Code   RO         6657    i.memp_malloc       memp.o
-    0x08004a40   0x00000070   Code   RO         6697    i.netif_add         netif.o
-    0x08004ab0   0x00000028   Code   RO         6701    i.netif_set_addr    netif.o
-    0x08004ad8   0x0000000c   Code   RO         6702    i.netif_set_default  netif.o
-    0x08004ae4   0x0000002a   Code   RO         6703    i.netif_set_down    netif.o
-    0x08004b0e   0x0000000c   Code   RO         6704    i.netif_set_gw      netif.o
-    0x08004b1a   0x00000002   PAD
-    0x08004b1c   0x00000078   Code   RO         6705    i.netif_set_ipaddr  netif.o
-    0x08004b94   0x00000006   Code   RO         6706    i.netif_set_link_callback  netif.o
-    0x08004b9a   0x0000002a   Code   RO         6707    i.netif_set_link_down  netif.o
-    0x08004bc4   0x00000050   Code   RO         6708    i.netif_set_link_up  netif.o
-    0x08004c14   0x0000000c   Code   RO         6709    i.netif_set_netmask  netif.o
-    0x08004c20   0x00000036   Code   RO         6710    i.netif_set_up      netif.o
-    0x08004c56   0x00000192   Code   RO         6797    i.pbuf_alloc        pbuf.o
-    0x08004de8   0x0000006c   Code   RO         6798    i.pbuf_alloced_custom  pbuf.o
-    0x08004e54   0x00000038   Code   RO         6799    i.pbuf_cat          pbuf.o
-    0x08004e8c   0x00000016   Code   RO         6800    i.pbuf_chain        pbuf.o
-    0x08004ea2   0x00000012   Code   RO         6801    i.pbuf_clen         pbuf.o
-    0x08004eb4   0x000000c0   Code   RO         6803    i.pbuf_copy         pbuf.o
-    0x08004f74   0x00000092   Code   RO         6804    i.pbuf_copy_partial  pbuf.o
-    0x08005006   0x00000086   Code   RO         6806    i.pbuf_free         pbuf.o
-    0x0800508c   0x0000007e   Code   RO         6808    i.pbuf_header       pbuf.o
-    0x0800510a   0x00000078   Code   RO         6811    i.pbuf_realloc      pbuf.o
-    0x08005182   0x0000000a   Code   RO         6812    i.pbuf_ref          pbuf.o
-    0x0800518c   0x00000088   Code   RO         6615    i.plug_holes        mem.o
-    0x08005214   0x00000074   Code   RO         6916    i.raw_input         raw.o
-    0x08005288   0x0000005c   Code   RO          507    i.sAD7980_ADC_Init  spi_ad7980_adc.o
-    0x080052e4   0x000000c4   Code   RO          509    i.sAD7980_ADC_LowLevel_Init  spi_ad7980_adc.o
-    0x080053a8   0x00000068   Code   RO          620    i.sMAX5541_DAC_Init  spi_max5541_dac.o
-    0x08005410   0x00000090   Code   RO          622    i.sMAX5541_DAC_LowLevel_Init  spi_max5541_dac.o
-    0x080054a0   0x00000094   Code   RO         6982    i.tcp_abandon       tcp.o
-    0x08005534   0x0000000e   Code   RO         6983    i.tcp_abort         tcp.o
-    0x08005542   0x00000002   PAD
-    0x08005544   0x000000d0   Code   RO         6986    i.tcp_alloc         tcp.o
-    0x08005614   0x0000001c   Code   RO         6989    i.tcp_close         tcp.o
-    0x08005630   0x000001c8   Code   RO         6990    i.tcp_close_shutdown  tcp.o
-    0x080057f8   0x00000158   Code   RO         6991    i.tcp_connect       tcp.o
-    0x08005950   0x00000064   Code   RO          919    i.tcp_connected     tcp_echoclient.o
-    0x080059b4   0x00000042   Code   RO           13    i.tcp_connected2    main.o
-    0x080059f6   0x000000ac   Code   RO         7265    i.tcp_create_segment  tcp_out.o
-    0x08005aa2   0x00000002   PAD
-    0x08005aa4   0x0000003c   Code   RO          920    i.tcp_echoclient_connect  tcp_echoclient.o
-    0x08005ae0   0x0000003c   Code   RO           14    i.tcp_echoclient_connect2  main.o
-    0x08005b1c   0x0000002e   Code   RO         6993    i.tcp_eff_send_mss  tcp.o
-    0x08005b4a   0x00000110   Code   RO         7266    i.tcp_enqueue_flags  tcp_out.o
-    0x08005c5a   0x00000002   PAD
-    0x08005c5c   0x0000007c   Code   RO         6995    i.tcp_fasttmr       tcp.o
-    0x08005cd8   0x00000474   Code   RO         7214    i.tcp_input         tcp_in.o
-    0x0800614c   0x00000044   Code   RO         7267    i.tcp_keepalive     tcp_out.o
-    0x08006190   0x00000054   Code   RO         6997    i.tcp_kill_prio     tcp.o
-    0x080061e4   0x0000003c   Code   RO         6998    i.tcp_kill_timewait  tcp.o
-    0x08006220   0x00000130   Code   RO         7215    i.tcp_listen_input  tcp_in.o
-    0x08006350   0x0000000a   Code   RO         7000    i.tcp_new           tcp.o
-    0x0800635a   0x00000002   PAD
-    0x0800635c   0x00000068   Code   RO         7001    i.tcp_new_port      tcp.o
-    0x080063c4   0x0000001c   Code   RO         7002    i.tcp_next_iss      tcp.o
-    0x080063e0   0x000001c0   Code   RO         7268    i.tcp_output        tcp_out.o
-    0x080065a0   0x00000078   Code   RO         7269    i.tcp_output_alloc_header  tcp_out.o
-    0x08006618   0x000000cc   Code   RO         7270    i.tcp_output_segment  tcp_out.o
-    0x080066e4   0x000000b8   Code   RO         7216    i.tcp_parseopt      tcp_in.o
-    0x0800679c   0x00000078   Code   RO         7271    i.tcp_pbuf_prealloc  tcp_out.o
-    0x08006814   0x00000040   Code   RO         7003    i.tcp_pcb_purge     tcp.o
-    0x08006854   0x00000090   Code   RO         7004    i.tcp_pcb_remove    tcp.o
-    0x080068e4   0x0000058c   Code   RO         7217    i.tcp_process       tcp_in.o
-    0x08006e70   0x0000008c   Code   RO         7006    i.tcp_process_refused_data  tcp.o
-    0x08006efc   0x0000064c   Code   RO         7218    i.tcp_receive       tcp_in.o
-    0x08007548   0x0000002e   Code   RO         7008    i.tcp_recv_null     tcp.o
-    0x08007576   0x00000046   Code   RO         7009    i.tcp_recved        tcp.o
-    0x080075bc   0x0000005a   Code   RO         7272    i.tcp_rexmit        tcp_out.o
-    0x08007616   0x00000070   Code   RO         7273    i.tcp_rexmit_fast   tcp_out.o
-    0x08007686   0x0000003a   Code   RO         7274    i.tcp_rexmit_rto    tcp_out.o
-    0x080076c0   0x0000007c   Code   RO         7275    i.tcp_rst           tcp_out.o
-    0x0800773c   0x0000001a   Code   RO         7010    i.tcp_seg_free      tcp.o
-    0x08007756   0x00000018   Code   RO         7011    i.tcp_segs_free     tcp.o
-    0x0800776e   0x0000004e   Code   RO         7276    i.tcp_send_empty_ack  tcp_out.o
-    0x080077bc   0x0000004a   Code   RO         7277    i.tcp_send_fin      tcp_out.o
-    0x08007806   0x00000002   PAD
-    0x08007808   0x00000344   Code   RO         7015    i.tcp_slowtmr       tcp.o
-    0x08007b4c   0x00000002   Code   RO         7362    i.tcp_timer_needed  timers.o
-    0x08007b4e   0x00000002   PAD
-    0x08007b50   0x000000ac   Code   RO         7219    i.tcp_timewait_input  tcp_in.o
-    0x08007bfc   0x00000024   Code   RO         7016    i.tcp_tmr           tcp.o
-    0x08007c20   0x0000004e   Code   RO         7017    i.tcp_update_rcv_ann_wnd  tcp.o
-    0x08007c6e   0x00000386   Code   RO         7278    i.tcp_write         tcp_out.o
-    0x08007ff4   0x00000070   Code   RO         7279    i.tcp_write_checks  tcp_out.o
-    0x08008064   0x000000a4   Code   RO         7280    i.tcp_zero_window_probe  tcp_out.o
-    0x08008108   0x00000080   Code   RO         7374    i.udp_bind          udp.o
-    0x08008188   0x00000064   Code   RO         7375    i.udp_connect       udp.o
-    0x080081ec   0x000001d0   Code   RO         7378    i.udp_input         udp.o
-    0x080083bc   0x0000001c   Code   RO         7379    i.udp_new           udp.o
-    0x080083d8   0x00000058   Code   RO         7380    i.udp_new_port      udp.o
-    0x08008430   0x00000006   Code   RO         7381    i.udp_recv          udp.o
-    0x08008436   0x00000002   PAD
-    0x08008438   0x00000040   Code   RO         7382    i.udp_remove        udp.o
-    0x08008478   0x000000ce   Code   RO         7385    i.udp_sendto_if     udp.o
-    0x08008546   0x00000002   PAD
-    0x08008548   0x00000018   Data   RO          749    .constdata          uart_com1.o
-    0x08008560   0x00000024   Data   RO         6659    .constdata          memp.o
-    0x08008584   0x00000050   Data   RO         7018    .constdata          tcp.o
-    0x080085d4   0x00000008   Data   RO         7606    .constdata          ip_addr.o
-    0x080085dc   0x0000000c   Data   RO         7733    .constdata          etharp.o
-    0x080085e8   0x00000068   Data   RO         7019    .conststring        tcp.o
-    0x08008650   0x00000020   Data   RO         7892    Region$$Table       anon$$obj.o
+    0x08001dc2   0x0000002e   Code   RO         6368    i.dhcp_arp_reply    dhcp.o
+    0x08001df0   0x000000e4   Code   RO         6369    i.dhcp_bind         dhcp.o
+    0x08001ed4   0x00000038   Code   RO         6370    i.dhcp_check        dhcp.o
+    0x08001f0c   0x00000044   Code   RO         6372    i.dhcp_coarse_tmr   dhcp.o
+    0x08001f50   0x00000148   Code   RO         6373    i.dhcp_create_msg   dhcp.o
+    0x08002098   0x00000084   Code   RO         6374    i.dhcp_decline      dhcp.o
+    0x0800211c   0x00000028   Code   RO         6375    i.dhcp_delete_msg   dhcp.o
+    0x08002144   0x000000c4   Code   RO         6376    i.dhcp_discover     dhcp.o
+    0x08002208   0x00000044   Code   RO         6377    i.dhcp_fine_tmr     dhcp.o
+    0x0800224c   0x00000078   Code   RO         6378    i.dhcp_handle_ack   dhcp.o
+    0x080022c4   0x00000038   Code   RO         6379    i.dhcp_handle_nak   dhcp.o
+    0x080022fc   0x0000002c   Code   RO         6380    i.dhcp_handle_offer  dhcp.o
+    0x08002328   0x00000050   Code   RO         6382    i.dhcp_network_changed  dhcp.o
+    0x08002378   0x00000020   Code   RO         6383    i.dhcp_option       dhcp.o
+    0x08002398   0x00000012   Code   RO         6384    i.dhcp_option_byte  dhcp.o
+    0x080023aa   0x00000042   Code   RO         6385    i.dhcp_option_long  dhcp.o
+    0x080023ec   0x00000022   Code   RO         6386    i.dhcp_option_short  dhcp.o
+    0x0800240e   0x00000046   Code   RO         6387    i.dhcp_option_trailer  dhcp.o
+    0x08002454   0x00000314   Code   RO         6388    i.dhcp_parse_reply  dhcp.o
+    0x08002768   0x00000088   Code   RO         6389    i.dhcp_rebind       dhcp.o
+    0x080027f0   0x000000a8   Code   RO         6390    i.dhcp_reboot       dhcp.o
+    0x08002898   0x00000100   Code   RO         6391    i.dhcp_recv         dhcp.o
+    0x08002998   0x000000a8   Code   RO         6392    i.dhcp_release      dhcp.o
+    0x08002a40   0x00000086   Code   RO         6393    i.dhcp_renew        dhcp.o
+    0x08002ac6   0x00000002   PAD
+    0x08002ac8   0x000000f4   Code   RO         6394    i.dhcp_select       dhcp.o
+    0x08002bbc   0x00000010   Code   RO         6395    i.dhcp_set_state    dhcp.o
+    0x08002bcc   0x000000d8   Code   RO         6397    i.dhcp_start        dhcp.o
+    0x08002ca4   0x0000003a   Code   RO         6398    i.dhcp_stop         dhcp.o
+    0x08002cde   0x00000020   Code   RO         6399    i.dhcp_t1_timeout   dhcp.o
+    0x08002cfe   0x00000020   Code   RO         6400    i.dhcp_t2_timeout   dhcp.o
+    0x08002d1e   0x000000a4   Code   RO         6401    i.dhcp_timeout      dhcp.o
+    0x08002dc2   0x0000010c   Code   RO         7718    i.etharp_arp_input  etharp.o
+    0x08002ece   0x00000002   PAD
+    0x08002ed0   0x00000038   Code   RO         7719    i.etharp_cleanup_netif  etharp.o
+    0x08002f08   0x00000160   Code   RO         7721    i.etharp_find_entry  etharp.o
+    0x08003068   0x00000040   Code   RO         7722    i.etharp_free_entry  etharp.o
+    0x080030a8   0x00000148   Code   RO         7723    i.etharp_output     etharp.o
+    0x080031f0   0x0000006c   Code   RO         7724    i.etharp_output_to_arp_index  etharp.o
+    0x0800325c   0x0000015c   Code   RO         7725    i.etharp_query      etharp.o
+    0x080033b8   0x000000b2   Code   RO         7726    i.etharp_raw        etharp.o
+    0x0800346a   0x00000002   PAD
+    0x0800346c   0x0000002c   Code   RO         7727    i.etharp_request    etharp.o
+    0x08003498   0x00000038   Code   RO         7728    i.etharp_send_ip    etharp.o
+    0x080034d0   0x0000008c   Code   RO         7729    i.etharp_tmr        etharp.o
+    0x0800355c   0x000000b8   Code   RO         7730    i.etharp_update_arp_entry  etharp.o
+    0x08003614   0x000000b8   Code   RO         7731    i.ethernet_input    etharp.o
+    0x080036cc   0x00000030   Code   RO         7820    i.ethernetif_init   ethernetif.o
+    0x080036fc   0x0000002a   Code   RO         7821    i.ethernetif_input  ethernetif.o
+    0x08003726   0x00000012   Code   RO         7474    i.icmp_dest_unreach  icmp.o
+    0x08003738   0x0000015c   Code   RO         7475    i.icmp_input        icmp.o
+    0x08003894   0x00000070   Code   RO         7476    i.icmp_send_response  icmp.o
+    0x08003904   0x00000012   Code   RO         7477    i.icmp_time_exceeded  icmp.o
+    0x08003916   0x00000014   Code   RO         7522    i.inet_chksum       inet_chksum.o
+    0x0800392a   0x00000056   Code   RO         7523    i.inet_chksum_pbuf  inet_chksum.o
+    0x08003980   0x0000004e   Code   RO         7599    i.ip4_addr_isbroadcast  ip_addr.o
+    0x080039ce   0x00000002   PAD
+    0x080039d0   0x000001ac   Code   RO         7652    i.ip_frag           ip_frag.o
+    0x08003b7c   0x0000000a   Code   RO         7653    i.ip_frag_alloc_pbuf_custom_ref  ip_frag.o
+    0x08003b86   0x00000012   Code   RO         7654    i.ip_frag_free_pbuf_custom_ref  ip_frag.o
+    0x08003b98   0x000001bc   Code   RO         7560    i.ip_input          ip.o
+    0x08003d54   0x00000038   Code   RO         7561    i.ip_output         ip.o
+    0x08003d8c   0x000000c4   Code   RO         7562    i.ip_output_if      ip.o
+    0x08003e50   0x0000018c   Code   RO         7655    i.ip_reass          ip_frag.o
+    0x08003fdc   0x00000164   Code   RO         7656    i.ip_reass_chain_frag_into_datagram_and_validate  ip_frag.o
+    0x08004140   0x0000002c   Code   RO         7657    i.ip_reass_dequeue_datagram  ip_frag.o
+    0x0800416c   0x00000054   Code   RO         7658    i.ip_reass_enqueue_new_datagram  ip_frag.o
+    0x080041c0   0x000000a0   Code   RO         7659    i.ip_reass_free_complete_datagram  ip_frag.o
+    0x08004260   0x0000007c   Code   RO         7660    i.ip_reass_remove_oldest_datagram  ip_frag.o
+    0x080042dc   0x00000054   Code   RO         7563    i.ip_route          ip.o
+    0x08004330   0x00000020   Code   RO         7662    i.ipfrag_free_pbuf_custom  ip_frag.o
+    0x08004350   0x00000080   Code   RO         7822    i.low_level_init    ethernetif.o
+    0x080043d0   0x000000e0   Code   RO         7823    i.low_level_input   ethernetif.o
+    0x080044b0   0x000000e0   Code   RO         7824    i.low_level_output  ethernetif.o
+    0x08004590   0x0000001a   Code   RO         6338    i.lwip_htonl        def.o
+    0x080045aa   0x0000000c   Code   RO         6339    i.lwip_htons        def.o
+    0x080045b6   0x0000000c   Code   RO         6340    i.lwip_ntohl        def.o
+    0x080045c2   0x0000000c   Code   RO         6341    i.lwip_ntohs        def.o
+    0x080045ce   0x0000005e   Code   RO         7526    i.lwip_standard_chksum  inet_chksum.o
+    0x0800462c   0x00000058   Code   RO           12    i.main              main.o
+    0x08004684   0x00000050   Code   RO         6611    i.mem_free          mem.o
+    0x080046d4   0x0000005c   Code   RO         6612    i.mem_init          mem.o
+    0x08004730   0x000000ec   Code   RO         6613    i.mem_malloc        mem.o
+    0x0800481c   0x0000012c   Code   RO         6614    i.mem_trim          mem.o
+    0x08004948   0x00000020   Code   RO         6655    i.memp_free         memp.o
+    0x08004968   0x00000064   Code   RO         6656    i.memp_init         memp.o
+    0x080049cc   0x0000002c   Code   RO         6657    i.memp_malloc       memp.o
+    0x080049f8   0x00000070   Code   RO         6697    i.netif_add         netif.o
+    0x08004a68   0x00000028   Code   RO         6701    i.netif_set_addr    netif.o
+    0x08004a90   0x0000000c   Code   RO         6702    i.netif_set_default  netif.o
+    0x08004a9c   0x0000002a   Code   RO         6703    i.netif_set_down    netif.o
+    0x08004ac6   0x0000000c   Code   RO         6704    i.netif_set_gw      netif.o
+    0x08004ad2   0x00000002   PAD
+    0x08004ad4   0x00000078   Code   RO         6705    i.netif_set_ipaddr  netif.o
+    0x08004b4c   0x00000006   Code   RO         6706    i.netif_set_link_callback  netif.o
+    0x08004b52   0x0000002a   Code   RO         6707    i.netif_set_link_down  netif.o
+    0x08004b7c   0x00000050   Code   RO         6708    i.netif_set_link_up  netif.o
+    0x08004bcc   0x0000000c   Code   RO         6709    i.netif_set_netmask  netif.o
+    0x08004bd8   0x00000036   Code   RO         6710    i.netif_set_up      netif.o
+    0x08004c0e   0x00000192   Code   RO         6797    i.pbuf_alloc        pbuf.o
+    0x08004da0   0x0000006c   Code   RO         6798    i.pbuf_alloced_custom  pbuf.o
+    0x08004e0c   0x00000038   Code   RO         6799    i.pbuf_cat          pbuf.o
+    0x08004e44   0x00000016   Code   RO         6800    i.pbuf_chain        pbuf.o
+    0x08004e5a   0x00000012   Code   RO         6801    i.pbuf_clen         pbuf.o
+    0x08004e6c   0x000000c0   Code   RO         6803    i.pbuf_copy         pbuf.o
+    0x08004f2c   0x00000092   Code   RO         6804    i.pbuf_copy_partial  pbuf.o
+    0x08004fbe   0x00000086   Code   RO         6806    i.pbuf_free         pbuf.o
+    0x08005044   0x0000007e   Code   RO         6808    i.pbuf_header       pbuf.o
+    0x080050c2   0x00000078   Code   RO         6811    i.pbuf_realloc      pbuf.o
+    0x0800513a   0x0000000a   Code   RO         6812    i.pbuf_ref          pbuf.o
+    0x08005144   0x00000088   Code   RO         6615    i.plug_holes        mem.o
+    0x080051cc   0x00000074   Code   RO         6916    i.raw_input         raw.o
+    0x08005240   0x0000005c   Code   RO          507    i.sAD7980_ADC_Init  spi_ad7980_adc.o
+    0x0800529c   0x000000c4   Code   RO          509    i.sAD7980_ADC_LowLevel_Init  spi_ad7980_adc.o
+    0x08005360   0x00000068   Code   RO          620    i.sMAX5541_DAC_Init  spi_max5541_dac.o
+    0x080053c8   0x00000090   Code   RO          622    i.sMAX5541_DAC_LowLevel_Init  spi_max5541_dac.o
+    0x08005458   0x00000094   Code   RO         6982    i.tcp_abandon       tcp.o
+    0x080054ec   0x0000000e   Code   RO         6983    i.tcp_abort         tcp.o
+    0x080054fa   0x00000002   PAD
+    0x080054fc   0x000000d0   Code   RO         6986    i.tcp_alloc         tcp.o
+    0x080055cc   0x0000001c   Code   RO         6989    i.tcp_close         tcp.o
+    0x080055e8   0x000001c8   Code   RO         6990    i.tcp_close_shutdown  tcp.o
+    0x080057b0   0x00000158   Code   RO         6991    i.tcp_connect       tcp.o
+    0x08005908   0x0000009c   Code   RO          919    i.tcp_connected     tcp_echoclient.o
+    0x080059a4   0x000000ac   Code   RO         7265    i.tcp_create_segment  tcp_out.o
+    0x08005a50   0x0000003c   Code   RO          920    i.tcp_echoclient_connect  tcp_echoclient.o
+    0x08005a8c   0x0000002e   Code   RO         6993    i.tcp_eff_send_mss  tcp.o
+    0x08005aba   0x00000110   Code   RO         7266    i.tcp_enqueue_flags  tcp_out.o
+    0x08005bca   0x00000002   PAD
+    0x08005bcc   0x0000007c   Code   RO         6995    i.tcp_fasttmr       tcp.o
+    0x08005c48   0x00000474   Code   RO         7214    i.tcp_input         tcp_in.o
+    0x080060bc   0x00000044   Code   RO         7267    i.tcp_keepalive     tcp_out.o
+    0x08006100   0x00000054   Code   RO         6997    i.tcp_kill_prio     tcp.o
+    0x08006154   0x0000003c   Code   RO         6998    i.tcp_kill_timewait  tcp.o
+    0x08006190   0x00000130   Code   RO         7215    i.tcp_listen_input  tcp_in.o
+    0x080062c0   0x0000000a   Code   RO         7000    i.tcp_new           tcp.o
+    0x080062ca   0x00000002   PAD
+    0x080062cc   0x00000068   Code   RO         7001    i.tcp_new_port      tcp.o
+    0x08006334   0x0000001c   Code   RO         7002    i.tcp_next_iss      tcp.o
+    0x08006350   0x000001c0   Code   RO         7268    i.tcp_output        tcp_out.o
+    0x08006510   0x00000078   Code   RO         7269    i.tcp_output_alloc_header  tcp_out.o
+    0x08006588   0x000000cc   Code   RO         7270    i.tcp_output_segment  tcp_out.o
+    0x08006654   0x000000b8   Code   RO         7216    i.tcp_parseopt      tcp_in.o
+    0x0800670c   0x00000078   Code   RO         7271    i.tcp_pbuf_prealloc  tcp_out.o
+    0x08006784   0x00000040   Code   RO         7003    i.tcp_pcb_purge     tcp.o
+    0x080067c4   0x00000090   Code   RO         7004    i.tcp_pcb_remove    tcp.o
+    0x08006854   0x0000058c   Code   RO         7217    i.tcp_process       tcp_in.o
+    0x08006de0   0x0000008c   Code   RO         7006    i.tcp_process_refused_data  tcp.o
+    0x08006e6c   0x0000064c   Code   RO         7218    i.tcp_receive       tcp_in.o
+    0x080074b8   0x0000002e   Code   RO         7008    i.tcp_recv_null     tcp.o
+    0x080074e6   0x00000046   Code   RO         7009    i.tcp_recved        tcp.o
+    0x0800752c   0x0000005a   Code   RO         7272    i.tcp_rexmit        tcp_out.o
+    0x08007586   0x00000070   Code   RO         7273    i.tcp_rexmit_fast   tcp_out.o
+    0x080075f6   0x0000003a   Code   RO         7274    i.tcp_rexmit_rto    tcp_out.o
+    0x08007630   0x0000007c   Code   RO         7275    i.tcp_rst           tcp_out.o
+    0x080076ac   0x0000001a   Code   RO         7010    i.tcp_seg_free      tcp.o
+    0x080076c6   0x00000018   Code   RO         7011    i.tcp_segs_free     tcp.o
+    0x080076de   0x0000004e   Code   RO         7276    i.tcp_send_empty_ack  tcp_out.o
+    0x0800772c   0x0000004a   Code   RO         7277    i.tcp_send_fin      tcp_out.o
+    0x08007776   0x00000002   PAD
+    0x08007778   0x00000344   Code   RO         7015    i.tcp_slowtmr       tcp.o
+    0x08007abc   0x00000002   Code   RO         7362    i.tcp_timer_needed  timers.o
+    0x08007abe   0x00000002   PAD
+    0x08007ac0   0x000000ac   Code   RO         7219    i.tcp_timewait_input  tcp_in.o
+    0x08007b6c   0x00000024   Code   RO         7016    i.tcp_tmr           tcp.o
+    0x08007b90   0x0000004e   Code   RO         7017    i.tcp_update_rcv_ann_wnd  tcp.o
+    0x08007bde   0x00000386   Code   RO         7278    i.tcp_write         tcp_out.o
+    0x08007f64   0x00000070   Code   RO         7279    i.tcp_write_checks  tcp_out.o
+    0x08007fd4   0x000000a4   Code   RO         7280    i.tcp_zero_window_probe  tcp_out.o
+    0x08008078   0x00000080   Code   RO         7374    i.udp_bind          udp.o
+    0x080080f8   0x00000064   Code   RO         7375    i.udp_connect       udp.o
+    0x0800815c   0x000001d0   Code   RO         7378    i.udp_input         udp.o
+    0x0800832c   0x0000001c   Code   RO         7379    i.udp_new           udp.o
+    0x08008348   0x00000058   Code   RO         7380    i.udp_new_port      udp.o
+    0x080083a0   0x00000006   Code   RO         7381    i.udp_recv          udp.o
+    0x080083a6   0x00000002   PAD
+    0x080083a8   0x00000040   Code   RO         7382    i.udp_remove        udp.o
+    0x080083e8   0x000000ce   Code   RO         7385    i.udp_sendto_if     udp.o
+    0x080084b6   0x00000002   PAD
+    0x080084b8   0x00000018   Data   RO          749    .constdata          uart_com1.o
+    0x080084d0   0x00000024   Data   RO         6659    .constdata          memp.o
+    0x080084f4   0x00000050   Data   RO         7018    .constdata          tcp.o
+    0x08008544   0x00000008   Data   RO         7606    .constdata          ip_addr.o
+    0x0800854c   0x0000000c   Data   RO         7733    .constdata          etharp.o
+    0x08008558   0x00000068   Data   RO         7019    .conststring        tcp.o
+    0x080085c0   0x00000020   Data   RO         7892    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000089a8, Max: 0x00030000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x0000cff8, Max: 0x00030000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3420,17 +3409,17 @@ Memory Map of the image
     0x2000010b   0x00000001   PAD
     0x2000010c   0x000000bc   Zero   RW          780    .bss                stm32f4x7_eth_bsp.o
     0x200001c8   0x00000038   Zero   RW          859    .bss                netconf.o
-    0x20000200   0x00000802   Zero   RW          927    .bss                tcp_echoclient.o
-    0x20000a02   0x00000002   PAD
-    0x20000a04   0x000030ac   Zero   RW         5848    .bss                stm32f4x7_eth.o
-    0x20003ab0   0x00000032   Zero   RW         6402    .bss                dhcp.o
-    0x20003ae2   0x00002814   Zero   RW         6616    .bss                mem.o
-    0x200062f6   0x00000002   PAD
-    0x200062f8   0x000021d7   Zero   RW         6658    .bss                memp.o
-    0x200084cf   0x00000001   PAD
-    0x200084d0   0x00000010   Zero   RW         7220    .bss                tcp_in.o
-    0x200084e0   0x000000c8   Zero   RW         7732    .bss                etharp.o
-    0x200085a8   0x00000400   Zero   RW         1036    STACK               startup_stm32f429_439xx.o
+    0x20000200   0x00004e52   Zero   RW          927    .bss                tcp_echoclient.o
+    0x20005052   0x00000002   PAD
+    0x20005054   0x000030ac   Zero   RW         5848    .bss                stm32f4x7_eth.o
+    0x20008100   0x00000032   Zero   RW         6402    .bss                dhcp.o
+    0x20008132   0x00002814   Zero   RW         6616    .bss                mem.o
+    0x2000a946   0x00000002   PAD
+    0x2000a948   0x000021d7   Zero   RW         6658    .bss                memp.o
+    0x2000cb1f   0x00000001   PAD
+    0x2000cb20   0x00000010   Zero   RW         7220    .bss                tcp_in.o
+    0x2000cb30   0x000000c8   Zero   RW         7732    .bss                etharp.o
+    0x2000cbf8   0x00000400   Zero   RW         1036    STACK               startup_stm32f429_439xx.o
 
 
 ==============================================================================
@@ -3444,7 +3433,6 @@ Image component sizes
       4094         98          0          4         50      21343   dhcp.o
       2310         66         12          1        200      12900   etharp.o
        666         46          0          0          0       4638   ethernetif.o
-        32          0          0          0          0        880   function.o
        496          8          0          0          0       3438   icmp.o
          0          0          0          0          0       3780   inet.o
        200          0          0          0          0       2481   inet_chksum.o
@@ -3452,7 +3440,7 @@ Image component sizes
        780         34          0         18          0       7125   ip.o
         78          0          8          0          0       6978   ip_addr.o
       1652         36          0          6          0       9177   ip_frag.o
-       856         74          0         24          0     339878   main.o
+       690         62          0         24          0     338724   main.o
        844         68          0         12      10260       4705   mem.o
        176         26         36          0       8663       3606   memp.o
        160         12          0          0          0       1546   misc.o
@@ -3475,7 +3463,7 @@ Image component sizes
        236          8          0          0          0       2033   stm32f4xx_usart.o
        388         34          0         20          0       1565   system_stm32f4xx.o
       3118        168        184         35          0      25146   tcp.o
-       160         18          0          8       2050       9150   tcp_echoclient.o
+       216         38          0          8      20050       9142   tcp_echoclient.o
       4832        286          0         32         16      16183   tcp_in.o
       3118          8          0          0          0      14255   tcp_out.o
          2          0          0          0          0        435   timers.o
@@ -3483,9 +3471,9 @@ Image component sizes
       1084         38          0          8          0      15113   udp.o
 
     ----------------------------------------------------------------------
-     33506       1616        724        268      34972     937256   Object Totals
+     33362       1624        724        268      52972     935214   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        42          0          0         13          5          0   (incl. Padding)
+        40          0          0         13          5          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -3525,15 +3513,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     33692       1632        724        268      34972     912176   Grand Totals
-     33692       1632        724        268      34972     912176   ELF Image Totals
-     33692       1632        724        268          0          0   ROM Totals
+     33548       1640        724        268      52972     910534   Grand Totals
+     33548       1640        724        268      52972     910534   ELF Image Totals
+     33548       1640        724        268          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                34416 (  33.61kB)
-    Total RW  Size (RW Data + ZI Data)             35240 (  34.41kB)
-    Total ROM Size (Code + RO Data + RW Data)      34684 (  33.87kB)
+    Total RO  Size (Code + RO Data)                34272 (  33.47kB)
+    Total RW  Size (RW Data + ZI Data)             53240 (  51.99kB)
+    Total ROM Size (Code + RO Data + RW Data)      34540 (  33.73kB)
 
 ==============================================================================
 

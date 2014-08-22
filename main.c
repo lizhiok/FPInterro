@@ -162,14 +162,14 @@ int main()
 		}
 #endif
 
-	if(jj<5002)
-	  jj++;
-
-      if (jj == 3000||jj==1000||jj==2000)
-	{
-	  _delay_ms (100);
-	  tcp_echoclient_connect2 ();
-	}
+//	if(jj<5002)
+//	  jj++;
+//
+//      if (jj == 3000||jj==1000||jj==2000)
+//	{
+//	  _delay_ms (100);
+//	  tcp_echoclient_connect2 ();
+//	}
 	}
 }
 
