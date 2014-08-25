@@ -42,9 +42,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 u8_t  recev_buf[50];
+extern uint8_t lwip_called;
 __IO uint32_t message_count=0;
 
-#define data_length	10000
+uint8_t connect_sucess=0;
+
 //u8_t   data[100];
 uint16_t data[data_length];
 struct tcp_pcb *echoclient_pcb;
@@ -117,19 +119,49 @@ void tcp_echoclient_connect(void)
   */
 static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 {
-	uint32_t i;
-	s8_t tcp_send_stat=-1;
-    for(i=0;i<data_length;i++)
-    {
-  	  data[i]=i;
-    }
+	connect_sucess=1;
+  tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
+//  while(lwip_called!=0);
+  //while(lwip_called==0)
+//      lwip_called=1;
+      tcp_output(pcb);
+//      lwip_called=0;
 
-	tcp_write(pcb,data,2000,1); /* 发送数据 */
-	tcp_write(pcb,data+2000,2000,1); /* 发送数据 */
-	tcp_write(pcb,data+2000*2,2000,1); /* 发送数据 */
-	tcp_write(pcb,data+2000*3,2000,1); /* 发送数据 */
-	tcp_write(pcb,data+2000*4,2000,1); /* 发送数据 */
-	tcp_write(pcb,data+2000*5,2000,1); /* 发送数据 */
+//#define send_step	200
+//  uint32_t i;
+//  for(i=0;i<data_length;i++)
+//    {
+//      data[i]=i;
+//    }
+//
+//  for(i=0;i<(data_length/send_step);i++)
+//    {
+//      tcp_write(pcb,data+send_step*i,send_step*2,1); /* 发送数据 */
+//      tcp_output(pcb);
+////      tcp_recved(pcb,send_step*2);
+//      pcb->snd_wnd+=send_step*2;
+//    }
+//	tcp_write(pcb,data,send_step*2,1); /* 发送数据 */
+//	tcp_output(pcb);
+////	tcp_recved(pcb,2000);
+//	tcp_write(pcb,data+send_step,send_step*2,1); /* 发送数据 */
+//	tcp_output(pcb);
+////	while(tcp_output(pcb)!=ERR_OK);
+////		tcp_recved(pcb,2000);
+//	tcp_write(pcb,data+send_step*2,send_step*2,1); /* 发送数据 */
+//	tcp_output(pcb);
+////	while(tcp_output(pcb)!=ERR_OK);
+////		tcp_recved(pcb,2000);
+//	tcp_write(pcb,data+send_step*3,send_step*2,1); /* 发送数据 */
+//	tcp_output(pcb);
+//	while(tcp_output(pcb)!=ERR_OK);
+//		tcp_recved(pcb,2000);
+//	tcp_write(pcb,data+2000*4,2000,1); /* 发送数据 */
+//	tcp_output(pcb);
+//		tcp_recved(pcb,2000);
+//	tcp_write(pcb,data+2000*5,2000,1); /* 发送数据 */
+//	tcp_output(pcb);
+//		tcp_recved(pcb,2000);
 //	tcp_send_stat=tcp_output(pcb);
 //	while(tcp_send_stat!=ERR_OK);
 //	tcp_send_stat=-1;
@@ -164,9 +196,6 @@ static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 //    	}
 //    	tcp_write(pcb,data+1000*i,j,0); /* 发送数据 */
 //    }
-
-
-
 	tcp_close(pcb);
 	return ERR_OK;
 }
@@ -186,10 +215,10 @@ static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err
       es->pcb = tpcb;
       
 //      sprintf((char*)data, "sending tcp client message %d", message_count);
-      for(i=0;i<data_length;i++)
-      {
-    	  data[i]=i;
-      }
+//      for(i=0;i<data_length;i++)
+//      {
+//    	  data[i]=i;
+//      }
         
       /* allocate pbuf */
       //es->p_tx = pbuf_alloc(PBUF_TRANSPORT, strlen((char*)data)+1 , PBUF_POOL);

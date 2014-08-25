@@ -100,7 +100,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define TCP_MSS                 (1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
 
 /* TCP sender buffer space (bytes). */
-#define TCP_SND_BUF             (4*TCP_MSS)
+#define TCP_SND_BUF             (6*TCP_MSS)
 
 /*  TCP_SND_QUEUELEN: TCP sender buffer space (pbufs). This must be at least
   as much as (2 * TCP_SND_BUF/TCP_MSS) for things to work. */
@@ -209,7 +209,7 @@ The STM32F4x7 allows computing and verifying the IP, UDP, TCP and ICMP checksums
    ---------- Lwip Debug options ----------
    ----------------------------------------
 */
-//#define LWIP_DEBUG                      1
+#define LWIP_DEBUG                      1
 
 #endif /* __LWIPOPTS_H__ */
 

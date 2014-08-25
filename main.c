@@ -16,6 +16,7 @@
 #include "lwip/debug.h"
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
+#include "tcp_echoclient.h"
 #define dac_max  65535
 //39321
 //39321  
@@ -26,6 +27,9 @@ uint16_t dac_data,adc_data1[dac_max];//,adc_data2[dac_max];
 int8_t dac_step=1;
 volatile uint32_t LocalTime = 0; /* this variable is used to create a time reference incremented by 10ms */
 uint32_t timingdelay;
+
+extern uint16_t data[data_length];
+extern uint8_t connect_sucess;
 
 void RCC_clock_set(void);
 void LED_set(void);
@@ -48,6 +52,8 @@ static __IO uint32_t TimingDelay;
 
 uint8_t tcp_conneced=0;
 struct tcp_pcb *echoclient_pcb2;
+uint8_t lwip_called=0;
+
 
 
 
@@ -125,6 +131,26 @@ int main()
 	    }
 #endif
 	}
+      if (ETH_CheckFrameReceived ())
+	{
+	  /* process received ethernet packet */
+	  LwIP_Pkt_Handle ();
+	}
+      _delay_ms(10);
+      if(jj++>1000)
+	{
+	  static uint8_t k;
+
+	  /*connect to tcp server */
+	  uint32_t ii;
+	  jj=0;
+	  if(k++>5)k=0;
+	  for (ii = 0; ii < data_length; ii++)
+	    {
+	      data[ii] = ii*k;
+	    }
+	  tcp_echoclient_connect ();
+	}
 #if     0
 		dac_data+=dac_step;
 	_delay_us(3);
@@ -200,22 +226,23 @@ void tcp_echoclient_connect2(void)
 }
 static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err)
 {
-#define data_length	1000
-//u8_t   data[100];
-  uint16_t data[data_length];
-
-  uint32_t i;
-  s8_t tcp_send_stat = -1;
-  for (i = 0; i < data_length; i++)
-    {
-      data[i] = i;
-    }
-
-  tcp_write (pcb, data, sizeof(data), 1); /* 发送数据 */
-//  tcp_output(pcb);
-  tcp_close (pcb);
-//	tcp_conneced=1;
-  return ERR_OK;
+  //{
+////#define data_length	1000
+////u8_t   data[100];
+//  uint16_t data[data_length];
+//
+//  uint32_t i;
+//  s8_t tcp_send_stat = -1;
+//  for (i = 0; i < data_length; i++)
+//    {
+//      data[i] = i;
+//    }
+//
+//  tcp_write (pcb, data, sizeof(data), 1); /* 发送数据 */
+////  tcp_output(pcb);
+//  tcp_close (pcb);
+////	tcp_conneced=1;
+//  return ERR_OK;
 }
 void RCC_clock_set(void)
 {

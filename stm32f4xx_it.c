@@ -31,6 +31,7 @@
 #include "stm32f4xx_it.h"
 #include "main.h"
 
+
 /** @addtogroup STM32F4xx_StdPeriph_Examples
   * @{
   */
@@ -51,6 +52,8 @@ extern __IO uint8_t EthLinkStatus;
 /*            Cortex-M4 Processor Exceptions Handlers                         */
 /******************************************************************************/
 
+extern uint16_t data[data_length];
+extern uint8_t connect_sucess;
 /**
   * @brief   This function handles NMI exception.
   * @param  None
@@ -157,11 +160,41 @@ void EXTI15_10_IRQHandler(void)
 {
   if(EXTI_GetITStatus(KEY_BUTTON_EXTI_LINE) != RESET)
   {
-    if (EthLinkStatus == 0)
-    {
-      /*connect to tcp server */
-      tcp_echoclient_connect();
-    }
+      if (EthLinkStatus == 0)
+	{
+	  //	  jj=0;
+	  /*connect to tcp server */
+	  uint32_t ii;
+	  for (ii = 0; ii < data_length; ii++)
+	    {
+	      data[ii] = ii;
+	    }
+	  //		while(connect_sucess!=1);
+	  //			connect_sucess=0;
+	  tcp_echoclient_connect ();
+	  while (connect_sucess != 1)
+	    ;
+	  connect_sucess = 0;
+	  for (ii = 0; ii < data_length; ii++)
+	    {
+	      data[ii] = 2 * ii;
+	    }
+
+	  tcp_echoclient_connect ();
+	  while (connect_sucess != 1)
+	    ;
+	  connect_sucess = 0;
+	  for (ii = 0; ii < data_length; ii++)
+	    {
+	      data[ii] = 3 * ii;
+	    }
+
+	  tcp_echoclient_connect ();
+	  while (connect_sucess != 1)
+	    ;
+	  connect_sucess = 0;
+
+	}
     /* Clear the EXTI line  pending bit */
     EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);
   }
@@ -181,11 +214,11 @@ static uint32_t timecounter;
 //         GPIO_ToggleBits(GPIOD, GPIO_Pin_13);	//led displayer
       /* check if any packet received */
 	 timecounter += 10;
-      if (ETH_CheckFrameReceived ())
-	{
-	  /* process received ethernet packet */
-	  LwIP_Pkt_Handle ();
-	}
+//      if (ETH_CheckFrameReceived ())
+//	{
+//	  /* process received ethernet packet */
+//	  LwIP_Pkt_Handle ();
+//	}
       /* handle periodic timers for LwIP */
       LwIP_Periodic_Handle (timecounter);
 

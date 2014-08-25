@@ -103,6 +103,7 @@
 void Time_Update(void);
 void Delay(uint32_t nCount);
 
+#define data_length	2000	//add by lizhi
 
 /**
  * @brief Key push-button

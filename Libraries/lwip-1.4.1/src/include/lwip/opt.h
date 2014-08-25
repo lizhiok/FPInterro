@@ -2029,7 +2029,7 @@
  * timeout.
  */
 #ifndef TCP_RTO_DEBUG
-#define TCP_RTO_DEBUG                   LWIP_DBG_OFF
+#define TCP_RTO_DEBUG                   LWIP_DBG_ON
 #endif
 
 /**
@@ -2043,28 +2043,28 @@
  * TCP_WND_DEBUG: Enable debugging in tcp_in.c for window updating.
  */
 #ifndef TCP_WND_DEBUG
-#define TCP_WND_DEBUG                   LWIP_DBG_OFF
+#define TCP_WND_DEBUG                   LWIP_DBG_ON
 #endif
 
 /**
  * TCP_OUTPUT_DEBUG: Enable debugging in tcp_out.c output functions.
  */
 #ifndef TCP_OUTPUT_DEBUG
-#define TCP_OUTPUT_DEBUG                LWIP_DBG_OFF
+#define TCP_OUTPUT_DEBUG                LWIP_DBG_ON
 #endif
 
 /**
  * TCP_RST_DEBUG: Enable debugging for TCP with the RST message.
  */
 #ifndef TCP_RST_DEBUG
-#define TCP_RST_DEBUG                   LWIP_DBG_OFF
+#define TCP_RST_DEBUG                   LWIP_DBG_ON
 #endif
 
 /**
  * TCP_QLEN_DEBUG: Enable debugging for TCP queue lengths.
  */
 #ifndef TCP_QLEN_DEBUG
-#define TCP_QLEN_DEBUG                  LWIP_DBG_OFF
+#define TCP_QLEN_DEBUG                  LWIP_DBG_ON
 #endif
 
 /**
