@@ -162,37 +162,38 @@ void EXTI15_10_IRQHandler(void)
   {
       if (EthLinkStatus == 0)
 	{
-	  //	  jj=0;
-	  /*connect to tcp server */
-	  uint32_t ii;
-	  for (ii = 0; ii < data_length; ii++)
-	    {
-	      data[ii] = ii;
-	    }
-	  //		while(connect_sucess!=1);
-	  //			connect_sucess=0;
-	  tcp_echoclient_connect ();
-	  while (connect_sucess != 1)
-	    ;
-	  connect_sucess = 0;
-	  for (ii = 0; ii < data_length; ii++)
-	    {
-	      data[ii] = 2 * ii;
-	    }
-
-	  tcp_echoclient_connect ();
-	  while (connect_sucess != 1)
-	    ;
-	  connect_sucess = 0;
-	  for (ii = 0; ii < data_length; ii++)
-	    {
-	      data[ii] = 3 * ii;
-	    }
-
-	  tcp_echoclient_connect ();
-	  while (connect_sucess != 1)
-	    ;
-	  connect_sucess = 0;
+//	  //	  jj=0;
+//	  /*connect to tcp server */
+//	  uint32_t ii;
+//	  for (ii = 0; ii < data_length; ii++)
+//	    {
+//	      data[ii] = ii;
+//	    }
+//	  //		while(connect_sucess!=1);
+//	  //			connect_sucess=0;
+//	  tcp_echoclient_connect ();
+//	  while (connect_sucess != 2)
+//	    ;
+//	  connect_sucess = 0;
+//	  for (ii = 0; ii < data_length; ii++)
+//	    {
+//	      data[ii] = 2 * ii;
+//	    }
+//
+//	  tcp_echoclient_connect ();
+//	  while (connect_sucess != 2)
+//	    ;
+//	  connect_sucess = 0;
+//	  for (ii = 0; ii < data_length; ii++)
+//	    {
+//	      data[ii] = 3 * ii;
+//	    }
+//
+//	  tcp_echoclient_connect ();
+	  connect_sucess=2;
+//	  while (connect_sucess != 2)
+//	    ;
+//	  connect_sucess = 0;
 
 	}
     /* Clear the EXTI line  pending bit */

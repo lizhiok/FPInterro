@@ -136,8 +136,10 @@ int main()
 	  /* process received ethernet packet */
 	  LwIP_Pkt_Handle ();
 	}
-      _delay_ms(10);
-      if(jj++>1000)
+//      _delay_ms(10);
+//      if(jj++>1000)
+
+      if(connect_sucess==2)
 	{
 	  static uint8_t k;
 

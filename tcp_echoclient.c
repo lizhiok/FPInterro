@@ -100,6 +100,7 @@ void tcp_echoclient_connect(void)
     
     /* connect to destination address/port */
     tcp_connect(echoclient_pcb,&DestIPaddr,DEST_PORT,tcp_connected);
+    connect_sucess=1;
   }
   else
   {
@@ -119,7 +120,7 @@ void tcp_echoclient_connect(void)
   */
 static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 {
-	connect_sucess=1;
+//  connect_sucess=1;
   tcp_write(pcb,data,sizeof(data),1); /* 发送数据 */
 //  while(lwip_called!=0);
   //while(lwip_called==0)
@@ -197,6 +198,7 @@ static err_t tcp_connected(void *arg, struct tcp_pcb *pcb, err_t err)
 //    	tcp_write(pcb,data+1000*i,j,0); /* 发送数据 */
 //    }
 	tcp_close(pcb);
+	connect_sucess=2;
 	return ERR_OK;
 }
 static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err)
