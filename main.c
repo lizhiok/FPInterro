@@ -67,8 +67,8 @@ int main()
 	Trig_set();
 	sMAX5541_DAC_Init();
 	sAD7980_ADC_Init();
-	ETH_BSP_Config();
-	LwIP_Init();
+//	ETH_BSP_Config();
+//	LwIP_Init();
 	TIM6_Config();
 
 
@@ -82,7 +82,7 @@ int main()
 //	    /* Capture error */
 //	    while (1);
 //	  }
-//	printf("uart ok");
+	printf("uart ok uart ok uart ok uart ok\n\r");
 
 //	{
 //	  struct ip_addr DestIPaddr;
@@ -260,26 +260,9 @@ void RCC_clock_set(void)
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-  RCC_MCO1Config (RCC_MCO1Source_HSE, RCC_MCO1Div_5);
-  //RCC_HSICmd(ENABLE); //enable internal clock 16M
-//  RCC_HSEConfig (RCC_HSE_ON);
-
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);//set PC9 for MCO2
-  RCC_MCO2Config (RCC_MCO2Source_SYSCLK, RCC_MCO2Div_5);
-
-  RCC_PLLConfig(RCC_PLLSource_HSE,5,144,5,2);	//set system clock to 180mHz
-  RCC_PLLCmd(ENABLE);
-//  RCC_PLLSAIConfig();
-  RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
-
-  RCC_HSEConfig (RCC_HSE_ON);
+	RCC_MCO1Config(RCC_MCO1Source_HSE,RCC_MCO1Div_1);
+	//RCC_HSICmd(ENABLE); //enable internal clock 16M
+	RCC_HSEConfig(RCC_HSE_ON);
 }
 
 
