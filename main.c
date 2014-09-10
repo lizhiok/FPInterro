@@ -39,6 +39,7 @@ static void USART_Config(void);
 void tcp_echoclient_connect2(void);
 static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err);
 void TIM6_Config(void);
+void filter(uint16_t* data);
 
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
@@ -82,55 +83,47 @@ int main()
 //	    /* Capture error */
 //	    while (1);
 //	  }
-	printf("uart ok uart ok uart ok uart ok\n\r");
-
-//	{
-//	  struct ip_addr DestIPaddr;
-//
-//	  /* create new tcp pcb */
-//	  echoclient_pcb = tcp_new();
-//
-//	  if (echoclient_pcb != NULL)
-//	  {
-//	    IP4_ADDR( &DestIPaddr, DEST_IP_ADDR0, DEST_IP_ADDR1, DEST_IP_ADDR2, DEST_IP_ADDR3 );
-//
-//	    /* connect to destination address/port */
-//	    tcp_connect(echoclient_pcb,&DestIPaddr,DEST_PORT,tcp_connected);
-//	  }
-//
-//	  uint16_t test_tcp[100]={0};
-//	  uint8_t i;
-//	  for(i=0;i<100;i++)
-//	    {
-//	      test_tcp[i]=i;
-//	    }
-//	tcp_write(echoclient_pcb2,(const void *)dac_data,sizeof(dac_data),1);
-//	tcp_output(echoclient_pcb2);
-//	}
-
-
+//	printf("uart ok\n\r");
 	for(;;)
 	{
-	    int i,jj;
+	    int i;
 		// Sawtooth
       if (dac_data >= dac_max)
 	{
 
 	  dac_step = 1;
 	  dac_data = dac_min;
-#if 0
-	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
-	      || adc_data1[dac_max - 1002] != 0)
+#if 0 //find peak
+	  for(i=0;i<65535;i++)
 	    {
-	      for (i = dac_min; i < dac_max; i++)
-		{
-		  //printf("%d,%d\n", i, adc_data1[i]);
-		  printf ("%d,%d\n\r", i, adc_data1[i]);
-		  //printf("%d,%d,%d\n", i, adc_data1[i],adc_data2[i]);
-		}
+		  if(adc_data1[i+1]-adc_data1[i]>2000)
+		    {
+		      int j;
+		      for(j=0;j<500;j++)
+			{
+			  if(adc_data1[i+j]-adc_data1[i+j+1]<200)
+			    {
+
+			    }
+			}
+		    }
 	    }
 #endif
+#if 1
+	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
+	      || adc_data1[dac_max - 1002] != 0)
+			{
+				for (i = dac_min; i < dac_max; i++)
+				{
+					printf("%d,%d,", i, adc_data1[i]);
+					filter(&adc_data1[i]);
+					printf("%d\n\r", adc_data1[i]);
+				}
+			}
+#endif
+
 	}
+#if 0
       if (ETH_CheckFrameReceived ())
 	{
 	  /* process received ethernet packet */
@@ -153,7 +146,8 @@ int main()
 	    }
 	  tcp_echoclient_connect ();
 	}
-#if     0
+#endif
+#if     1
 		dac_data+=dac_step;
 	_delay_us(3);
 	sMAX5541_DAC_CS_LOW();
@@ -164,7 +158,7 @@ int main()
 
 #endif
 
-#if 0
+#if 1
 		{
 #define adc_times	1
 			uint32_t data_temp[3]={0};
@@ -189,18 +183,37 @@ int main()
 			//adc_data1[dac_data] = data_temp[2]/adc_times;
 		}
 #endif
-
-//	if(jj<5002)
-//	  jj++;
-//
-//      if (jj == 3000||jj==1000||jj==2000)
-//	{
-//	  _delay_ms (100);
-//	  tcp_echoclient_connect2 ();
-//	}
 	}
 }
 
+////中值平均滤波算法
+#define N 10
+void filter(uint16_t* data)
+{
+	uint16_t count, i, j;
+	uint16_t value_buf[N];
+	uint32_t sum = 0;
+	for (count = 0; count < N; count++)
+	{
+		value_buf[count] = *(data+count);
+	}
+	for (j = 0; j < N - 1; j++)
+	{
+		for (i = 0; i < N - j; i++)
+		{
+			if (value_buf[i] > value_buf[i + 1])
+			{
+				uint16_t temp;
+				temp = value_buf[i];
+				value_buf[i] = value_buf[i + 1];
+				value_buf[i + 1] = temp;
+			}
+		}
+	}
+	for (count = 1; count < N - 1; count++)
+		sum += value_buf[count];
+	*data =(sum / (N - 2));
+}
 void tcp_echoclient_connect2(void)
 {
 ////////////////////////////////////////
@@ -244,7 +257,7 @@ static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err)
 ////  tcp_output(pcb);
 //  tcp_close (pcb);
 ////	tcp_conneced=1;
-//  return ERR_OK;
+  return ERR_OK;
 }
 void RCC_clock_set(void)
 {
@@ -375,7 +388,7 @@ static void USART_Config(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
-  USART_InitStructure.USART_BaudRate = 921600;//256000;//115200;
+  USART_InitStructure.USART_BaudRate = 380400;//921600;//256000;//115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_No;
