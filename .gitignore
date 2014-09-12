@@ -95,4 +95,4 @@ contiki-cc2530dk.lib
 /Libraries/*
 !Libraries/CMSIS/Include/*
 !Libraries/CMSIS/Device/*
-JLinkLog.txt
+JLinkLog*.txt
