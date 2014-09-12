@@ -110,14 +110,14 @@ int main()
 	    }
 #endif
 #if 1
-	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
-	      || adc_data1[dac_max - 1002] != 0)
+	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0 || adc_data1[dac_max - 1002] != 0)
 			{
 				for (i = dac_min; i < dac_max; i++)
 				{
-					printf("%d,%d,", i, adc_data1[i]);
-					filter(&adc_data1[i]);
-					printf("%d\n\r", adc_data1[i]);
+					printf("%d,%d\n\r", i, adc_data1[i]);//,adc_data2[i]);
+//					printf("%d,%d,", i, adc_data1[i]);
+//					filter(&adc_data1[i]);
+//					printf("%d\n\r", adc_data1[i]);
 				}
 			}
 #endif
@@ -179,8 +179,9 @@ int main()
 					sAD7980_ADC_CS_LOW();
 				}
 			}
-			adc_data1[dac_data] = data_temp[0]/adc_times;
-			//adc_data1[dac_data] = data_temp[2]/adc_times;
+			adc_data1[dac_data] = data_temp[2]/adc_times;
+//			adc_data1[dac_data] = data_temp[0]/adc_times;
+//			adc_data2[dac_data] = data_temp[2]/adc_times;
 		}
 #endif
 	}
@@ -388,7 +389,7 @@ static void USART_Config(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
-  USART_InitStructure.USART_BaudRate = 380400;//921600;//256000;//115200;
+  USART_InitStructure.USART_BaudRate = 921600;//256000;//115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_No;
