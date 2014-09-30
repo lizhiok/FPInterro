@@ -31,6 +31,9 @@ uint32_t timingdelay;
 extern uint16_t data[data_length];
 extern uint8_t connect_sucess;
 
+void uart_send(void);
+void sMAX5541_writer(void);
+void sAD7980_reader(void);
 void RCC_clock_set(void);
 void LED_set(void);
 void STM_EVAL_PBInit(void);//(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode);
@@ -75,7 +78,6 @@ int main()
 
 	USART_Config();
 
-//#define	dac_step 1
 	dac_data=1;
 
 //	  if (SysTick_Config(500))
@@ -86,7 +88,7 @@ int main()
 //	printf("uart ok\n\r");
 	for(;;)
 	{
-	    int i;
+//	    int i;
 		// Sawtooth
       if (dac_data >= dac_max)
 	{
@@ -109,19 +111,8 @@ int main()
 		    }
 	    }
 #endif
-#if 1
-	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
-	      || adc_data1[dac_max - 1002] != 0)
-			{
-				for (i = dac_min; i < dac_max; i++)
-				{
-					printf("%d,%d,", i, adc_data1[i]);
-					filter(&adc_data1[i]);
-					printf("%d\n\r", adc_data1[i]);
-				}
-			}
-#endif
 
+uart_send();
 	}
 #if 0
       if (ETH_CheckFrameReceived ())
@@ -147,45 +138,63 @@ int main()
 	  tcp_echoclient_connect ();
 	}
 #endif
-#if     1
-		dac_data+=dac_step;
-	_delay_us(3);
-	sMAX5541_DAC_CS_LOW();
-	_delay_us(3);
-	SPI_I2S_SendData(SPI2,dac_data);
-	_delay_us(3);
-	sMAX5541_DAC_CS_HIGH();
 
-#endif
-
-#if 1
-		{
-#define adc_times	1
-			uint32_t data_temp[3]={0};
-			int i;
-			for (i = 0; i < adc_times; i++) {
-				sAD7980_ADC_CS_HIGH();
-				while (GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,
-						sAD7980_IRQ_PIN) != 0) {
-					uint8_t i;
-					for (i = 0; i < 3; i++) {
-//						uint16_t temp1;
-						SPI_I2S_SendData(SPI5, 0);
-						_delay_us(20);
-						data_temp[i] += SPI_I2S_ReceiveData(SPI5);
-//						if(data_temp[i]<temp1)
-//							data_temp[i]=temp1;
-					}
-					sAD7980_ADC_CS_LOW();
-				}
-			}
-			adc_data1[dac_data] = data_temp[0]/adc_times;
-			//adc_data1[dac_data] = data_temp[2]/adc_times;
-		}
-#endif
+sMAX5541_writer();
+_delay_us(100);
+sAD7980_reader();
 	}
 }
 
+void uart_send(void)
+{
+	uint16_t i=0;
+	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
+	      || adc_data1[dac_max - 1002] != 0)
+			{
+				for (i = dac_min; i < dac_max; i++)
+				{
+					printf("%d,%d\n\r", i, adc_data1[i]);
+//					printf("%d,%d,", i, adc_data1[i]);
+//					filter(&adc_data1[i]);
+//					printf("%d\n\r", adc_data1[i]);
+				}
+			}
+}
+void sMAX5541_writer(void)
+{
+	dac_data+=dac_step;
+_delay_us(3);
+sMAX5541_DAC_CS_LOW();
+_delay_us(3);
+SPI_I2S_SendData(SPI2,dac_data);
+_delay_us(3);
+sMAX5541_DAC_CS_HIGH();
+}
+void sAD7980_reader(void)
+{
+#define adc_times	1
+		uint32_t data_temp[3]={0};
+		int i;
+		for (i = 0; i < adc_times; i++) {
+			sAD7980_ADC_CS_HIGH();
+			while (GPIO_ReadInputDataBit(sAD7980_IRQ_GPIO_PORT,
+					sAD7980_IRQ_PIN) != 0) {
+				uint8_t i;
+				for (i = 0; i < 3; i++) {
+//						uint16_t temp1;
+					SPI_I2S_SendData(SPI5, 0);
+					_delay_us(20);
+					data_temp[i] += SPI_I2S_ReceiveData(SPI5);
+//						if(data_temp[i]<temp1)
+//							data_temp[i]=temp1;
+				}
+				sAD7980_ADC_CS_LOW();
+			}
+		}
+		adc_data1[dac_data] = data_temp[0]/adc_times;
+		//adc_data1[dac_data] = data_temp[2]/adc_times;
+
+}
 ////中值平均滤波算法
 #define N 10
 void filter(uint16_t* data)
@@ -388,7 +397,7 @@ static void USART_Config(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
-  USART_InitStructure.USART_BaudRate = 380400;//921600;//256000;//115200;
+  USART_InitStructure.USART_BaudRate = 921600;//380400;//921600;//256000;//115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_No;
