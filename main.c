@@ -17,7 +17,7 @@
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
 #include "tcp_echoclient.h"
-#define dac_max  65535
+#define dac_max  65535/2
 //39321
 //39321  
 #define dac_min		0
@@ -191,7 +191,7 @@ void sAD7980_reader(void)
 				sAD7980_ADC_CS_LOW();
 			}
 		}
-		adc_data1[dac_data] = data_temp[0]/adc_times;
+		adc_data1[dac_data] = data_temp[1]/adc_times;
 		//adc_data1[dac_data] = data_temp[2]/adc_times;
 
 }
