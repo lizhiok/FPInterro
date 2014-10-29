@@ -17,14 +17,13 @@
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
 #include "tcp_echoclient.h"
-#define DAC_MAX  65535/2
+#define dac_max  65535/2
 //39321
 //39321  
-#define DAC_MIN		0
+#define dac_min		0
 
 #define SYSTEMTICK_PERIOD_MS  10
-uint16_t dac_data,adc_data1[DAC_MAX];//,adc_data2[DAC_MAX];
-short center[DAC_MAX]={0};
+uint16_t dac_data,adc_data1[dac_max];//,adc_data2[dac_max];
 int8_t dac_step=1;
 volatile uint32_t LocalTime = 0; /* this variable is used to create a time reference incremented by 10ms */
 uint32_t timingdelay;
@@ -44,8 +43,7 @@ void tcp_echoclient_connect2(void);
 static err_t tcp_connected2(void *arg, struct tcp_pcb *pcb, err_t err);
 void TIM6_Config(void);
 void filter(uint16_t* data);
-void find_peak(uint16_t peak_mindle2[],const uint16_t adc_data2[],const uint16_t data_count2);
-void uart_send_peak(void);
+
 #ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
      set to 'Yes') calls __io_putchar() */
@@ -60,11 +58,7 @@ uint8_t tcp_conneced=0;
 struct tcp_pcb *echoclient_pcb2;
 uint8_t lwip_called=0;
 
-#define peak_value 10000
-#define PEAK_COUNT	160
-#define PEAK_LENGTH 200
-uint16_t peak_start[PEAK_COUNT]={0},peak_end[PEAK_COUNT]={0};
-uint16_t peak_middle[PEAK_COUNT]={0};
+
 
 
 int main()
@@ -80,29 +74,45 @@ int main()
 //	ETH_BSP_Config();
 //	LwIP_Init();
 	TIM6_Config();
+
+
 	USART_Config();
+
 	dac_data=1;
+
 //	  if (SysTick_Config(500))
 //	  {
 //	    /* Capture error */
 //	    while (1);
 //	  }
-	printf(" uart ok\n\r");
+//	printf("uart ok\n\r");
 	for(;;)
 	{
 //	    int i;
 		// Sawtooth
-      if (dac_data >= DAC_MAX)
+      if (dac_data >= dac_max)
 	{
 
 	  dac_step = 1;
-	  dac_data = DAC_MIN;
-//	  	  uart_send();
-		filter(adc_data1);
-	  find_peak(peak_middle,adc_data1,DAC_MAX);
-	  uart_send_peak();
+	  dac_data = dac_min;
+#if 0 //find peak
+	  for(i=0;i<65535;i++)
+	    {
+		  if(adc_data1[i+1]-adc_data1[i]>2000)
+		    {
+		      int j;
+		      for(j=0;j<500;j++)
+			{
+			  if(adc_data1[i+j]-adc_data1[i+j+1]<200)
+			    {
 
-//	  uart_send();
+			    }
+			}
+		    }
+	    }
+#endif
+
+uart_send();
 	}
 #if 0
       if (ETH_CheckFrameReceived ())
@@ -129,81 +139,26 @@ int main()
 	}
 #endif
 
-      sMAX5541_writer();
-      _delay_us(100);
-      sAD7980_reader();
+sMAX5541_writer();
+_delay_us(100);
+sAD7980_reader();
 	}
-}
-
-
-//uint16_t peak_middle[16]={0};
-void find_peak(uint16_t peak_mindle2[],const uint16_t adc_data2[],const uint16_t data_count2)
-{
-	int i,j=0;
-	uint32_t tempxy=0,tempx=0;
-	for(i=0;i<PEAK_LENGTH;i++)
-	{
-		tempxy+=i*adc_data2[i];
-		tempx+=i;
-	}
-
-	for(j=PEAK_LENGTH/2;j<DAC_MAX-PEAK_LENGTH/2;j++)
-	{
-		tempxy=tempxy-j*adc_data2[j]+(j+PEAK_LENGTH)*adc_data2[j+PEAK_LENGTH];
-		tempx+=PEAK_LENGTH;
-		center[j+PEAK_LENGTH/2]=tempxy/tempx;
-	}
-
-	for(j=0,i=0+1;i<DAC_MAX-1;i++)
-	{
-		if(adc_data2[i]>800&&center[i]>center[i-1]&&center[i]>=center[i+1])
-		{
-			peak_mindle2[j]=i;
-			if(peak_mindle2[j]-peak_mindle2[j-1]<500)
-			{
-				peak_mindle2[j-1]=center[j-1]>=center[j]?peak_mindle2[j-1]:peak_mindle2[j];
-				peak_mindle2[j]=0;
-			}
-			else
-			{
-			j++;
-			}
-		}
-	}
-	for(i=0;i<DAC_MAX;i++)
-	{
-		adc_data1[i]=0;	//clear data
-	}
-
-//	__asm__("nop");
 }
 
 void uart_send(void)
 {
 	uint16_t i=0;
-	  if (adc_data1[DAC_MAX - 1000] != 0 || adc_data1[DAC_MAX - 1001] != 0|| adc_data1[DAC_MAX - 1002] != 0)
+	  if (adc_data1[dac_max - 1000] != 0 || adc_data1[dac_max - 1001] != 0
+	      || adc_data1[dac_max - 1002] != 0)
 			{
-				for (i = DAC_MIN; i < DAC_MAX; i++)
+				for (i = dac_min; i < dac_max; i++)
 				{
-					printf("%d,%d\n", i, adc_data1[i]);
+					printf("%d,%d\n\r", i, adc_data1[i]);
 //					printf("%d,%d,", i, adc_data1[i]);
 //					filter(&adc_data1[i]);
 //					printf("%d\n\r", adc_data1[i]);
 				}
 			}
-}
-void uart_send_peak(void)
-{
-	uint8_t i;
-	//printf("ok\n");
-	for(i=0;i<PEAK_COUNT;i++)
-	{
-		if(peak_middle[i]!=0)
-		{
-			printf("%d,", peak_middle[i]);
-		}
-	}
-	printf("\n");
 }
 void sMAX5541_writer(void)
 {
@@ -217,7 +172,7 @@ sMAX5541_DAC_CS_HIGH();
 }
 void sAD7980_reader(void)
 {
-#define adc_times	4
+#define adc_times	1
 		uint32_t data_temp[3]={0};
 		int i;
 		for (i = 0; i < adc_times; i++) {
@@ -442,7 +397,7 @@ static void USART_Config(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
-  USART_InitStructure.USART_BaudRate = 256000;//380400;//921600;//256000;//115200;
+  USART_InitStructure.USART_BaudRate = 921600;//380400;//921600;//256000;//115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
   USART_InitStructure.USART_Parity = USART_Parity_No;
