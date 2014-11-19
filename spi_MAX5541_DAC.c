@@ -99,8 +99,8 @@ void sMAX5541_DAC_Init(void)
   sMAX5541_DAC_LowLevel_Init();//(RCC_APB1Periph_SPI2,ENABLE);
     
   /*!< Deselect the MAX5541_DAC: Chip Select high */
-  sMAX5541_DAC_CS_HIGH();
-
+  //sMAX5541_DAC_CS_HIGH();
+	sMAX5541_DAC_CS_LOW();
   /*!< SPI configuration */
   SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
   SPI_InitStructure.SPI_Mode = SPI_Mode_Master;

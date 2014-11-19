@@ -95,4 +95,6 @@ contiki-cc2530dk.lib
 /Libraries/*
 !Libraries/CMSIS/Include/*
 !Libraries/CMSIS/Device/*
+!/Libraries/STM32F4xx_StdPeriph_Driver/*
+!/Libraries/STM32F4x7_ETH_Driver/*
 JLinkLog.txt

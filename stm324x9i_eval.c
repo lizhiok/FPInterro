@@ -33,7 +33,7 @@
 
 #include "stm324x9i_eval.h"
 #include "stm32f4xx_sdio.h"
-#include "stm32f4xx_dma.h"
+//#include "stm32f4xx_dma.h"
 #include "stm324x9i_i2c.h"
 
 /** @addtogroup Utilities

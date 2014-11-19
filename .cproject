@@ -24,6 +24,7 @@
 								<option id="gnu.c.compiler.option.debugging.level.1025886646" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.812232943" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="LWIP_DHCP=1"/>
+									<listOptionValue builtIn="false" value="STM32F439xx=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.paths.1636062988" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;C:\Keil\ARM\ARMCC\include\&quot;"/>
