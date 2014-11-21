@@ -880,16 +880,19 @@ ARM Macro Assembler    Page 14
   433 0000001C         ; User Stack and Heap initialization
   434 0000001C         ;*******************************************************
                        ************************
-  435 0000001C                 IF               :DEF:__MICROLIB
+  435 0000001C         
   436 0000001C         
-  437 0000001C                 EXPORT           __initial_sp
-  438 0000001C                 EXPORT           __heap_base
-  439 0000001C                 EXPORT           __heap_limit
-  440 0000001C         
-  441 0000001C                 ELSE
-  456                          ENDIF
-  457 0000001C         
-  458 0000001C                 END
+  437 0000001C         
+  438 0000001C                 IF               :DEF:__MICROLIB
+  439 0000001C         
+  440 0000001C                 EXPORT           __initial_sp
+  441 0000001C                 EXPORT           __heap_base
+  442 0000001C                 EXPORT           __heap_limit
+  443 0000001C         
+  444 0000001C                 ELSE
+  459                          ENDIF
+  460 0000001C         
+  461 0000001C                 END
               00000000 
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=.\obj
@@ -926,7 +929,7 @@ Symbol: __initial_sp
       At line 45 in file startup_stm32f429_439xx.s
    Uses
       At line 69 in file startup_stm32f429_439xx.s
-      At line 437 in file startup_stm32f429_439xx.s
+      At line 440 in file startup_stm32f429_439xx.s
 
 3 symbols
 
@@ -957,7 +960,7 @@ Symbol: __heap_base
    Definitions
       At line 55 in file startup_stm32f429_439xx.s
    Uses
-      At line 438 in file startup_stm32f429_439xx.s
+      At line 441 in file startup_stm32f429_439xx.s
 Comment: __heap_base used once
 __heap_limit 00000200
 
@@ -965,7 +968,7 @@ Symbol: __heap_limit
    Definitions
       At line 57 in file startup_stm32f429_439xx.s
    Uses
-      At line 439 in file startup_stm32f429_439xx.s
+      At line 442 in file startup_stm32f429_439xx.s
 Comment: __heap_limit used once
 4 symbols
 

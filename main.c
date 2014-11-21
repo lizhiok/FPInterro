@@ -2,6 +2,7 @@
 #include "netconf.h"
 #include "main.h"
 #include "stdint.h"
+#include "stdlib.h"
 #include <stdio.h>
 
 #include "spi_AD7980_ADC.h"
@@ -64,7 +65,7 @@ uint8_t lwip_called=0;
 #define peak_value 10000
 #define PEAK_COUNT	160
 #define PEAK_LENGTH 200
-#define sdram_addr_low	0xc0000000	
+#define sdram_addr_low	0xc0000000
 #define sdram_addr_high	0xC07fffff
 	
 uint16_t peak_start[PEAK_COUNT]={0},peak_end[PEAK_COUNT]={0};
@@ -75,9 +76,20 @@ uint8_t data_temp;
 //#define lenth 65535
 //uint16_t test1[lenth]={0},test2[lenth]={0},test3[lenth]={0};
 
+uint8_t*(p[5]);
+
+//int aa[512] __attribute__ ((section ("EXRAM")));
+//char bb __attribute__ ((section ("EXRAM"))) = 0;
+//char cc __attribute__ ((section ("EXRAM"))) = 1;
+
+int ff[512] __attribute__((at(0xc0100000)));
+int gg[512] __attribute__((at(0xc0100000+sizeof(int)*512)));
+uint8_t dd[512];
+char ee = 1;
 
 int main()
 {
+	int i;
 
 	RCC_DeInit();
 	RCC_clock_set();
@@ -92,18 +104,61 @@ int main()
 	TIM6_Config();
 	USART_Config();
 	dac_data=1;
+	p[0] = (uint8_t *)(sdram_addr_low);
+	p[1] = (uint8_t *)(p[0]+sizeof(uint8_t)*512);
+	p[2] = (uint8_t *)(p[1]+sizeof(uint8_t)*512);
+	p[3] = (uint8_t *)(p[2]+sizeof(uint8_t)*512);
+	p[4] = (uint8_t *)(p[3]+sizeof(uint8_t)*512);
 //	  if (SysTick_Config(500))
 //	  {
 //	    /* Capture error */
 //	    while (1);
 //	  }
 //	printf(" uart ok\n\r");
+
+	for(i=0;i<512;i++)
+	{
+		*(__IO uint8_t*)(p[0]+i)=100;
+
+	}
+	for(i=0;i<512;i++)
+	{
+		*(__IO uint8_t*)(p[1]+i)=2;
+	}
+	for(i=0;i<512;i++)
+		{
+			*(__IO uint8_t*)(p[2]+i)=3;
+		}
+	for(i=0;i<512;i++)
+		{
+			*(__IO uint8_t*)(p[3]+i)=4;
+		}
+	for(i=0;i<512;i++)
+		{
+			*(__IO uint8_t*)(p[4]+i)=5;
+		}
+	for(i=0;i<512;i++)
+	{
+		dd[i]=0;
+	}
+	for(i=0;i<512;i++)
+	{
+		dd[i]=*(__IO uint8_t*)(p[0]+i);
+//		dd[i]+=*(__IO uint8_t*)(p[0]+i);
+//		dd[i]+=*(__IO uint8_t*)(p[1]+i);
+//		dd[i]+=*(__IO uint8_t*)(p[2]+i);
+//		dd[i]+=*(__IO uint8_t*)(p[3]+i);
+//		dd[i]+=*(__IO uint8_t*)(p[4]+i);
+
+	}
+
+	  uwInternelBuffer = (uint8_t *)(0xC0300000);
+	  *(__IO uint8_t*) (uwInternelBuffer)=200;
+	  _delay_ms(1000);
+	  data_temp=*(__IO uint8_t*) (uwInternelBuffer);
+
 	while(1)
 	{
-	
-	  uwInternelBuffer = (uint8_t *)(0xC0000000);
-	  *(__IO uint8_t*) (uwInternelBuffer)=200;
-	  data_temp=*(__IO uint8_t*) (uwInternelBuffer);
 		__asm("NOP");
 	}
 	for(;;)

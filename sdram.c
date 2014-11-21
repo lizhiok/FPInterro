@@ -28,9 +28,9 @@ uint8_t BSP_SDRAM_Init(void)
 
   /* Timing configuration for 90Mhz as SD clock frequency (System clock is up to 180Mhz */
   Timing.LoadToActiveDelay    = 2;
-  Timing.ExitSelfRefreshDelay = 7;
+  Timing.ExitSelfRefreshDelay = 6;
   Timing.SelfRefreshTime      = 4;
-  Timing.RowCycleDelay        = 7;
+  Timing.RowCycleDelay        = 6;
   Timing.WriteRecoveryTime    = 2;
   Timing.RPDelay              = 2;
   Timing.RCDDelay             = 2;
@@ -78,8 +78,8 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
 
   /* Step 2: Insert 100 us minimum delay */
   /* Inserted delay is equal to 1 ms due to systick time base unit (ms) */
-  //HAL_Delay(1);
-	_delay_ms(1);
+//  HAL_Delay(1);
+	_delay_ms(10);
 
   /* Step 3: Configure a PALL (precharge all) command */
   Command.CommandMode            = FMC_SDRAM_CMD_PALL;
@@ -93,14 +93,14 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   /* Step 4: Configure an Auto Refresh command */
   Command.CommandMode            = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
   Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
-  Command.AutoRefreshNumber      = 8;
+  Command.AutoRefreshNumber      = 4;
   Command.ModeRegisterDefinition = 0;
 
   /* Send the command */
   HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);
 
   /* Step 5: Program the external memory mode register */
-  tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1          |\
+  tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_2          |\
                      SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |\
                      SDRAM_MODEREG_CAS_LATENCY_3           |\
                      SDRAM_MODEREG_OPERATING_MODE_STANDARD |\
